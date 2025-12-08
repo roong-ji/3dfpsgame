@@ -9,8 +9,6 @@ public class PlayerRotate : MonoBehaviour
 
     private void Update()
     {
-        if (!Input.GetMouseButton(1)) return;
-
         _accumulationX = _cameraRotate.AccumulationX;
 
         transform.eulerAngles = new Vector3(0, _accumulationX);

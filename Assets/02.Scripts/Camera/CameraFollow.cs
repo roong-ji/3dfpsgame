@@ -37,15 +37,15 @@ public class CameraFollow : MonoBehaviour
         _targetIndex = (_targetIndex + 1) % _targets.Length;
         _currentTarget = _targets[_targetIndex];
         _isChanging = true;
+        
+        Vector3 startPosition = transform.position;
+        transform.DOKill();
 
-        Tweener moveTween = transform.DOMove(_currentTarget.position, _transitionDuration)
-            .SetEase(_easeType);
-
-        moveTween.OnUpdate(() =>
+        DOVirtual.Float(0f, 1f, _transitionDuration, (float easedTime) =>
         {
-            moveTween.ChangeEndValue(_currentTarget.position, true);
-        });
-
-        moveTween.OnComplete(() => _isChanging = false);
+            transform.position = Vector3.Lerp(startPosition, _currentTarget.position, easedTime);
+        })
+        .SetEase(_easeType)
+        .OnComplete(() => _isChanging = false);
     }
 }

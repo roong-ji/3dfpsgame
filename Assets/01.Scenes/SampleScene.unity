@@ -1434,6 +1434,7 @@ GameObject:
   - component: {fileID: 1829563385}
   - component: {fileID: 1829563386}
   - component: {fileID: 1829563387}
+  - component: {fileID: 1829563388}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1575,6 +1576,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxStamina: 100
   _staminaRegenRate: 25
+--- !u!114 &1829563388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829563379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c9a3a678cc56cf43aeea01ea6cea3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damage:
+    _value: 10
+  _moveSpeed:
+    _value: 7
+  _runSpeed:
+    _value: 14
 --- !u!1 &1918005768
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,11 +15,13 @@ public class PlayerMove : MonoBehaviour
     private bool _canDoubleJump = false;
 
     private CharacterController _controller;
+    private PlayerStats _stats;
     private PlayerStamina _stamina;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
+        _stats = GetComponent<PlayerStats>();
         _stamina = GetComponent<PlayerStamina>();
         _currentMoveSpeed = _originMoveSpeed;
     }

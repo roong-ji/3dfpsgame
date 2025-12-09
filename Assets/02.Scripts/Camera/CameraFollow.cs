@@ -29,16 +29,23 @@ public class CameraFollow : MonoBehaviour
     private void InputChangeTarget()
     {
         if (!Input.GetKeyDown(KeyCode.T)) return;
+        ChangeTarget();
+    }
 
+    private void ChangeTarget()
+    {
         _targetIndex = (_targetIndex + 1) % _targets.Length;
         _currentTarget = _targets[_targetIndex];
         _isChanging = true;
 
-        transform.DOMove(_currentTarget.position, _transitionDuration)
-            .SetEase(_easeType)
-            .OnComplete(() =>
-            {
-                _isChanging = false;
-            });
+        Tweener moveTween = transform.DOMove(_currentTarget.position, _transitionDuration)
+            .SetEase(_easeType);
+
+        moveTween.OnUpdate(() =>
+        {
+            moveTween.ChangeEndValue(_currentTarget.position, true);
+        });
+
+        moveTween.OnComplete(() => _isChanging = false);
     }
 }

@@ -8,7 +8,14 @@ public class PlayerFire : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(1))
+        Fire();
+    }
+
+    private void Fire()
+    {
+        if (!Input.GetMouseButtonDown(1)) return;
+
+        if (PlayerStats.Instance.BombCount.TryConsume(1))
         {
             Bomb bomb = Instantiate(_bombPrefab, _fireTransform.position, Quaternion.identity);
             Rigidbody rigidbody = bomb.GetComponent<Rigidbody>();

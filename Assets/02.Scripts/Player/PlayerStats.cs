@@ -4,6 +4,7 @@ public class PlayerStats : Singleton<PlayerStats>
 {
     public ConsumableStat Health;
     public ConsumableStat Stamina;
+    public ItemCount BombCount;
 
     public ValueStat Damage;
     public ValueStat MoveSpeed;
@@ -14,6 +15,7 @@ public class PlayerStats : Singleton<PlayerStats>
     {
         Health.Initialize();
         Stamina.Initialize();
+        BombCount.Initialize();
     }
 
     private void Update()

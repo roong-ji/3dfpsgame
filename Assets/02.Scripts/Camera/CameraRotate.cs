@@ -15,7 +15,7 @@ public class CameraRotate : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.RightAlt)) return;
+        if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) return;
 
         // 1. 마우스 입력 받기
         float mouseX = Input.GetAxis("Mouse X");

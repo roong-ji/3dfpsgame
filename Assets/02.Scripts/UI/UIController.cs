@@ -11,14 +11,14 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        PlayerStats.Instance.Health.OnValueChanged += UpdateHealthUI;
-        PlayerStats.Instance.Stamina.OnValueChanged += UpdateStaminaUI;
+        PlayerStats.Instance.Health.AddListener(UpdateHealthUI);
+        PlayerStats.Instance.Stamina.AddListener(UpdateStaminaUI);
     }
 
     private void OnDestroy()
     {
-        PlayerStats.Instance.Health.OnValueChanged -= UpdateHealthUI;
-        PlayerStats.Instance.Stamina.OnValueChanged -= UpdateStaminaUI;
+        PlayerStats.Instance.Health.RemoveListener(UpdateHealthUI);
+        PlayerStats.Instance.Stamina.RemoveListener(UpdateStaminaUI);
     }
     
     private void UpdateHealthUI(float health, float maxHealth)

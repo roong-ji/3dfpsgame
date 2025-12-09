@@ -11,12 +11,14 @@ public class PlayerMove : MonoBehaviour
 
     }
 
-    private float _currentMoveSpeed;
-    private float _runStamina = 75f;
-
     private const float Gravity = -9.81f;
+
+    private float _currentMoveSpeed;
     private float _yVelocity = 0;
+
+    private float _runStamina = 75f;
     private float _jumpStamina = 50f;
+
     private bool _canDoubleJump = false;
 
     private CharacterController _controller;

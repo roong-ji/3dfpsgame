@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -8,7 +9,7 @@ public class ConsumableStat
     [SerializeField] private float _value;
     [SerializeField] private float _regenerationRate = 10f;
 
-    public event Action<float, float> OnValueChanged;
+    private event Action<float, float> _onValueChanged;
 
     public float Value
     {
@@ -20,7 +21,7 @@ public class ConsumableStat
             if (newValue != _value)
             {
                 _value = newValue;
-                OnValueChanged?.Invoke(_value, _maxValue);
+                _onValueChanged?.Invoke(_value, _maxValue);
             }
         }
     }
@@ -28,6 +29,16 @@ public class ConsumableStat
     public void Initialize()
     {
         Value = _maxValue;
+    }
+
+    public void AddListener(Action<float, float> listener)
+    {
+        _onValueChanged += listener;
+    }
+
+    public void RemoveListener(Action<float, float> listener)
+    {
+        _onValueChanged -= listener;
     }
 
     public void Regenerate(float time)

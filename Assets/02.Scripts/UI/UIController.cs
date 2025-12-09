@@ -21,6 +21,7 @@ public class UIController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (PlayerStats.Instance == null) return;
         PlayerStats.Instance.Health.RemoveListener(UpdateHealthUI);
         PlayerStats.Instance.Stamina.RemoveListener(UpdateStaminaUI);
         PlayerStats.Instance.BombCount.RemoveListener(UpdateBombCountUI);

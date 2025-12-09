@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
+    [SerializeField] private GameObject _prefab;
     [SerializeField] private GameObject _explosionEffectPrefab;
 
     private void OnCollisionEnter(Collision collision)

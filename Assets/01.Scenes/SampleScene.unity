@@ -1144,10 +1144,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1255459216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 377758326719e6b41a9d0f8ef077946f, type: 3}
+  m_Script: {fileID: 11500000, guid: 20468c5b4eb85324dacaf46b6b400dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hpSliderUI: {fileID: 0}
+  _hpSliderUI: {fileID: 389310340}
   _staminaSliderUI: {fileID: 1631512728}
 --- !u!1 &1534071477
 GameObject:
@@ -1588,12 +1588,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9a3a678cc56cf43aeea01ea6cea3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage:
+  Health:
+    _maxValue: 100
+    _value: 0
+    _regenerationRate: 10
+  Stamina:
+    _maxValue: 100
+    _value: 0
+    _regenerationRate: 25
+  Damage:
     _value: 10
-  _moveSpeed:
+  MoveSpeed:
     _value: 7
-  _runSpeed:
+  RunSpeed:
     _value: 14
+  JumpPower:
+    _value: 5
 --- !u!1 &1918005768
 GameObject:
   m_ObjectHideFlags: 0

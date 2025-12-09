@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : Singleton<PlayerStats>
 {
     public ConsumableStat Health;
     public ConsumableStat Stamina;

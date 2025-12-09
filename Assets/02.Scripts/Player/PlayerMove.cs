@@ -1,29 +1,31 @@
+using System;
 using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
+[RequireComponent (typeof(PlayerStats))]
 public class PlayerMove : MonoBehaviour
 {
-    private float _originMoveSpeed = 7f;
+    [Serializable]
+    public class moveConfig
+    {
+
+    }
+
     private float _currentMoveSpeed;
-    private float _moveSpeedFactor = 2f;
-    private float _sprintStaminaCost = 100f;
+    private float _runStamina = 75f;
 
     private const float Gravity = -9.81f;
     private float _yVelocity = 0;
-    private float _jumpPower = 5f;
-    private float _duobleJumpStaminaCost = 50f;
+    private float _jumpStamina = 50f;
     private bool _canDoubleJump = false;
 
     private CharacterController _controller;
     private PlayerStats _stats;
-    private PlayerStamina _stamina;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
         _stats = GetComponent<PlayerStats>();
-        _stamina = GetComponent<PlayerStamina>();
-        _currentMoveSpeed = _originMoveSpeed;
     }
 
     private void Update()
@@ -55,12 +57,12 @@ public class PlayerMove : MonoBehaviour
 
         if (_controller.isGrounded)
         {
-            _yVelocity = _jumpPower;
+            _yVelocity = _stats.JumpPower.Value;
             _canDoubleJump = true;
         }
-        else if (_canDoubleJump && _stamina.TryUseStamina(_duobleJumpStaminaCost))
+        else if (_canDoubleJump && _stats.Stamina.TryConsume(_jumpStamina))
         {
-            _yVelocity = _jumpPower;
+            _yVelocity = _stats.JumpPower.Value;
             _canDoubleJump = false;
         }
     }
@@ -69,12 +71,12 @@ public class PlayerMove : MonoBehaviour
     {
         bool isShiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        if (isShiftDown && _stamina.TryUseStamina(_sprintStaminaCost * Time.deltaTime))
+        if (isShiftDown && _stats.Stamina.TryConsume(_runStamina * Time.deltaTime))
         {
-            _currentMoveSpeed = _originMoveSpeed * _moveSpeedFactor;
+            _currentMoveSpeed = _stats.RunSpeed.Value;
             return;
         }
 
-        _currentMoveSpeed = _originMoveSpeed;
+        _currentMoveSpeed = _stats.MoveSpeed.Value;
     }
 }

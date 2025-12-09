@@ -9,14 +9,21 @@ public class UIController : MonoBehaviour
     [Header("스태미나 UI")]
     [SerializeField] private Slider _staminaSliderUI;
 
-    private void Awake()
+    private void Start()
     {
-        PlayerStamina.OnStaminaChanged += UpdateStaminaUI;
+        PlayerStats.Instance.Health.OnValueChanged += UpdateHealthUI;
+        PlayerStats.Instance.Stamina.OnValueChanged += UpdateStaminaUI;
     }
 
     private void OnDestroy()
     {
-        PlayerStamina.OnStaminaChanged -= UpdateStaminaUI;
+        PlayerStats.Instance.Health.OnValueChanged -= UpdateHealthUI;
+        PlayerStats.Instance.Stamina.OnValueChanged -= UpdateStaminaUI;
+    }
+    
+    private void UpdateHealthUI(float health, float maxHealth)
+    {
+        _hpSliderUI.value = health / maxHealth;
     }
 
     private void UpdateStaminaUI(float stamina, float maxStamina)

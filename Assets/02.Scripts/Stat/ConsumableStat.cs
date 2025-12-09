@@ -5,15 +5,23 @@ using UnityEngine;
 public class ConsumableStat
 {
     [SerializeField] private float _maxValue = 100f;
+    [SerializeField] private float _value;
     [SerializeField] private float _regenerationRate = 10f;
-    private float _value;
+
+    public event Action<float, float> OnValueChanged;
 
     public float Value
     {
         get { return _value; }
         private set
         {
-            _value = Mathf.Clamp(value, 0, _maxValue);
+            float newValue = Mathf.Clamp(value, 0, _maxValue);
+
+            if (newValue != _value)
+            {
+                _value = newValue;
+                OnValueChanged?.Invoke(_value, _maxValue);
+            }
         }
     }
 

@@ -7,7 +7,7 @@ public class CameraFollow : MonoBehaviour
     private Transform _currentTarget;
     private int _targetIndex = 0;
     private float _transitionDuration = 1f;
-    [SerializeField] private Ease _easeType = Ease.Linear;
+    private Ease _easeType = Ease.OutQuad;
     private bool _isChanging = false;
 
     private void Start()

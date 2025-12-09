@@ -1,13 +1,23 @@
 using UnityEngine;
 
-public class Bomb : MonoBehaviour
+public class Bomb : MonoBehaviour, IPoolable
 {
-    [SerializeField] private GameObject _prefab;
+    private GameObject _prefab;
     [SerializeField] private GameObject _explosionEffectPrefab;
+
+    public void Initialize(GameObject prefab)
+    {
+        _prefab = prefab;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
         Instantiate(_explosionEffectPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        Release();
+    }
+
+    public void Release()
+    {
+        PoolManager.Instance.Release(_prefab, gameObject);
     }
 }

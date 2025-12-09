@@ -1889,7 +1889,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireTransform: {fileID: 1947230757}
-  _bombPrefab: {fileID: 6051166621489886295, guid: 60b80637d2f425144a5365e0deca5d00, type: 3}
+  _bombPrefab: {fileID: 8404473868249565428, guid: 60b80637d2f425144a5365e0deca5d00, type: 3}
   _throwPower: 15
 --- !u!1 &1830549035
 GameObject:

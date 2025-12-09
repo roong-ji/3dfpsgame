@@ -1,29 +1,33 @@
 using System;
 using UnityEngine;
 
-public class PlayerStamina : Singleton<PlayerStamina>
+public class PlayerStamina : MonoBehaviour
 {
     [Header("최대 스태미나")]
     [SerializeField] private float _maxStamina = 100f;
     private float _stamina;
 
     [Header("초당 스태미나 회복량")]
-    [SerializeField] private float _staminaRegenRate = 1f;
+    [SerializeField] private float _staminaRegenRate = 10f;
 
-    public event Action<float, float> OnStaminaChanged;
+    public static event Action<float, float> OnStaminaChanged;
 
     public float Stamina
     {
         get { return _stamina; } 
         private set 
         {
-            _stamina = Mathf.Clamp(value, 0, _maxStamina);
-            OnStaminaChanged?.Invoke(_stamina, _maxStamina);
-            Debug.Log("Changed");
+            float newValue = Mathf.Clamp(value, 0, _maxStamina);
+
+            if (newValue != _stamina)
+            {
+                _stamina = newValue;
+                OnStaminaChanged?.Invoke(_stamina, _maxStamina);
+            }
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         Stamina = _maxStamina;
     }
@@ -35,7 +39,7 @@ public class PlayerStamina : Singleton<PlayerStamina>
 
     private void RegenStamina()
     {
-        _stamina += _staminaRegenRate * Time.deltaTime;
+        Stamina += _staminaRegenRate * Time.deltaTime;
     }
 
     public bool TryUseStamina(float stamina)

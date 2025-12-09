@@ -6,17 +6,19 @@ public class PlayerMove : MonoBehaviour
     private float _originMoveSpeed = 7f;
     private float _currentMoveSpeed;
     private float _moveSpeedFactor = 2f;
-    private float _sprintStaminaCost = 10;
+    private float _sprintStaminaCost = 100f;
 
     private const float Gravity = -9.81f;
     private float _yVelocity = 0;
     private float _jumpPower = 5f;
 
     private CharacterController _controller;
+    private PlayerStamina _stamina;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
+        _stamina = GetComponent<PlayerStamina>();
         _currentMoveSpeed = _originMoveSpeed;
     }
 
@@ -51,7 +53,7 @@ public class PlayerMove : MonoBehaviour
     {
         bool isShiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        if (isShiftDown && PlayerStamina.Instance.TryUseStamina(_sprintStaminaCost * Time.deltaTime))
+        if (isShiftDown && _stamina.TryUseStamina(_sprintStaminaCost * Time.deltaTime))
         {
             _currentMoveSpeed = _originMoveSpeed * _moveSpeedFactor;
             return;

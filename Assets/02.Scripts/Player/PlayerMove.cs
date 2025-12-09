@@ -13,12 +13,10 @@ public class PlayerMove : MonoBehaviour
     private float _jumpPower = 5f;
 
     private CharacterController _controller;
-    private PlayerStamina _stamina;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
-        _stamina = GetComponent<PlayerStamina>();
         _currentMoveSpeed = _originMoveSpeed;
     }
 
@@ -53,7 +51,7 @@ public class PlayerMove : MonoBehaviour
     {
         bool isShiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        if (isShiftDown && _stamina.TryUseStamina(_sprintStaminaCost * Time.deltaTime))
+        if (isShiftDown && PlayerStamina.Instance.TryUseStamina(_sprintStaminaCost * Time.deltaTime))
         {
             _currentMoveSpeed = _originMoveSpeed * _moveSpeedFactor;
             return;

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerStamina : MonoBehaviour
+public class PlayerStamina : Singleton<PlayerStamina>
 {
     [Header("최대 스태미나")]
     [SerializeField] private float _maxStamina = 100f;
@@ -19,12 +19,13 @@ public class PlayerStamina : MonoBehaviour
         {
             _stamina = Mathf.Clamp(value, 0, _maxStamina);
             OnStaminaChanged?.Invoke(_stamina, _maxStamina);
+            Debug.Log("Changed");
         }
     }
 
     private void Awake()
     {
-        _stamina = _maxStamina;
+        Stamina = _maxStamina;
     }
 
     private void Update()

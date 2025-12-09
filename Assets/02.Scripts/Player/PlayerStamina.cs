@@ -16,10 +16,15 @@ public class PlayerStamina : MonoBehaviour
     {
         get { return _stamina; } 
         private set 
-        { 
-            _stamina = value;
+        {
+            _stamina = Mathf.Clamp(value, 0, _maxStamina);
             OnStaminaChanged?.Invoke(_stamina, _maxStamina);
         }
+    }
+
+    private void Awake()
+    {
+        _stamina = _maxStamina;
     }
 
     private void Update()
@@ -32,7 +37,7 @@ public class PlayerStamina : MonoBehaviour
         _stamina += _staminaRegenRate * Time.deltaTime;
     }
 
-    public bool UseStamina(float stamina)
+    public bool TryUseStamina(float stamina)
     {
         if(stamina <=0 || _stamina < stamina) return false;
 

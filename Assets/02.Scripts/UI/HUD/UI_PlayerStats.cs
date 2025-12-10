@@ -12,11 +12,16 @@ public class UI_PlayerStats : MonoBehaviour
     [Header("폭탄 UI")]
     [SerializeField] private Text _bombCountTexTUI;
 
+    [Header("총알 UI")]
+    [SerializeField] private Text _bulletCountTexTUI;
+
     private void Start()
     {
         PlayerStats.Instance.Health.AddListener(UpdateHealthUI);
         PlayerStats.Instance.Stamina.AddListener(UpdateStaminaUI);
         PlayerStats.Instance.BombCount.AddListener(UpdateBombCountUI);
+        PlayerStats.Instance.BulletCount.AddListener(UpdateBulletCountUI);
+        PlayerStats.Instance.TotalBulletCount.AddListener(UpdateBulletCountUI);
     }
 
     private void OnDestroy()
@@ -25,6 +30,8 @@ public class UI_PlayerStats : MonoBehaviour
         PlayerStats.Instance.Health.RemoveListener(UpdateHealthUI);
         PlayerStats.Instance.Stamina.RemoveListener(UpdateStaminaUI);
         PlayerStats.Instance.BombCount.RemoveListener(UpdateBombCountUI);
+        PlayerStats.Instance.BulletCount.RemoveListener(UpdateBulletCountUI);
+        PlayerStats.Instance.TotalBulletCount.RemoveListener(UpdateBulletCountUI);
     }
     
     private void UpdateHealthUI(float health, float maxHealth)
@@ -41,4 +48,13 @@ public class UI_PlayerStats : MonoBehaviour
     {
         _bombCountTexTUI.text = bombCount.ToString();
     }
+
+    private void UpdateBulletCountUI(int count)
+    {
+        int bulletCount = PlayerStats.Instance.BulletCount.Count;
+        int maxBulletCount = PlayerStats.Instance.TotalBulletCount.Count;
+
+        _bulletCountTexTUI.text = $"{bulletCount}/{maxBulletCount}";
+    }
+
 }

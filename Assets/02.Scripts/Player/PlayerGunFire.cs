@@ -4,6 +4,7 @@ public class PlayerGunFire : MonoBehaviour
 {
     [SerializeField] private Transform _fireTransform;
     private ParticleSystem _hitEffect;
+    private float _nextFireTime = 0f;
 
     private Transform _mainCameraTransform;
 
@@ -15,12 +16,14 @@ public class PlayerGunFire : MonoBehaviour
 
     private void Update()
     {
-        if (!Input.GetMouseButtonDown(0)) return;
+        if (!Input.GetMouseButton(0) || Time.time < _nextFireTime) return;
         GunFire();
     }
 
     private void GunFire()
     {
+        if (!PlayerStats.Instance.BulletCount.TryConsume(1)) return;
+
         // 1. Ray를 생성하고 발사할 위치, 방향, 거리를 설정한다.
         Ray ray = new Ray(origin: _fireTransform.position, direction: _mainCameraTransform.forward);
 
@@ -39,5 +42,7 @@ public class PlayerGunFire : MonoBehaviour
 
             _hitEffect.Play();
         }
+
+        _nextFireTime = Time.time + (1f / PlayerStats.Instance.FireRate.Value);
     }
 }

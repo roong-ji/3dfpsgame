@@ -8,16 +8,15 @@ public class PlayerMove : MonoBehaviour
     [Serializable]
     public class moveConfig
     {
-
+        public float Gravity = -9.81f;
+        public float RunStamina = 75f;
+        public float JumpStamina = 50f;
     }
 
-    private const float Gravity = -9.81f;
+    private moveConfig _configs = new moveConfig();
 
     private float _currentMoveSpeed;
     private float _yVelocity = 0;
-
-    private float _runStamina = 75f;
-    private float _jumpStamina = 50f;
 
     private bool _canDoubleJump = false;
 
@@ -52,7 +51,7 @@ public class PlayerMove : MonoBehaviour
 
     private void HandleJump()
     {
-        _yVelocity += Gravity * Time.deltaTime;
+        _yVelocity += _configs.Gravity * Time.deltaTime;
 
         // if (_controller.collisionFlags == CollisionFlags.Below)
         if (!Input.GetButtonDown("Jump")) return;
@@ -62,7 +61,7 @@ public class PlayerMove : MonoBehaviour
             _yVelocity = _stats.JumpPower.Value;
             _canDoubleJump = true;
         }
-        else if (_canDoubleJump && _stats.Stamina.TryConsume(_jumpStamina))
+        else if (_canDoubleJump && _stats.Stamina.TryConsume(_configs.JumpStamina))
         {
             _yVelocity = _stats.JumpPower.Value;
             _canDoubleJump = false;
@@ -73,7 +72,7 @@ public class PlayerMove : MonoBehaviour
     {
         bool isShiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
-        if (isShiftDown && _stats.Stamina.TryConsume(_runStamina * Time.deltaTime))
+        if (isShiftDown && _stats.Stamina.TryConsume(_configs.RunStamina * Time.deltaTime))
         {
             _currentMoveSpeed = _stats.RunSpeed.Value;
             return;

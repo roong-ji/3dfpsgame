@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour
+public class UI_PlayerStats : MonoBehaviour
 {
     [Header("체력 UI")]
     [SerializeField] private Slider _hpSliderUI;

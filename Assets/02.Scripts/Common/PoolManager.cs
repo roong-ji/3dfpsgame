@@ -7,8 +7,8 @@ public class PoolManager : Singleton<PoolManager>
     [System.Serializable]
     public class PoolInfo
     {
-        public GameObject prefab;
-        public int count;
+        public GameObject Prefab;
+        public int Count;
     }
 
     [SerializeField] private List<PoolInfo> _poolInfos;
@@ -24,16 +24,16 @@ public class PoolManager : Singleton<PoolManager>
     {
         foreach (var poolInfo in _poolInfos)
         {
-            Transform rootTransform = new GameObject(poolInfo.prefab.name).transform;
+            Transform rootTransform = new GameObject(poolInfo.Prefab.name).transform;
             rootTransform.SetParent(transform);
 
             ObjectPool<GameObject> pool = new ObjectPool<GameObject>(
                 createFunc: () => 
                 {
-                    var obj = Instantiate(poolInfo.prefab, rootTransform);
+                    var obj = Instantiate(poolInfo.Prefab, rootTransform);
                     if (obj.TryGetComponent(out IPoolable poolable))
                     {
-                        poolable.Initialize(poolInfo.prefab);
+                        poolable.Initialize(poolInfo.Prefab);
                     }
                     return obj;
                 },
@@ -41,13 +41,13 @@ public class PoolManager : Singleton<PoolManager>
                 actionOnRelease: (obj) => obj.SetActive(false),
                 actionOnDestroy: (obj) => Destroy(obj),
                 collectionCheck: true,
-                defaultCapacity: poolInfo.count
+                defaultCapacity: poolInfo.Count
             );
 
-            _pools.Add(poolInfo.prefab, pool);
+            _pools.Add(poolInfo.Prefab, pool);
 
             List<GameObject> tempObjects = new List<GameObject>();
-            for (int i = 0; i < poolInfo.count; i++)
+            for (int i = 0; i < poolInfo.Count; i++)
             {
                 tempObjects.Add(pool.Get());
             }

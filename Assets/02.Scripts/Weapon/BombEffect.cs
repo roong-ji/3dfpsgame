@@ -1,18 +1,16 @@
 using UnityEngine;
 
-public class Bomb : MonoBehaviour, IPoolable
+public class BombEffect : MonoBehaviour, IPoolable
 {
     private GameObject _prefab;
-    [SerializeField] private GameObject _explosionEffectPrefab;
 
     public void Initialize(GameObject prefab)
     {
         _prefab = prefab;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnParticleSystemStopped()
     {
-        PoolManager.Instance.Spawn(_explosionEffectPrefab, transform.position);
         Release();
     }
 

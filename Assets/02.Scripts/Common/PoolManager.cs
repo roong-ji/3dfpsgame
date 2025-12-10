@@ -61,10 +61,10 @@ public class PoolManager : Singleton<PoolManager>
 
     public GameObject Spawn(GameObject prefab, Vector3 position)
     {
-        GameObject gameObject = _pools[prefab].Get();
-        gameObject.transform.position = position;
+        GameObject obj = _pools[prefab].Get();
+        obj.transform.position = position;
 
-        return gameObject;
+        return obj;
     }
 
     public void Release(GameObject prefab, GameObject instance)

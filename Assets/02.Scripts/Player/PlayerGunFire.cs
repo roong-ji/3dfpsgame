@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerGunFire : MonoBehaviour
 {
     [SerializeField] private Transform _fireTransform;
-    [SerializeField] private GameObject _bombPrefab;
+    [SerializeField] private ParticleSystem _hitEffect;
 
     private Transform _mainCameraTransform;
 
@@ -32,6 +32,9 @@ public class PlayerGunFire : MonoBehaviour
         {
             // 4. 충돌했다면 피격 이펙트를 표시한다.
             Debug.Log(hitInfo.transform.name);
+            _hitEffect.transform.position = hitInfo.point;
+            _hitEffect.transform.forward = hitInfo.normal;
+            _hitEffect.Play();
         }
     }
 }

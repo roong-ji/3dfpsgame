@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayerRotate : MonoBehaviour
 {
-    private const float RotationSpeed = 200f;
-
     [SerializeField] private CameraRotate _cameraRotate;
     private float _accumulationX = 0;
 

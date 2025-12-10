@@ -49,7 +49,7 @@ public class UI_PlayerStats : MonoBehaviour
         _bombCountTexTUI.text = bombCount.ToString();
     }
 
-    private void UpdateBulletCountUI(int count)
+    private void UpdateBulletCountUI(int _)
     {
         int bulletCount = PlayerStats.Instance.BulletCount.Count;
         int maxBulletCount = PlayerStats.Instance.TotalBulletCount.Count;

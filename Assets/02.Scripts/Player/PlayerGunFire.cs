@@ -7,10 +7,12 @@ public class PlayerGunFire : MonoBehaviour
     private float _nextFireTime = 0f;
 
     private Transform _mainCameraTransform;
+    private CameraRecoil _cameraRecoil;
 
     private void Awake()
     {
         _mainCameraTransform = Camera.main.transform;
+        _cameraRecoil = Camera.main.GetComponent<CameraRecoil>();
         _hitEffect = EffectManager.Instance.BulletHitEffect;
     }
 
@@ -23,6 +25,8 @@ public class PlayerGunFire : MonoBehaviour
     private void GunFire()
     {
         if (!PlayerStats.Instance.BulletCount.TryConsume(1)) return;
+
+        _cameraRecoil.CameraRecoilByFire();
 
         // 1. Ray를 생성하고 발사할 위치, 방향, 거리를 설정한다.
         Ray ray = new Ray(origin: _fireTransform.position, direction: _mainCameraTransform.forward);

@@ -3,13 +3,14 @@ using UnityEngine;
 public class PlayerGunFire : MonoBehaviour
 {
     [SerializeField] private Transform _fireTransform;
-    [SerializeField] private ParticleSystem _hitEffect;
+    private ParticleSystem _hitEffect;
 
     private Transform _mainCameraTransform;
 
     private void Awake()
     {
         _mainCameraTransform = Camera.main.transform;
+        _hitEffect = EffectManager.Instance.BulletHitEffect;
     }
 
     private void Update()

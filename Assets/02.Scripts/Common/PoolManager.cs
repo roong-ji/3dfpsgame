@@ -41,7 +41,8 @@ public class PoolManager : Singleton<PoolManager>
                 actionOnRelease: (obj) => obj.SetActive(false),
                 actionOnDestroy: (obj) => Destroy(obj),
                 collectionCheck: true,
-                defaultCapacity: poolInfo.Count
+                defaultCapacity: poolInfo.Count,
+                maxSize: poolInfo.Count
             );
 
             _pools.Add(poolInfo.Prefab, pool);

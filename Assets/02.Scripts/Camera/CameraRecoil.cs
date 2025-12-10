@@ -37,6 +37,5 @@ public class CameraRecoil : MonoBehaviour
         )
         .SetEase(_returnEase)
         .OnComplete(() => _currentReturnDuration = _startReturnDuration);
-
     }
 }

@@ -1,0 +1,37 @@
+using UnityEngine;
+
+public class PlayerGunFire : MonoBehaviour
+{
+    [SerializeField] private Transform _fireTransform;
+    [SerializeField] private GameObject _bombPrefab;
+
+    private Transform _mainCameraTransform;
+
+    private void Awake()
+    {
+        _mainCameraTransform = Camera.main.transform;
+    }
+
+    private void Update()
+    {
+        if (!Input.GetMouseButtonDown(0)) return;
+        GunFire();
+    }
+
+    private void GunFire()
+    {
+        // 1. Ray를 생성하고 발사할 위치, 방향, 거리를 설정한다.
+        Ray ray = new Ray(origin: _fireTransform.position, direction: _mainCameraTransform.forward);
+
+        // 2. 충돌할 대상의 정보를 저장할 변수를 생성한다.
+        RaycastHit hitInfo = new RaycastHit();
+
+        // 3. 발사한다.
+        bool isHit = Physics.Raycast(ray, out hitInfo);
+        if (isHit)
+        {
+            // 4. 충돌했다면 피격 이펙트를 표시한다.
+            Debug.Log(hitInfo.transform.name);
+        }
+    }
+}

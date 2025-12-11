@@ -1340,6 +1340,7 @@ GameObject:
   - component: {fileID: 779130563}
   - component: {fileID: 779130565}
   - component: {fileID: 779130564}
+  - component: {fileID: 779130566}
   m_Layer: 5
   m_Name: BulletUI
   m_TagString: Untagged
@@ -1405,6 +1406,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779130562}
   m_CullTransparentMesh: 1
+--- !u!114 &779130566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779130562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604f25dc18fd90744909cc6654debd37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletCountTexTUI: {fileID: 674856452}
 --- !u!1 &810269562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1760,6 @@ MonoBehaviour:
   _hpSliderUI: {fileID: 389310340}
   _staminaSliderUI: {fileID: 1631512728}
   _bombCountTexTUI: {fileID: 1004254652}
-  _bulletCountTexTUI: {fileID: 674856452}
 --- !u!1 &1255459216
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,7 +2635,6 @@ GameObject:
   - component: {fileID: 1829563388}
   - component: {fileID: 1829563389}
   - component: {fileID: 1829563390}
-  - component: {fileID: 1829563391}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -2772,8 +2784,6 @@ MonoBehaviour:
     _regenerationRate: 10
   BombCount:
     _count: 5
-  BulletCount:
-    _count: 30
   TotalBulletCount:
     _count: 120
   Damage:
@@ -2786,6 +2796,7 @@ MonoBehaviour:
     _value: 5
   FireRate:
     _value: 10
+  Gun: {fileID: 0}
 --- !u!114 &1829563389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2814,18 +2825,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gun: {fileID: 1947230761}
---- !u!114 &1829563391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829563379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f713c06f434c5d4781b300ee88b440c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1830549035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3096,6 +3095,8 @@ GameObject:
   - component: {fileID: 1947230760}
   - component: {fileID: 1947230759}
   - component: {fileID: 1947230761}
+  - component: {fileID: 1947230764}
+  - component: {fileID: 1947230763}
   m_Layer: 3
   m_Name: Norse
   m_TagString: Untagged
@@ -3183,7 +3184,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fbb4c76564452c428c094fea68d8398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fireTransform: {fileID: 1947230757}
+  _stats:
+    Damage:
+      _value: 10
+    FireRate:
+      _value: 10
+    ReloadTime:
+      _value: 1.6
+    RecoilX:
+      _value: 5
+    RecoilY:
+      _value: 0.5
+    RecoilPower:
+      _value: 1
+  _magazine:
+    BulletCount:
+      _count: 30
+--- !u!114 &1947230763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947230756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc4fb7875043a3841a9528ceff6a942e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1947230764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1947230756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a91ba3ed44580644b101864011d611e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2077368861
 GameObject:
   m_ObjectHideFlags: 0

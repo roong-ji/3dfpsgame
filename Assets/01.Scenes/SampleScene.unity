@@ -2796,7 +2796,6 @@ MonoBehaviour:
     _value: 5
   FireRate:
     _value: 10
-  Gun: {fileID: 1947230761}
 --- !u!114 &1829563389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3341,7 +3340,7 @@ MonoBehaviour:
     ReloadTime:
       _value: 1.6
     KnockbackPower:
-      _value: 1
+      _value: 1.5
     Recoil:
       MinX: 2.5
       MaxX: 5

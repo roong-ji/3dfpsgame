@@ -22,7 +22,7 @@ public class UI_Bullet : MonoBehaviour
 
     public void Initialize(GunMagazine magazine)
     {
-        if(_currentBullet != null)
+        if (_currentBullet != null)
         {
             _currentBullet.RemoveListener(UpdateBulletCountUI);
         }
@@ -30,9 +30,11 @@ public class UI_Bullet : MonoBehaviour
         _currentBullet.AddListener(UpdateBulletCountUI);
     }
 
-    private void UpdateBulletCountUI(int bulletCount)
+    private void UpdateBulletCountUI(int _)
     {
         int maxBulletCount = PlayerStats.Instance.TotalBulletCount.Count;
+        int bulletCount = _currentBullet.Count;
+
         _bulletCountTexTUI.text = $"{bulletCount}/{maxBulletCount}";
     }
 }

@@ -1,6 +1,6 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
+[RequireComponent(typeof(GunFire), typeof(GunReload))]
 public class GunFire : MonoBehaviour
 {
     private ParticleSystem _hitEffect;

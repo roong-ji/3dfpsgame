@@ -7,6 +7,7 @@ public class NorseGun : MonoBehaviour
 
     public GunMagazine Magazine => _magazine;
 
+    private GameObject _owner;
     private GunFire _fire;
     private GunReload _reload;
 
@@ -16,9 +17,10 @@ public class NorseGun : MonoBehaviour
         _reload = GetComponent<GunReload>();
     }
 
-    public void Initialize()
+    public void Initialize(GameObject owner)
     {
-        _reload.Initialize(_magazine, _stats);
+        _owner = owner;
+        _reload.Initialize(_magazine, _stats, _owner);
         _fire.Initialize(_stats);
     }
 

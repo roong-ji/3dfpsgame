@@ -41,7 +41,7 @@ public class PlayerGunController : MonoBehaviour
     private void Equip(NorseGun gun)
     {
         _gun = gun;
-        _gun.Initialize();
+        _gun.Initialize(gameObject);
         _onGunEquipped?.Invoke(gun.Magazine);
     }
 

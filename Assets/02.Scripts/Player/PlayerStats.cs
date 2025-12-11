@@ -14,8 +14,6 @@ public class PlayerStats : Singleton<PlayerStats>
     public ValueStat JumpPower;
     public ValueStat FireRate;
 
-    public NorseGun Gun;
-
     private void Start()
     {
         Health.Initialize();

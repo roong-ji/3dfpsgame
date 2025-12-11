@@ -27,11 +27,13 @@ public class PlayerGunController : MonoBehaviour
 
     private void GunFire()
     {
+        if (_onGunEquipped == null) return;
         _gun.TryFire();
     }
 
     private void GunReload()
     {
+        if (_onGunEquipped == null || PlayerStats.Instance.TotalBulletCount.IsEmpty) return;
         _gun.TryReload();
     }
 

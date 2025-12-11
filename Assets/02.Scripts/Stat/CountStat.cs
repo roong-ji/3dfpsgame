@@ -18,6 +18,8 @@ public class CountStat
         }
     }
 
+    public bool IsEmpty => _count == 0;
+
     public void Initialize()
     {
         Count = _count;

@@ -6,7 +6,6 @@ public class PlayerStats : Singleton<PlayerStats>
     public ConsumableStat Stamina;
 
     public CountStat BombCount;
-    public CountStat BulletCount;
     public CountStat TotalBulletCount;
 
     public ValueStat Damage;
@@ -22,7 +21,6 @@ public class PlayerStats : Singleton<PlayerStats>
         Health.Initialize();
         Stamina.Initialize();
         BombCount.Initialize();
-        BulletCount.Initialize();
     }
 
     private void Update()

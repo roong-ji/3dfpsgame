@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class GunReload : MonoBehaviour
 {
-    private const int Capacity = 30;
-    private const float ReloadTime = 1.6f;
+    private GunMagazine _magazine;
+    private float _reloadTime;
 
     private bool _isReloading = false;
 
     private static event Action<float> _onReloadProgress;
+
+    public void Initialize(GunMagazine magazine, float reloadTime)
+    {
+        _magazine = magazine;
+        _reloadTime = reloadTime;
+    }
 
     public void TryReload()
     {
@@ -20,15 +26,12 @@ public class GunReload : MonoBehaviour
     private void Reload()
     {
         int totalBullet = PlayerStats.Instance.TotalBulletCount.Count;
-        int currentBullet = PlayerStats.Instance.BulletCount.Count;
-
-        int needToFill = Capacity - currentBullet;
-        int bulletToFill = Mathf.Min(needToFill, totalBullet);
+        int bulletToFill = Mathf.Min(_magazine.NeedToFill, totalBullet);
 
         if (bulletToFill <= 0) return;
 
         PlayerStats.Instance.TotalBulletCount.TryConsume(bulletToFill);
-        PlayerStats.Instance.BulletCount.Increase(bulletToFill);
+        _magazine.BulletCount.Increase(bulletToFill);
     }
 
     private IEnumerator ReloadRoutine()
@@ -38,10 +41,10 @@ public class GunReload : MonoBehaviour
 
         float timer = 0;
 
-        while (timer < ReloadTime)
+        while (timer < _reloadTime)
         {
             timer += Time.deltaTime;
-            _onReloadProgress?.Invoke(timer / ReloadTime);
+            _onReloadProgress?.Invoke(timer / _reloadTime);
             yield return null;
         }
 

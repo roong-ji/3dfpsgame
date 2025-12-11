@@ -1340,6 +1340,7 @@ GameObject:
   - component: {fileID: 779130563}
   - component: {fileID: 779130565}
   - component: {fileID: 779130564}
+  - component: {fileID: 779130566}
   m_Layer: 5
   m_Name: BulletUI
   m_TagString: Untagged
@@ -1405,6 +1406,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779130562}
   m_CullTransparentMesh: 1
+--- !u!114 &779130566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779130562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604f25dc18fd90744909cc6654debd37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletCountTexTUI: {fileID: 674856452}
 --- !u!1 &810269562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1760,6 @@ MonoBehaviour:
   _hpSliderUI: {fileID: 389310340}
   _staminaSliderUI: {fileID: 1631512728}
   _bombCountTexTUI: {fileID: 1004254652}
-  _bulletCountTexTUI: {fileID: 674856452}
 --- !u!1 &1255459216
 GameObject:
   m_ObjectHideFlags: 0
@@ -2771,8 +2784,6 @@ MonoBehaviour:
     _regenerationRate: 10
   BombCount:
     _count: 5
-  BulletCount:
-    _count: 30
   TotalBulletCount:
     _count: 120
   Damage:
@@ -2814,8 +2825,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gun: {fileID: 1947230761}
-  _gunFire: {fileID: 1947230763}
-  _gunReload: {fileID: 1947230764}
 --- !u!1 &1830549035
 GameObject:
   m_ObjectHideFlags: 0

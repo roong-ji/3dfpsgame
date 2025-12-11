@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -12,17 +13,21 @@ public class Monster : MonoBehaviour
     private float _damage = 10f;
 
     private float _attackDistance = 2f;
-    private float _detectDistance = 10f;
-    private float _moveSpeed = 5f;
+    private float _detectDistance = 5f;
+    private float _patrolDistance = 5f;
+    private float _moveSpeed = 3f;
+    private Vector3 _patrolPoint = Vector3.zero;
+
+    private const float Epsilon = 0.1f;
 
     private float _nextAttackTime = 0f;
     private float _attackSpeed = 2f;
 
-    private float _knockbackSpeed = -10f;
+    private float _knockbackSpeed = -2f;
     private float _hitStunTime = 0.2f;
     private float _deathDelayTime = 2f;
-    private Vector3 _deathRotation = new Vector3(90f, 0, 0);
     private float _deathYPosition = 0.5f;
+    private Vector3 _deathRotation = new Vector3(90f, 0, 0);
 
     private Vector3 _originPosition;
     private float _distance;
@@ -47,6 +52,9 @@ public class Monster : MonoBehaviour
             case EMonsterState.Idle:
                 Idle();
                 break;
+            case EMonsterState.Patrol:
+                Patrol();
+                break;
             case EMonsterState.Trace:
                 Trace();
                 break;
@@ -65,6 +73,33 @@ public class Monster : MonoBehaviour
 
         if (_distance <= _detectDistance)
         {
+            _state = EMonsterState.Trace;
+            Debug.Log("플레이어 추적");
+        }
+
+        else
+        {
+            _state = EMonsterState.Patrol;
+            Debug.Log("순찰 시작");
+        }
+    }
+
+    private void Patrol()
+    {
+        if(_patrolPoint == Vector3.zero || (_patrolPoint - transform.position).sqrMagnitude <= Epsilon)
+        {
+            Debug.Log("다음 순찰 지점");
+            _patrolPoint = Random.insideUnitSphere * _patrolDistance;
+            _patrolPoint.y = _originPosition.y;
+        }
+
+        Vector3 direction = (_patrolPoint - transform.position).normalized;
+
+        _controller.Move(direction * _moveSpeed * Time.deltaTime);
+
+        if (_distance <= _detectDistance)
+        {
+            _patrolPoint = Vector3.zero;
             _state = EMonsterState.Trace;
             Debug.Log("플레이어 추적");
         }
@@ -95,7 +130,7 @@ public class Monster : MonoBehaviour
         Vector3 direction = (_originPosition - transform.position).normalized;
         _controller.Move(direction * _moveSpeed * Time.deltaTime);
 
-        if ((transform.position - _originPosition).sqrMagnitude < Mathf.Epsilon)
+        if ((transform.position - _originPosition).sqrMagnitude <= Epsilon)
         {
             _state = EMonsterState.Idle;
             Debug.Log("정지");
@@ -124,7 +159,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public bool TryTakeDamage(float damage, Vector3 hitDirection)
+    public bool TryTakeDamage(float damage)
     {
         if (_state == EMonsterState.Hit || _state == EMonsterState.Die) return false;
         _health -= damage;
@@ -132,7 +167,7 @@ public class Monster : MonoBehaviour
         if( _health > 0 )
         {
             _state = EMonsterState.Hit;
-            StartCoroutine(HitRoutine(hitDirection));
+            StartCoroutine(HitRoutine());
         }
         else
         {
@@ -143,16 +178,20 @@ public class Monster : MonoBehaviour
         return true;
     }
 
-    private IEnumerator HitRoutine(Vector3 hitDirection)
+    private IEnumerator HitRoutine()
     {
         // Todo: Hit 애니메이션 실행
+
+        float currentSpeed = _knockbackSpeed;
+        Vector3 hitDirection = _player.transform.position - transform.position;
 
         float timer = 0f;
         while(timer < _hitStunTime)
         {
             timer += Time.deltaTime;
 
-            _controller.Move(hitDirection * _knockbackSpeed * Time.deltaTime);
+            _controller.Move(hitDirection * currentSpeed * Time.deltaTime);
+            currentSpeed = Mathf.Lerp(currentSpeed, 0f, timer / _hitStunTime);
 
             yield return null;
         }

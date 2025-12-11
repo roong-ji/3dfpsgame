@@ -9,9 +9,6 @@ public class GunReload : MonoBehaviour
 
     private bool _isReloading = false;
 
-    // Hack: 임시로 static 이용
-    private static event Action<float> _onReloadProgress;
-
     public void Initialize(GunMagazine magazine, float reloadTime)
     {
         _magazine = magazine;
@@ -38,29 +35,19 @@ public class GunReload : MonoBehaviour
     private IEnumerator ReloadRoutine()
     {
         _isReloading = true;
-        _onReloadProgress?.Invoke(0);
+        PlayerGunController.UpdateReloadProgress(0);
 
         float timer = 0;
 
         while (timer < _reloadTime)
         {
             timer += Time.deltaTime;
-            _onReloadProgress?.Invoke(timer / _reloadTime);
+            PlayerGunController.UpdateReloadProgress(timer / _reloadTime);
             yield return null;
         }
 
-        _onReloadProgress?.Invoke(1);
+        PlayerGunController.UpdateReloadProgress(1);
         Reload();
         _isReloading = false;
-    }
-
-    public static void AddListener(Action<float> listener)
-    {
-        _onReloadProgress += listener;
-    }
-
-    public static void RemoveListener(Action<float> listener)
-    {
-        _onReloadProgress -= listener;
     }
 }

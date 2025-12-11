@@ -23,7 +23,7 @@ public class Monster : MonoBehaviour
     private float _nextAttackTime = 0f;
     private float _attackSpeed = 2f;
 
-    private float _knockbackSpeed = -2f;
+    private float _knockbackSpeed = 2f;
     private float _hitStunTime = 0.2f;
     private float _deathDelayTime = 2f;
     private float _deathYPosition = 0.5f;
@@ -89,7 +89,7 @@ public class Monster : MonoBehaviour
         if(_patrolPoint == Vector3.zero || (_patrolPoint - transform.position).sqrMagnitude <= Epsilon)
         {
             Debug.Log("다음 순찰 지점");
-            _patrolPoint = Random.insideUnitSphere * _patrolDistance;
+            _patrolPoint = _originPosition + Random.insideUnitSphere * _patrolDistance;
             _patrolPoint.y = _originPosition.y;
         }
 
@@ -183,7 +183,7 @@ public class Monster : MonoBehaviour
         // Todo: Hit 애니메이션 실행
 
         float currentSpeed = _knockbackSpeed;
-        Vector3 hitDirection = _player.transform.position - transform.position;
+        Vector3 hitDirection = transform.position - _player.transform.position;
 
         float timer = 0f;
         while(timer < _hitStunTime)

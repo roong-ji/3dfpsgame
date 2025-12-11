@@ -7,6 +7,7 @@ public class PlayerGunController : MonoBehaviour
     [SerializeField] private NorseGun _gun;
 
     private static event Action<GunMagazine> _onGunEquipped;
+    private static event Action<float> _onReloadProgress;
 
     private void Start()
     {
@@ -51,5 +52,20 @@ public class PlayerGunController : MonoBehaviour
     public static void RemoveListener(Action<GunMagazine> listener)
     {
         _onGunEquipped -= listener;
+    }
+
+    public static void AddListener(Action<float> listener)
+    {
+        _onReloadProgress += listener;
+    }
+
+    public static void RemoveListener(Action<float> listener)
+    {
+        _onReloadProgress -= listener;
+    }
+
+    public static void UpdateReloadProgress(float rate)
+    {
+        _onReloadProgress?.Invoke(rate);
     }
 }

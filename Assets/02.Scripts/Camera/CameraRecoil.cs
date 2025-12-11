@@ -3,39 +3,38 @@ using UnityEngine;
 
 public class CameraRecoil : MonoBehaviour
 {
-    private float _recoilMinX = 2.5f;
-    private float _recoilMaxX = 5f;
-    private float _recoilY = 0.5f;
-
-    private float _startReturnDuration = 0.2f;
-    private float _currentReturnDuration = 0.2f;
-    private float _durationIncrement = 0.1f;
-    private float _maxReturnDuration = 1f;
+    private RecoilData _recoil;
 
     private Vector3 _recoilOffset;
+
     public Vector3 RecoilOffset => _recoilOffset;
 
     private Tweener _recoilTweener;
     private Ease _returnEase = Ease.OutQuad;
 
+    public void Initialize(RecoilData recoil)
+    {
+        _recoil = recoil;
+    }
+
     public void CameraRecoilByFire()
     {
-        float x = Random.Range(-_recoilMinX, -_recoilMaxX);
-        float y = Random.Range(-_recoilY, _recoilY);
+        float x = Random.Range(-_recoil.MaxX, -_recoil.MinX);
+        float y = Random.Range(-_recoil.Y, _recoil.Y);
 
         _recoilOffset += new Vector3(x, y, 0);
 
-        _currentReturnDuration += _durationIncrement;
-        _currentReturnDuration = Mathf.Min(_currentReturnDuration, _maxReturnDuration);
+        _recoil.Duration += _recoil.DurationIncrement;
+         _recoil.Duration = Mathf.Min(_recoil.Duration, _recoil.MaxDuration);
 
         _recoilTweener.Kill();
         _recoilTweener = DOTween.To(
             () => _recoilOffset,
             val => _recoilOffset = val,
             Vector3.zero,
-            _currentReturnDuration
+            _recoil.Duration
         )
         .SetEase(_returnEase)
-        .OnComplete(() => _currentReturnDuration = _startReturnDuration);
+        .OnComplete(() => _recoil.Duration = _recoil.StartDuration);
     }
 }

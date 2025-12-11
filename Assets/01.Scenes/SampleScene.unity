@@ -2796,7 +2796,7 @@ MonoBehaviour:
     _value: 5
   FireRate:
     _value: 10
-  Gun: {fileID: 0}
+  Gun: {fileID: 1947230761}
 --- !u!114 &1829563389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3099,8 +3099,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54603811bb86afc4aab2365d555f4fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1829563379}
-  _controller: {fileID: 1880991860}
 --- !u!143 &1880991860
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3342,12 +3340,16 @@ MonoBehaviour:
       _value: 10
     ReloadTime:
       _value: 1.6
-    RecoilX:
-      _value: 5
-    RecoilY:
-      _value: 0.5
-    RecoilPower:
+    KnockbackPower:
       _value: 1
+    Recoil:
+      MinX: 2.5
+      MaxX: 5
+      Y: 0.5
+      StartDuration: 0.2
+      Duration: 0.2
+      DurationIncrement: 0.1
+      MaxDuration: 1
   _magazine:
     BulletCount:
       _count: 30

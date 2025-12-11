@@ -14,7 +14,12 @@ public class NorseGun : MonoBehaviour
     {
         _fire = GetComponent<GunFire>();
         _reload = GetComponent<GunReload>();
-        _reload.Initialize(_magazine, _stats.ReloadTime.Value);
+    }
+
+    public void Initialize()
+    {
+        _reload.Initialize(_magazine, _stats);
+        _fire.Initialize(_stats);
     }
 
     public void TryFire()

@@ -28,19 +28,20 @@ public class PlayerGunController : MonoBehaviour
 
     private void GunFire()
     {
-        if (_onGunEquipped == null) return;
+        if (_gun == null) return;
         _gun.TryFire();
     }
 
     private void GunReload()
     {
-        if (_onGunEquipped == null || PlayerStats.Instance.TotalBulletCount.IsEmpty) return;
+        if (_gun == null || PlayerStats.Instance.TotalBulletCount.IsEmpty) return;
         _gun.TryReload();
     }
 
     private void Equip(NorseGun gun)
     {
         _gun = gun;
+        _gun.Initialize();
         _onGunEquipped?.Invoke(gun.Magazine);
     }
 

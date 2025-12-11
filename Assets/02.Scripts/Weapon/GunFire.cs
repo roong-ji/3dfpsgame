@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class GunFire : MonoBehaviour
@@ -8,6 +9,9 @@ public class GunFire : MonoBehaviour
     private Transform _fireTransform;
     private CameraRecoil _cameraRecoil;
 
+    private Damage _damage;
+    private float _fireRate;
+
     public bool IsReady => Time.time >= _nextFireTime;
 
     private void Awake()
@@ -15,6 +19,15 @@ public class GunFire : MonoBehaviour
         _fireTransform = Camera.main.transform;
         _cameraRecoil = Camera.main.GetComponent<CameraRecoil>();
         _hitEffect = EffectManager.Instance.BulletHitEffect;
+    }
+
+    public void Initialize(GunStats stats)
+    {
+        _damage.Amount = stats.Damage.Value;
+        _damage.KnockbackPower = stats.KnockbackPower.Value;
+        _damage.Attacker = gameObject;
+        _fireRate = stats.FireRate.Value;
+        _cameraRecoil.Initialize(stats.Recoil);
     }
 
     public void Fire()
@@ -39,11 +52,12 @@ public class GunFire : MonoBehaviour
 
             if (hitInfo.collider.TryGetComponent<Monster>(out Monster monster))
             {
-                // Todo : 총 스탯에서 가져오기
-                monster.TryTakeDamage(10);
+                _damage.HitPoint = hitInfo.point;
+                _damage.AttackerPoint = transform.position;
+                monster.TryTakeDamage(_damage);
             }
         }
         // Todo: 총 스탯에서 가져오기
-        _nextFireTime = Time.time + (1f / PlayerStats.Instance.FireRate.Value);
+        _nextFireTime = Time.time + (1f / _fireRate);
     }
 }

@@ -9,10 +9,10 @@ public class GunReload : MonoBehaviour
 
     private bool _isReloading = false;
 
-    public void Initialize(GunMagazine magazine, float reloadTime)
+    public void Initialize(GunMagazine magazine, GunStats stats)
     {
         _magazine = magazine;
-        _reloadTime = reloadTime;
+        _reloadTime = stats.ReloadTime.Value;
     }
 
     public void TryReload()

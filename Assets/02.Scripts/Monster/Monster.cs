@@ -23,7 +23,6 @@ public class Monster : MonoBehaviour
     private float _nextAttackTime = 0f;
     private float _attackSpeed = 2f;
 
-    private float _knockbackSpeed = 2f;
     private float _hitStunTime = 0.2f;
     private float _deathDelayTime = 2f;
     private float _deathYPosition = 0.5f;
@@ -159,15 +158,15 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public bool TryTakeDamage(float damage)
+    public bool TryTakeDamage(Damage damage)
     {
         if (_state == EMonsterState.Hit || _state == EMonsterState.Die) return false;
-        _health -= damage;
+        _health -= damage.Amount;
 
         if( _health > 0 )
         {
             _state = EMonsterState.Hit;
-            StartCoroutine(HitRoutine());
+            StartCoroutine(HitRoutine(damage));
         }
         else
         {
@@ -178,12 +177,12 @@ public class Monster : MonoBehaviour
         return true;
     }
 
-    private IEnumerator HitRoutine()
+    private IEnumerator HitRoutine(Damage damage)
     {
         // Todo: Hit 애니메이션 실행
 
-        float currentSpeed = _knockbackSpeed;
-        Vector3 hitDirection = transform.position - _player.transform.position;
+        float currentSpeed = damage.KnockbackPower;
+        Vector3 hitDirection = transform.position - damage.AttackerPoint;
 
         float timer = 0f;
         while(timer < _hitStunTime)

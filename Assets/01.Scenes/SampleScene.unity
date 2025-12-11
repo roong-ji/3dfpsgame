@@ -2777,7 +2777,7 @@ MonoBehaviour:
   Health:
     _maxValue: 100
     _value: 0
-    _regenerationRate: 10
+    _regenerationRate: 1
   Stamina:
     _maxValue: 100
     _value: 0

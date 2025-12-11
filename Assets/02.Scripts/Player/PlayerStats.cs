@@ -30,4 +30,14 @@ public class PlayerStats : Singleton<PlayerStats>
         Health.Regenerate(deltaTime);
         Stamina.Regenerate(deltaTime);
     }
+
+    public void TakeDamage(float damage)
+    {
+        Health.Decrease(damage);
+
+        if(Health.Value <= 0)
+        {
+            // Todo: 사망 로직 작성
+        }
+    }
 }

@@ -5,25 +5,32 @@ public class Monster : MonoBehaviour
 {
     private EMonsterState _state = EMonsterState.Idle;
 
-    [SerializeField] private GameObject _player;
-    [SerializeField] private CharacterController _controller;
+    private GameObject _player;
+    private CharacterController _controller;
 
     private float _health = 100f;
+    private float _damage = 10f;
 
     private float _attackDistance = 2f;
     private float _detectDistance = 10f;
     private float _moveSpeed = 5f;
 
-    private float _attackTimer = 2f;
+    private float _nextAttackTime = 0f;
     private float _attackSpeed = 2f;
 
-    private const float _hitStun = 0.2f;
-    private const float _deathDelay = 2f;
+    private const float HitStunTime = 0.2f;
+    private const float DeathDelayTime = 2f;
 
-    private WaitForSeconds _hitWait = new WaitForSeconds(_hitStun);
-    private WaitForSeconds _deathWait = new WaitForSeconds(_deathDelay);
+    private WaitForSeconds _hitWait = new WaitForSeconds(HitStunTime);
+    private WaitForSeconds _deathWait = new WaitForSeconds(DeathDelayTime);
 
     private float _distance;
+
+    private void Start()
+    {
+        _player = PlayerStats.Instance.gameObject;
+        _controller = GetComponent<CharacterController>();
+    }
 
     private void Update()
     {
@@ -88,18 +95,18 @@ public class Monster : MonoBehaviour
 
     private void Attack()
     {
-        // Todo: Attack 애니메이션 실행
-
-        _attackTimer += Time.deltaTime;
-        if (_attackTimer >= _attackSpeed)
+        if (Time.time >= _nextAttackTime)
         {
-            _attackTimer = 0;
-            Debug.Log("공격함");
+            // Todo: Attack 애니메이션 실행
+            _nextAttackTime = Time.time + _attackSpeed;
+            PlayerStats.Instance.TakeDamage(_damage);
         }
 
-        if (_distance < _attackDistance) return;
-        _state = EMonsterState.Trace;
-        Debug.Log("플레이어 추적");
+        if (_distance > _attackDistance)
+        {
+            _state = EMonsterState.Trace;
+            Debug.Log("플레이어 추적");
+        }
     }
 
     public bool TryTakeDamage(float damage)

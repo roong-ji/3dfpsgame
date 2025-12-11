@@ -32,8 +32,6 @@ public class GunFire : MonoBehaviour
         if (isHit)
         {
             // 4. 충돌했다면 피격 이펙트를 표시한다.
-            Debug.Log(hitInfo.transform.name);
-
             _hitEffect.transform.position = hitInfo.point;
             _hitEffect.transform.forward = hitInfo.normal;
 

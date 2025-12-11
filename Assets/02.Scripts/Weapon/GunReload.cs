@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerReload : MonoBehaviour
+public class GunReload : MonoBehaviour
 {
     private const int Capacity = 30;
     private const float ReloadTime = 1.6f;
@@ -11,19 +11,19 @@ public class PlayerReload : MonoBehaviour
 
     private static event Action<float> _onReloadProgress;
 
-    private void Update()
+    public void TryReload()
     {
-        if (!Input.GetKeyDown(KeyCode.R) || _isReloading) return;
+        if (_isReloading) return;
         StartCoroutine(ReloadRoutine());
     }
 
     private void Reload()
     {
-        int totalBulelt = PlayerStats.Instance.TotalBulletCount.Count;
+        int totalBullet = PlayerStats.Instance.TotalBulletCount.Count;
         int currentBullet = PlayerStats.Instance.BulletCount.Count;
 
         int needToFill = Capacity - currentBullet;
-        int bulletToFill = Mathf.Min(needToFill, totalBulelt);
+        int bulletToFill = Mathf.Min(needToFill, totalBullet);
 
         if (bulletToFill <= 0) return;
 

@@ -8,13 +8,13 @@ public class UI_Reload : MonoBehaviour
     private void Awake()
     {
         _reloadUI = GetComponent<Slider>();
-        PlayerReload.AddListener(UpdateReloadUI);
+        GunReload.AddListener(UpdateReloadUI);
         gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        PlayerReload.RemoveListener(UpdateReloadUI);
+        GunReload.RemoveListener(UpdateReloadUI);
     }
 
     private void UpdateReloadUI(float reloadRate)

@@ -38,8 +38,14 @@ public class GunFire : MonoBehaviour
             _hitEffect.transform.forward = hitInfo.normal;
 
             _hitEffect.Play();
-        }
 
+            if (hitInfo.collider.TryGetComponent<Monster>(out Monster monster))
+            {
+                // Todo : 총 스탯에서 가져오기
+                monster.TryTakeDamage(10);
+            }
+        }
+        // Todo: 총 스탯에서 가져오기
         _nextFireTime = Time.time + (1f / PlayerStats.Instance.FireRate.Value);
     }
 }

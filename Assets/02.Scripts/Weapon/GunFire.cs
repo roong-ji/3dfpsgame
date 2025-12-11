@@ -40,7 +40,7 @@ public class GunFire : MonoBehaviour
             if (hitInfo.collider.TryGetComponent<Monster>(out Monster monster))
             {
                 // Todo : 총 스탯에서 가져오기
-                monster.TryTakeDamage(10);
+                monster.TryTakeDamage(10, hitInfo.normal);
             }
         }
         // Todo: 총 스탯에서 가져오기

@@ -3,16 +3,18 @@ using UnityEngine;
 public class Bomb : MonoBehaviour, IPoolable
 {
     private GameObject _prefab;
-    [SerializeField] private GameObject _explosionEffectPrefab;
+    private ParticleSystem _explosionEffect;
 
     public void Initialize(GameObject prefab)
     {
         _prefab = prefab;
+        _explosionEffect = EffectManager.Instance.BombExplosionEffect;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        PoolManager.Instance.Spawn(_explosionEffectPrefab, transform.position);
+        _explosionEffect.transform.position = transform.position;
+        _explosionEffect.Play(); 
         Release();
     }
 

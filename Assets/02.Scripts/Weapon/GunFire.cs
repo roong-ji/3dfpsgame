@@ -5,14 +5,14 @@ public class GunFire : MonoBehaviour
     private ParticleSystem _hitEffect;
     private float _nextFireTime = 0f;
 
-    private Transform _mainCameraTransform;
+    private Transform _fireTransform;
     private CameraRecoil _cameraRecoil;
 
     public bool IsReady => Time.time >= _nextFireTime;
 
     private void Awake()
     {
-        _mainCameraTransform = Camera.main.transform;
+        _fireTransform = Camera.main.transform;
         _cameraRecoil = Camera.main.GetComponent<CameraRecoil>();
         _hitEffect = EffectManager.Instance.BulletHitEffect;
     }
@@ -22,7 +22,7 @@ public class GunFire : MonoBehaviour
         _cameraRecoil.CameraRecoilByFire();
 
         // 1. Ray를 생성하고 발사할 위치, 방향, 거리를 설정한다.
-        Ray ray = new Ray(origin: transform.position, direction: _mainCameraTransform.forward);
+        Ray ray = new Ray(origin: _fireTransform.position, direction: _fireTransform.forward);
 
         // 2. 충돌할 대상의 정보를 저장할 변수를 생성한다.
         RaycastHit hitInfo = new RaycastHit();

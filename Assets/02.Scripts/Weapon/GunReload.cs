@@ -9,6 +9,7 @@ public class GunReload : MonoBehaviour
 
     private bool _isReloading = false;
 
+    // Hack: 임시로 static 이용
     private static event Action<float> _onReloadProgress;
 
     public void Initialize(GunMagazine magazine, float reloadTime)

@@ -4,6 +4,7 @@ public class NorseGun : MonoBehaviour
 {
     [SerializeField] private GunStats _stats;
     [SerializeField] private GunMagazine _magazine;
+
     public GunMagazine Magazine => _magazine;
 
     private GunFire _fire;

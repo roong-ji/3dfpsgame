@@ -61,6 +61,11 @@ public class Monster : MonoBehaviour, IDamagable
 
     public void ChangeState(EMonsterState nextState)
     {
+        if(_state != null)
+        {
+            _state.OnStateExit();
+        }
+
         _state = _states[nextState];
         _state.OnStateEnter();
     }

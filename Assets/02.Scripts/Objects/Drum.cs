@@ -16,6 +16,7 @@ public class Drum : MonoBehaviour, IDamagable
 
     [Header("폭발 범위")]
     [SerializeField] private float _explosionDistance = 10f;
+    [SerializeField] LayerMask _targetLayer;
 
     private void Start()
     {
@@ -42,7 +43,8 @@ public class Drum : MonoBehaviour, IDamagable
     {
         Collider[] targets = Physics.OverlapSphere(
             transform.position,
-            _explosionDistance
+            _explosionDistance,
+            _targetLayer
         );
 
         foreach (Collider target in targets)

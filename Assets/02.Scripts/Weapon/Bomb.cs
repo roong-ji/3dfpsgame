@@ -11,6 +11,7 @@ public class Bomb : MonoBehaviour, IPoolable
 
     // Todo : SO 방식 도입
     [SerializeField] private float _damageAmount;
+    [SerializeField] private float _knockbackPower;
 
     [Header("폭발 범위")]
     [SerializeField] private float _explosionDistance;
@@ -21,6 +22,7 @@ public class Bomb : MonoBehaviour, IPoolable
         _explosionEffect = EffectManager.Instance.BombExplosionEffect;
         _rigidbody = GetComponent<Rigidbody>();
         _damage.Amount = _damageAmount;
+        _damage.KnockbackPower = _knockbackPower;
     }
 
     public void SetAttacker(GameObject attacker)
@@ -30,6 +32,7 @@ public class Bomb : MonoBehaviour, IPoolable
 
     public void Throw(Vector3 throwForce)
     {
+        _damage.AttackerPoint = transform.position;
         _rigidbody.AddForce(throwForce, ForceMode.Impulse);
     }
 
@@ -40,7 +43,7 @@ public class Bomb : MonoBehaviour, IPoolable
 
     private void Explosion()
     {
-        _damage.AttackerPoint = transform.position;
+        _damage.HitPoint = transform.position;
 
         Collider[] targets = Physics.OverlapSphere(
             transform.position,

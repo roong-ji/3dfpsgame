@@ -150,5 +150,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageAmount: 50
-  _knockbackPower: 3
+  _knockbackPower: 7
   _explosionDistance: 1

@@ -20,19 +20,21 @@ public class UI_Bullet : MonoBehaviour
         _currentBullet.RemoveListener(UpdateBulletCountUI);
     }
 
-    public void Initialize(GunMagazine magazine)
+    public void Initialize(NorseGun gun)
     {
-        if(_currentBullet != null)
+        if (_currentBullet != null)
         {
             _currentBullet.RemoveListener(UpdateBulletCountUI);
         }
-        _currentBullet = magazine.BulletCount;
+        _currentBullet = gun.Magazine.BulletCount;
         _currentBullet.AddListener(UpdateBulletCountUI);
     }
 
-    private void UpdateBulletCountUI(int bulletCount)
+    private void UpdateBulletCountUI(int _)
     {
         int maxBulletCount = PlayerStats.Instance.TotalBulletCount.Count;
+        int bulletCount = _currentBullet.Count;
+
         _bulletCountTexTUI.text = $"{bulletCount}/{maxBulletCount}";
     }
 }

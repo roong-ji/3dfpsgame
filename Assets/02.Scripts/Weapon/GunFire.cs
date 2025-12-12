@@ -8,6 +8,9 @@ public class GunFire : MonoBehaviour
     private Transform _fireTransform;
     private CameraRecoil _cameraRecoil;
 
+    private Damage _damage;
+    private float _fireRate;
+
     public bool IsReady => Time.time >= _nextFireTime;
 
     private void Awake()
@@ -15,6 +18,15 @@ public class GunFire : MonoBehaviour
         _fireTransform = Camera.main.transform;
         _cameraRecoil = Camera.main.GetComponent<CameraRecoil>();
         _hitEffect = EffectManager.Instance.BulletHitEffect;
+    }
+
+    public void Initialize(GunStats stats, GameObject onwer)
+    {
+        _damage.Amount = stats.Damage.Value;
+        _damage.KnockbackPower = stats.KnockbackPower.Value;
+        _damage.Attacker = onwer;
+        _fireRate = stats.FireRate.Value;
+        _cameraRecoil.Initialize(stats.Recoil);
     }
 
     public void Fire()
@@ -32,14 +44,19 @@ public class GunFire : MonoBehaviour
         if (isHit)
         {
             // 4. 충돌했다면 피격 이펙트를 표시한다.
-            Debug.Log(hitInfo.transform.name);
-
             _hitEffect.transform.position = hitInfo.point;
             _hitEffect.transform.forward = hitInfo.normal;
 
             _hitEffect.Play();
+
+            if (hitInfo.collider.TryGetComponent<Monster>(out Monster monster))
+            {
+                _damage.HitPoint = hitInfo.point;
+                _damage.AttackerPoint = transform.position;
+                monster.TryTakeDamage(_damage);
+            }
         }
 
-        _nextFireTime = Time.time + (1f / PlayerStats.Instance.FireRate.Value);
+        _nextFireTime = Time.time + (1f / _fireRate);
     }
 }

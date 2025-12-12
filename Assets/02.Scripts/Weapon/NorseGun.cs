@@ -1,11 +1,20 @@
+using System;
 using UnityEngine;
 
+[RequireComponent(typeof(GunFire), typeof(GunReload))]
 public class NorseGun : MonoBehaviour
 {
     [SerializeField] private GunStats _stats;
     [SerializeField] private GunMagazine _magazine;
-    public GunMagazine Magazine => _magazine;
 
+    public GunMagazine Magazine => _magazine;
+    public event Action<float> OnReloadProgress
+    {
+        add { _reload.AddListener(value); }
+        remove { _reload.RemoveListener(value); }
+    }
+
+    private GameObject _owner;
     private GunFire _fire;
     private GunReload _reload;
 
@@ -13,9 +22,15 @@ public class NorseGun : MonoBehaviour
     {
         _fire = GetComponent<GunFire>();
         _reload = GetComponent<GunReload>();
-        _reload.Initialize(_magazine, _stats.ReloadTime.Value);
     }
 
+    public void Initialize(GameObject owner)
+    {
+        _owner = owner;
+        _reload.Initialize(_magazine, _stats, _owner);
+        _fire.Initialize(_stats, _owner);
+    }
+    
     public void TryFire()
     {
         if(!_fire.IsReady || !_magazine.BulletCount.TryConsume(1)) return;

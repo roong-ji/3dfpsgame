@@ -5,16 +5,27 @@ public class UI_Reload : MonoBehaviour
 {
     private Slider _reloadUI;
 
+    private NorseGun _currentGun;
+
     private void Awake()
     {
         _reloadUI = GetComponent<Slider>();
-        GunReload.AddListener(UpdateReloadUI);
+        PlayerGunController.AddListener(Initialize);
         gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        GunReload.RemoveListener(UpdateReloadUI);
+        PlayerGunController.RemoveListener(Initialize);
+    }
+    public void Initialize(NorseGun gun)
+    {
+        if (_currentGun != null)
+        {
+            _currentGun.OnReloadProgress -= UpdateReloadUI;
+        }
+        _currentGun = gun;
+        _currentGun.OnReloadProgress += UpdateReloadUI;
     }
 
     private void UpdateReloadUI(float reloadRate)

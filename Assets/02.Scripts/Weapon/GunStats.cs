@@ -4,8 +4,7 @@ public class GunStats
     public ValueStat Damage;
     public ValueStat FireRate;
     public ValueStat ReloadTime;
+    public ValueStat KnockbackPower;
 
-    public ValueStat RecoilX;
-    public ValueStat RecoilY;
-    public ValueStat RecoilPower;
+    public RecoilData Recoil;
 }

@@ -7,14 +7,17 @@ public class GunReload : MonoBehaviour
     private GunMagazine _magazine;
     private float _reloadTime;
 
+    private CountStat _ownerMagazine;
+
     private bool _isReloading = false;
 
-    private static event Action<float> _onReloadProgress;
+    private event Action<float> _onReloadProgress;
 
-    public void Initialize(GunMagazine magazine, float reloadTime)
+    public void Initialize(GunMagazine magazine, GunStats stats, GameObject onwer)
     {
         _magazine = magazine;
-        _reloadTime = reloadTime;
+        _reloadTime = stats.ReloadTime.Value;
+        _ownerMagazine = onwer.GetComponent<PlayerStats>().TotalBulletCount;
     }
 
     public void TryReload()
@@ -25,12 +28,12 @@ public class GunReload : MonoBehaviour
 
     private void Reload()
     {
-        int totalBullet = PlayerStats.Instance.TotalBulletCount.Count;
+        int totalBullet = _ownerMagazine.Count;
         int bulletToFill = Mathf.Min(_magazine.NeedToFill, totalBullet);
 
         if (bulletToFill <= 0) return;
 
-        PlayerStats.Instance.TotalBulletCount.TryConsume(bulletToFill);
+        _ownerMagazine.TryConsume(bulletToFill);
         _magazine.BulletCount.Increase(bulletToFill);
     }
 
@@ -53,12 +56,12 @@ public class GunReload : MonoBehaviour
         _isReloading = false;
     }
 
-    public static void AddListener(Action<float> listener)
+    public void AddListener(Action<float> listener)
     {
         _onReloadProgress += listener;
     }
 
-    public static void RemoveListener(Action<float> listener)
+    public void RemoveListener(Action<float> listener)
     {
         _onReloadProgress -= listener;
     }

@@ -6,7 +6,7 @@ public class PlayerGunController : MonoBehaviour
     [Header("현재 장착 중인 총기")]
     [SerializeField] private NorseGun _gun;
 
-    private static event Action<GunMagazine> _onGunEquipped;
+    private static event Action<NorseGun> _onGunEquipped;
 
     private void Start()
     {
@@ -27,28 +27,29 @@ public class PlayerGunController : MonoBehaviour
 
     private void GunFire()
     {
-        if (_onGunEquipped == null) return;
+        if (_gun == null) return;
         _gun.TryFire();
     }
 
     private void GunReload()
     {
-        if (_onGunEquipped == null || PlayerStats.Instance.TotalBulletCount.IsEmpty) return;
+        if (_gun == null || PlayerStats.Instance.TotalBulletCount.IsEmpty) return;
         _gun.TryReload();
     }
 
     private void Equip(NorseGun gun)
     {
         _gun = gun;
-        _onGunEquipped?.Invoke(gun.Magazine);
+        _gun.Initialize(gameObject);
+        _onGunEquipped?.Invoke(gun);
     }
 
-    public static void AddListener(Action<GunMagazine> listener)
+    public static void AddListener(Action<NorseGun> listener)
     {
         _onGunEquipped += listener;
     }
 
-    public static void RemoveListener(Action<GunMagazine> listener)
+    public static void RemoveListener(Action<NorseGun> listener)
     {
         _onGunEquipped -= listener;
     }

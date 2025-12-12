@@ -1,9 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    private EMonsterState _state = EMonsterState.Idle;
+    private Dictionary<EMonsterState, BaseState> _states = new();
+    private BaseState _state;
+    private EMonsterState _stateEnum;
 
     private GameObject _player;
     private CharacterController _controller;
@@ -14,12 +17,8 @@ public class Monster : MonoBehaviour
     private float _attackDistance = 2f;
     private float _detectDistance = 5f;
     private float _patrolDistance = 5f;
+
     private float _moveSpeed = 3f;
-    private Vector3 _patrolPoint = Vector3.zero;
-
-    private const float Epsilon = 0.1f;
-
-    private float _nextAttackTime = 0f;
     private float _attackSpeed = 2f;
 
     private float _hitStunTime = 0.2f;
@@ -27,149 +26,67 @@ public class Monster : MonoBehaviour
     private float _deathYPosition = 0.5f;
     private Vector3 _deathRotation = new Vector3(90f, 0, 0);
 
-    private Vector3 _originPosition;
-    private float _distance;
+    public float Damage => _damage;
+    public float AttackDistance => _attackDistance;
+    public float DetectDistance => _detectDistance;
+    public float PatrolDistance => _patrolDistance;
+    public float NextAttackTime => Time.time + _attackSpeed;
+
+    private Damage _lastDamageInfo;
+    public Damage LastDamageInfo => _lastDamageInfo;
+
+    public float Distance => Vector3.Distance(transform.position, _player.transform.position);
+
+    public Vector3 DirectionToPlayer => (_player.transform.position - transform.position).normalized;
 
     private void Start()
     {
         _player = PlayerStats.Instance.gameObject;
         _controller = GetComponent<CharacterController>();
-        _originPosition = transform.position;
+
+        _states.Add(EMonsterState.Idle, new IdleState(this));
+        _states.Add(EMonsterState.Patrol, new PatrolState(this));
+        _states.Add(EMonsterState.Trace, new TraceState(this));
+        _states.Add(EMonsterState.Comeback, new ComebackState(this));
+        _states.Add(EMonsterState.Attack, new AttackState(this));
+        _states.Add(EMonsterState.Hit, new HitState(this));
+        _states.Add(EMonsterState.Die, new DieState(this));
+
+        _state = _states[EMonsterState.Idle];
     }
 
     private void Update()
     {
-        _distance = Vector3.Distance(transform.position, _player.transform.position);
-        ActionByState();
+        _state.OnStateUpdate();
     }
 
-    private void ActionByState()
+    public void ChangeState(EMonsterState nextState)
     {
-        switch (_state)
-        {
-            case EMonsterState.Idle:
-                Idle();
-                break;
-            case EMonsterState.Patrol:
-                Patrol();
-                break;
-            case EMonsterState.Trace:
-                Trace();
-                break;
-            case EMonsterState.Comeback:
-                Comeback();
-                break;
-            case EMonsterState.Attack:
-                Attack();
-                break;
-        }
+        _state.OnStateExit();
+        _state = _states[nextState];
+        _state.OnStateEnter();
     }
 
-    private void Idle()
+    public void Move(Vector3 direction)
     {
-        // Todo: Idle 애니메이션 실행
-
-        if (_distance <= _detectDistance)
-        {
-            _state = EMonsterState.Trace;
-            Debug.Log("플레이어 추적");
-        }
-
-        else
-        {
-            _state = EMonsterState.Patrol;
-            Debug.Log("순찰 시작");
-        }
-    }
-
-    private void Patrol()
-    {
-        if(_patrolPoint == Vector3.zero || (_patrolPoint - transform.position).sqrMagnitude <= Epsilon)
-        {
-            Debug.Log("다음 순찰 지점");
-            _patrolPoint = _originPosition + Random.insideUnitSphere * _patrolDistance;
-            _patrolPoint.y = _originPosition.y;
-        }
-
-        Vector3 direction = (_patrolPoint - transform.position).normalized;
-
         _controller.Move(direction * _moveSpeed * Time.deltaTime);
-
-        if (_distance <= _detectDistance)
-        {
-            _patrolPoint = Vector3.zero;
-            _state = EMonsterState.Trace;
-            Debug.Log("플레이어 추적");
-        }
-    }
-
-    private void Trace()
-    {
-        // Todo: Run 애니메이션 실행
-
-        Vector3 direction = (_player.transform.position - transform.position).normalized;
-        _controller.Move(direction * _moveSpeed * Time.deltaTime);
-
-        if(_distance > _detectDistance)
-        {
-            _state = EMonsterState.Comeback;
-            Debug.Log("돌아가기");
-        }
-
-        if (_distance <= _attackDistance)
-        {
-            _state = EMonsterState.Attack;
-            Debug.Log("플레이어 공격");
-        }
-    }
-
-    private void Comeback()
-    {
-        Vector3 direction = (_originPosition - transform.position).normalized;
-        _controller.Move(direction * _moveSpeed * Time.deltaTime);
-
-        if ((transform.position - _originPosition).sqrMagnitude <= Epsilon)
-        {
-            _state = EMonsterState.Idle;
-            Debug.Log("정지");
-        }
-
-        if (_distance <= _detectDistance)
-        {
-            _state = EMonsterState.Trace;
-            Debug.Log("추적");
-        }
-    }
-
-    private void Attack()
-    {
-        if (Time.time >= _nextAttackTime)
-        {
-            // Todo: Attack 애니메이션 실행
-            _nextAttackTime = Time.time + _attackSpeed;
-            PlayerStats.Instance.TakeDamage(_damage);
-        }
-
-        if (_distance > _attackDistance)
-        {
-            _state = EMonsterState.Trace;
-            Debug.Log("플레이어 추적");
-        }
     }
 
     public bool TryTakeDamage(Damage damage)
     {
-        if (_state == EMonsterState.Hit || _state == EMonsterState.Die) return false;
+        if (_stateEnum == EMonsterState.Hit || _stateEnum == EMonsterState.Die) return false;
         _health -= damage.Amount;
 
-        if( _health > 0 )
+        _lastDamageInfo = damage;
+
+        if ( _health > 0 )
         {
-            _state = EMonsterState.Hit;
+            ChangeState(EMonsterState.Hit);
             StartCoroutine(HitRoutine(damage));
         }
         else
         {
-            _state = EMonsterState.Die;
+            ChangeState(EMonsterState.Die);
             StartCoroutine(DieRoutine());
         }
 
@@ -184,7 +101,7 @@ public class Monster : MonoBehaviour
         Vector3 hitDirection = transform.position - damage.AttackerPoint;
 
         float timer = 0f;
-        while(timer < _hitStunTime)
+        while (timer < _hitStunTime)
         {
             timer += Time.deltaTime;
 
@@ -194,7 +111,7 @@ public class Monster : MonoBehaviour
             yield return null;
         }
 
-        _state = EMonsterState.Idle;
+        _stateEnum = EMonsterState.Idle;
     }
 
     private IEnumerator DieRoutine()

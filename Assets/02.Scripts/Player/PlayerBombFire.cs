@@ -23,8 +23,10 @@ public class PlayerBombFire : MonoBehaviour
     {
         if (!PlayerStats.Instance.BombCount.TryConsume(1)) return;
 
-        GameObject bomb = PoolManager.Instance.Spawn(_bombPrefab, _fireTransform.position);
-        Rigidbody rigidbody = bomb.GetComponent<Rigidbody>();
-        rigidbody.AddForce(_mainCameraTransform.forward * _throwPower, ForceMode.Impulse);
+        GameObject bombObject = PoolManager.Instance.Spawn(_bombPrefab, _fireTransform.position);
+        
+        Bomb bomb = bombObject.GetComponent<Bomb>();
+        bomb.SetAttacker(gameObject);
+        bomb.Throw(_mainCameraTransform.forward * _throwPower);
     }
 }

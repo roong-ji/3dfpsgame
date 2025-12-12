@@ -49,11 +49,11 @@ public class GunFire : MonoBehaviour
 
             _hitEffect.Play();
 
-            if (hitInfo.collider.TryGetComponent<Monster>(out Monster monster))
+            if (hitInfo.collider.TryGetComponent<IDamagable>(out IDamagable hitObject))
             {
                 _damage.HitPoint = hitInfo.point;
                 _damage.AttackerPoint = transform.position;
-                monster.TryTakeDamage(_damage);
+                hitObject.TryTakeDamage(_damage);
             }
         }
 

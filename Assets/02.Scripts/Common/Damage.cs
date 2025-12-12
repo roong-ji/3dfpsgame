@@ -8,11 +8,11 @@ public struct Damage
     public GameObject Attacker;
     public float KnockbackPower;
 
-    public Damage(float amount, Vector3 hitPoint, Vector3 transform, GameObject attacker, float knockbackPower = 0)
+    public Damage(float amount, Vector3 hitPoint, Vector3 attackerPoint, GameObject attacker, float knockbackPower = 0)
     {
         Amount = amount;
         HitPoint = hitPoint;
-        AttackerPoint = transform;
+        AttackerPoint = attackerPoint;
         Attacker = attacker;
         KnockbackPower = knockbackPower;
     }

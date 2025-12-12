@@ -52,8 +52,8 @@ public class Bomb : MonoBehaviour, IPoolable
 
         foreach (Collider target in targets)
         {
-            if (!target.TryGetComponent<Monster>(out Monster monster)) continue;
-            monster.TryTakeDamage(_damage);
+            if (!target.TryGetComponent<IDamagable>(out IDamagable targetObject)) continue;
+            targetObject.TryTakeDamage(_damage);
         }
 
         _explosionEffect.transform.position = transform.position;

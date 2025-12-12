@@ -13,11 +13,11 @@ public class GunReload : MonoBehaviour
 
     private event Action<float> _onReloadProgress;
 
-    public void Initialize(GunMagazine magazine, GunStats stats, GameObject onwer)
+    public void Initialize(GunMagazine magazine, GunStats stats, GameObject owner)
     {
         _magazine = magazine;
         _reloadTime = stats.ReloadTime.Value;
-        _ownerMagazine = onwer.GetComponent<PlayerStats>().TotalBulletCount;
+        _ownerMagazine = owner.GetComponent<PlayerStats>().TotalBulletCount;
     }
 
     public void TryReload()

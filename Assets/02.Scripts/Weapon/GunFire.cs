@@ -20,11 +20,11 @@ public class GunFire : MonoBehaviour
         _hitEffect = EffectManager.Instance.BulletHitEffect;
     }
 
-    public void Initialize(GunStats stats, GameObject onwer)
+    public void Initialize(GunStats stats, GameObject owner)
     {
         _damage.Amount = stats.Damage.Value;
         _damage.KnockbackPower = stats.KnockbackPower.Value;
-        _damage.Attacker = onwer;
+        _damage.Attacker = owner;
         _fireRate = stats.FireRate.Value;
         _cameraRecoil.Initialize(stats.Recoil);
     }
@@ -49,11 +49,11 @@ public class GunFire : MonoBehaviour
 
             _hitEffect.Play();
 
-            if (hitInfo.collider.TryGetComponent<Monster>(out Monster monster))
+            if (hitInfo.collider.TryGetComponent<IDamagable>(out IDamagable hitObject))
             {
                 _damage.HitPoint = hitInfo.point;
                 _damage.AttackerPoint = transform.position;
-                monster.TryTakeDamage(_damage);
+                hitObject.TryTakeDamage(_damage);
             }
         }
 

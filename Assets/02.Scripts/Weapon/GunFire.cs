@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(GunFire), typeof(GunReload))]
 public class GunFire : MonoBehaviour
 {
     private ParticleSystem _hitEffect;
@@ -21,11 +20,11 @@ public class GunFire : MonoBehaviour
         _hitEffect = EffectManager.Instance.BulletHitEffect;
     }
 
-    public void Initialize(GunStats stats)
+    public void Initialize(GunStats stats, GameObject onwer)
     {
         _damage.Amount = stats.Damage.Value;
         _damage.KnockbackPower = stats.KnockbackPower.Value;
-        _damage.Attacker = gameObject;
+        _damage.Attacker = onwer;
         _fireRate = stats.FireRate.Value;
         _cameraRecoil.Initialize(stats.Recoil);
     }
@@ -57,7 +56,7 @@ public class GunFire : MonoBehaviour
                 monster.TryTakeDamage(_damage);
             }
         }
-        // Todo: 총 스탯에서 가져오기
+
         _nextFireTime = Time.time + (1f / _fireRate);
     }
 }

@@ -20,13 +20,13 @@ public class UI_Bullet : MonoBehaviour
         _currentBullet.RemoveListener(UpdateBulletCountUI);
     }
 
-    public void Initialize(GunMagazine magazine)
+    public void Initialize(NorseGun gun)
     {
         if (_currentBullet != null)
         {
             _currentBullet.RemoveListener(UpdateBulletCountUI);
         }
-        _currentBullet = magazine.BulletCount;
+        _currentBullet = gun.Magazine.BulletCount;
         _currentBullet.AddListener(UpdateBulletCountUI);
     }
 

@@ -11,6 +11,8 @@ public class GunReload : MonoBehaviour
 
     private bool _isReloading = false;
 
+    private event Action<float> _onReloadProgress;
+
     public void Initialize(GunMagazine magazine, GunStats stats, GameObject onwer)
     {
         _magazine = magazine;
@@ -38,19 +40,29 @@ public class GunReload : MonoBehaviour
     private IEnumerator ReloadRoutine()
     {
         _isReloading = true;
-        PlayerGunController.UpdateReloadProgress(0);
+        _onReloadProgress?.Invoke(0);
 
         float timer = 0;
 
         while (timer < _reloadTime)
         {
             timer += Time.deltaTime;
-            PlayerGunController.UpdateReloadProgress(timer / _reloadTime);
+            _onReloadProgress?.Invoke(timer / _reloadTime);
             yield return null;
         }
 
-        PlayerGunController.UpdateReloadProgress(1);
+        _onReloadProgress?.Invoke(1);
         Reload();
         _isReloading = false;
+    }
+
+    public void AddListener(Action<float> listener)
+    {
+        _onReloadProgress += listener;
+    }
+
+    public void RemoveListener(Action<float> listener)
+    {
+        _onReloadProgress -= listener;
     }
 }

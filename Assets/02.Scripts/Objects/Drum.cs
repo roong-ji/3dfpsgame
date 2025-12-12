@@ -23,6 +23,7 @@ public class Drum : MonoBehaviour, IDamagable
         _explosionEffect = EffectManager.Instance.DrumExplosionEffect;
         _rigidbody = GetComponent<Rigidbody>();
         _damage.Amount = _damageAmount;
+        _damage.Attacker = gameObject;
         _damage.KnockbackPower = _knockbackPower;
     }
 

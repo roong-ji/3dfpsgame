@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour, IDamagable
 {
-    private Dictionary<EMonsterState, BaseState> _states = new();
+    private Dictionary<EMonsterState, BaseState> _states;
     private BaseState _state;
 
     private GameObject _player;
@@ -43,13 +43,16 @@ public class Monster : MonoBehaviour, IDamagable
         _player = PlayerStats.Instance.gameObject;
         _controller = GetComponent<CharacterController>();
 
-        _states.Add(EMonsterState.Idle, new IdleState(this));
-        _states.Add(EMonsterState.Patrol, new PatrolState(this));
-        _states.Add(EMonsterState.Trace, new TraceState(this));
-        _states.Add(EMonsterState.Comeback, new ComebackState(this));
-        _states.Add(EMonsterState.Attack, new AttackState(this));
-        _states.Add(EMonsterState.Hit, new HitState(this));
-        _states.Add(EMonsterState.Die, new DieState(this));
+        _states = new Dictionary<EMonsterState, BaseState>
+        {
+            { EMonsterState.Idle, new IdleState(this) },
+            { EMonsterState.Patrol, new PatrolState(this) },
+            { EMonsterState.Trace, new TraceState(this) },
+            { EMonsterState.Comeback, new ComebackState(this) },
+            { EMonsterState.Attack, new AttackState(this) },
+            { EMonsterState.Hit, new HitState(this) },
+            { EMonsterState.Die, new DieState(this) }
+        };
 
         ChangeState(EMonsterState.Idle);
     }

@@ -8,8 +8,8 @@ public class DieState : BaseState
     private Vector3 _deathRotation = new Vector3(90f, 0, 0);
 
     private Transform _monsterTransform;
-    private Quaternion targetQuaternion;
-    private Vector3 targetPosition;
+    private Quaternion _targetQuaternion;
+    private Vector3 _targetPosition;
 
     public DieState(Monster monster) : base(monster) { }
 
@@ -20,9 +20,9 @@ public class DieState : BaseState
 
         _timer = 0;
 
-        targetQuaternion = Quaternion.Euler(_deathRotation);
-        targetPosition = _monster.gameObject.transform.position;
-        targetPosition.y = _deathYPosition;
+        _targetQuaternion = Quaternion.Euler(_deathRotation);
+        _targetPosition = _monster.gameObject.transform.position;
+        _targetPosition.y = _deathYPosition;
 
         _monsterTransform = _monster.gameObject.transform;
     }
@@ -35,8 +35,8 @@ public class DieState : BaseState
         {
             _timer += Time.deltaTime;
 
-            _monsterTransform.rotation = Quaternion.Lerp(_monsterTransform.rotation, targetQuaternion, _timer / _monster.DeathTime);
-            _monsterTransform.position = Vector3.Lerp(_monsterTransform.position, targetPosition, _timer / _monster.DeathTime);
+            _monsterTransform.rotation = Quaternion.Lerp(_monsterTransform.rotation, _targetQuaternion, _timer / _monster.DeathTime);
+            _monsterTransform.position = Vector3.Lerp(_monsterTransform.position, _targetPosition, _timer / _monster.DeathTime);
 
         }
         else

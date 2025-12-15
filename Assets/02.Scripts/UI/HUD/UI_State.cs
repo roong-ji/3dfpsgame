@@ -24,22 +24,14 @@ public class UI_State : MonoBehaviour
 
     private void UpdateStateUIText(EGameState state)
     {
-        switch (state)
-        {
-            case EGameState.Ready:
-                _stateUIText.text = _readyTextContent;
-                break;
+        gameObject.SetActive(state != EGameState.Playing);
 
-            case EGameState.Start:
-                _stateUIText.text = _startTextContent;
-                break;
-            case EGameState.Playing:
-                gameObject.SetActive(false);
-                break;
-            case EGameState.GameOver:
-                gameObject.SetActive(true);
-                _stateUIText.text = _gameOverTextContent;
-                break;
-        }
+        _stateUIText.text = state switch
+        {
+            EGameState.Ready => _readyTextContent,
+            EGameState.Start => _startTextContent,
+            EGameState.GameOver => _gameOverTextContent,
+            _ => string.Empty
+        };
     }
 }

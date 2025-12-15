@@ -40,6 +40,8 @@ public class Monster : MonoBehaviour, IDamagable
 
     public bool IsDead => Health.Value <= 0;
 
+    // Todo: MonsterStats 분리
+
     private void Start()
     {
         Health.Initialize();

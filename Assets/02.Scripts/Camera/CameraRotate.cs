@@ -22,14 +22,14 @@ public class CameraRotate : MonoBehaviour
 
     private void Update()
     {
+        if(!CursorManager.Instance.IsLockCursor) return;
+
         CameraRotateByMouseInput();
         transform.eulerAngles = _cameraRotation + _recoil.RecoilOffset;
     }
 
     private void CameraRotateByMouseInput()
     {
-        if (Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) return;
-
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
 

@@ -15,6 +15,8 @@ public class PlayerGunController : MonoBehaviour
 
     private void Update()
     {
+        if (!CursorManager.Instance.IsLockCursor) return;
+
         if (Input.GetMouseButton(0))
         {
             GunFire();

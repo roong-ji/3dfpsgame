@@ -25,8 +25,11 @@ public class MonsterHealthBar : MonoBehaviour
     private void LateUpdate()
     {
         // 빌보드 기법
-        if (_monster.IsDead) return;
-        _healthBarTransform.transform.forward = _mainCameraTransform.forward;
+        if (_monster.IsDead)
+        {
+            _healthBarTransform.gameObject.SetActive(false);
+        }
+        _healthBarTransform.forward = _mainCameraTransform.forward;
     }
 
     private void UpdateHealthUI(float health, float maxHealth)

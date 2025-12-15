@@ -8,11 +8,8 @@ public class PlayerGunController : MonoBehaviour
 
     private static event Action<NorseGun> _onGunEquipped;
 
-    private CountStat _totalBulletCount;
-
     private void Start()
     {
-        _totalBulletCount = GetComponent<PlayerStats>().TotalBulletCount;
         Equip(_gun);
     }
 
@@ -38,7 +35,7 @@ public class PlayerGunController : MonoBehaviour
 
     private void GunReload()
     {
-        if (_gun == null || _totalBulletCount.IsEmpty) return;
+        if (_gun == null || PlayerStats.Instance.TotalBulletCount.IsEmpty) return;
         _gun.TryReload();
     }
 

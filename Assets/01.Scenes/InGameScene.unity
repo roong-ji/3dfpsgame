@@ -1798,7 +1798,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604f25dc18fd90744909cc6654debd37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerStats: {fileID: 0}
   _bulletCountTexTUI: {fileID: 674856452}
 --- !u!1001 &787591028
 PrefabInstance:
@@ -1816,10 +1815,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3085834646952005124, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 1829563379}
     - target: {fileID: 3659441196209815009, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11
@@ -2508,7 +2503,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20468c5b4eb85324dacaf46b6b400dd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerStats: {fileID: 1829563388}
   _hpSliderUI: {fileID: 389310340}
   _staminaSliderUI: {fileID: 1631512728}
   _bombCountTexTUI: {fileID: 1004254652}
@@ -3045,10 +3039,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3085834646952005124, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 1829563379}
     - target: {fileID: 3659441196209815009, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8
@@ -4467,7 +4457,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1829563391}
-  _effectDuration: 2
+  _effectDuration: 0.5
 --- !u!1 &1940785589
 GameObject:
   m_ObjectHideFlags: 0
@@ -5044,10 +5034,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3085834646952005124, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
-      propertyPath: _player
-      value: 
-      objectReference: {fileID: 1829563379}
     - target: {fileID: 3659441196209815009, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5

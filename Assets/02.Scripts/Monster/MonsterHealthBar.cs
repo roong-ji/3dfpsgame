@@ -24,7 +24,7 @@ public class MonsterHealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_monster.IsDead)
+        if (_monster.IsDead && _healthBarTransform.gameObject.activeSelf)
         {
             _healthBarTransform.gameObject.SetActive(false);
         }

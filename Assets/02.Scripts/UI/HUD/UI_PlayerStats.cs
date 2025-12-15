@@ -14,7 +14,7 @@ public class UI_PlayerStats : MonoBehaviour
     [Header("폭탄 UI")]
     [SerializeField] private Text _bombCountTexTUI;
 
-    private void Start()
+    private void Awake()
     {
         _playerStats.Health.AddListener(UpdateHealthUI);
         _playerStats.Stamina.AddListener(UpdateStaminaUI);

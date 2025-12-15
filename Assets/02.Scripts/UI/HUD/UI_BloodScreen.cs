@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UI_BloodScreen : MonoBehaviour
 {
@@ -9,7 +9,7 @@ public class UI_BloodScreen : MonoBehaviour
     private Image _bloodScreenImage;
     [SerializeField] private float _effectDuration = 0.5f;
 
-    private Coroutine _bloodScreenCoroutine;
+    private Tween _fadeTween;
 
     private void Awake()
     {
@@ -21,35 +21,22 @@ public class UI_BloodScreen : MonoBehaviour
     private void OnDestroy()
     {
         _player.OnTakeDamaged -= PlayBloodScreenEffect;
+        _fadeTween?.Kill();
     }
 
     private void PlayBloodScreenEffect()
     {
         gameObject.SetActive(true);
 
-        if (_bloodScreenCoroutine != null)
-        {
-            StopCoroutine(_bloodScreenCoroutine);
-        }
+        _fadeTween?.Kill();
 
-        _bloodScreenCoroutine = StartCoroutine(BloodScreen_Coroutine());
-    }
-
-    private IEnumerator BloodScreen_Coroutine()
-    {
         Color color = _bloodScreenImage.color;
         color.a = 1f;
         _bloodScreenImage.color = color;
 
-        float timer = 0;
-        while (timer < _effectDuration)
-        {
-            timer += Time.deltaTime;
-            color.a = Mathf.Lerp(1, 0, timer / _effectDuration);
-            _bloodScreenImage.color = color;
-            yield return null;
-        }
-
-        gameObject.SetActive(false);
+        _fadeTween = _bloodScreenImage.DOFade(0f, _effectDuration)
+            .SetEase(Ease.Linear)
+            .OnComplete(() => gameObject.SetActive(false)
+            );
     }
 }

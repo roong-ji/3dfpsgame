@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +43,8 @@ public class Monster : MonoBehaviour, IDamagable
     public bool IsDead => Health.Value <= 0;
 
     // Todo: MonsterStats 분리
+
+    public event Action OnTakeDamaged;
 
     private void Start()
     {
@@ -91,6 +94,7 @@ public class Monster : MonoBehaviour, IDamagable
         Health.Decrease(damage.Amount);
 
         _lastDamageInfo = damage;
+        OnTakeDamaged?.Invoke();
 
         if ( Health.Value > 0 )
         {

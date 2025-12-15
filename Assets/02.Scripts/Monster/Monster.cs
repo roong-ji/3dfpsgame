@@ -7,6 +7,7 @@ public class Monster : MonoBehaviour, IDamagable
     private BaseState _state;
 
     [SerializeField] private GameObject _player;
+    private IDamagable _attackTarget;
     private CharacterController _controller;
 
     public ConsumableStat Health;
@@ -46,6 +47,7 @@ public class Monster : MonoBehaviour, IDamagable
     {
         Health.Initialize();
 
+        _attackTarget = _player.GetComponent<IDamagable>();
         _controller = GetComponent<CharacterController>();
 
         _states = new Dictionary<EMonsterState, BaseState>
@@ -104,7 +106,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     public void Attack()
     {
-        _player.GetComponent<IDamagable>().TryTakeDamage(new Damage(
+        _attackTarget.TryTakeDamage(new Damage(
                 _damage,
                 transform.position,
                 transform.position,

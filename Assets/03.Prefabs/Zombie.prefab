@@ -689,3 +689,7 @@ MonoBehaviour:
   _hitDelay: 0.5
   _hitDuration: 0.5
   _fadeDuration: 0.2
+  _shakeDuration: 0.2
+  _shakePower: 15
+  _shakeCount: 20
+  _shakeRandomness: 90

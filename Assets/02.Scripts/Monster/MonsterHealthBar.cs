@@ -19,6 +19,14 @@ public class MonsterHealthBar : MonoBehaviour
     [SerializeField] private float _hitDuration = 0.5f;
     [SerializeField] private float _fadeDuration = 0.2f;
 
+    [Header("흔들림 설정")]
+    [SerializeField] private float _shakeDuration = 0.2f;
+    [SerializeField] private float _shakePower = 0.1f;
+    [SerializeField] private int _shakeCount = 10;
+    [SerializeField] private float _shakeRandomness = 90f;
+
+    private Vector3 _effectOffset;
+
     private Sequence _hitSequence;
 
     private void Awake()
@@ -65,13 +73,11 @@ public class MonsterHealthBar : MonoBehaviour
             _splashEffectImage.gameObject.SetActive(true);
         }
 
-        Color color = _splashEffectImage.color;
-        color.a = 1;
-        _splashEffectImage.color = color;
-
         _hitSequence = DOTween.Sequence();
 
-        _hitSequence.Insert(0, _splashEffectImage.DOFade(0f, _fadeDuration).SetEase(Ease.Linear));
+        _hitSequence.Insert(0, _splashEffectImage.DOFade(0f, _fadeDuration).From(1f).SetEase(Ease.Linear));
+
+        _hitSequence.Insert(0, transform.DOShakePosition(_shakeDuration, _shakePower, _shakeCount, _shakeRandomness, false, true));
 
         _hitSequence.Insert(_hitDelay, _effectImage.DOFillAmount(_gaugeImage.fillAmount, _hitDuration).SetEase(Ease.OutQuad));
 
@@ -79,7 +85,6 @@ public class MonsterHealthBar : MonoBehaviour
         {
             _effectImage.gameObject.SetActive(false);
             _splashEffectImage.gameObject.SetActive(false);
-        }
-        );
+        });
     }
 }

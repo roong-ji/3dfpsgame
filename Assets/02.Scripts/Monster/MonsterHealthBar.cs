@@ -24,7 +24,6 @@ public class MonsterHealthBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        // 빌보드 기법
         if (_monster.IsDead)
         {
             _healthBarTransform.gameObject.SetActive(false);

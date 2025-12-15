@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class ConsumableStat
+public class ConsumableStat : IConsumableStat
 {
     [SerializeField] private float _maxValue = 100f;
     [SerializeField] private float _value;

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerStats : Singleton<PlayerStats>
 {
-    public ConsumableStat Health;
-    public ConsumableStat Stamina;
+    [SerializeField] private ConsumableStat _health;
+    [SerializeField] private ConsumableStat _stamina;
 
     public CountStat BombCount;
     public CountStat TotalBulletCount;
@@ -14,10 +14,13 @@ public class PlayerStats : Singleton<PlayerStats>
     public ValueStat JumpPower;
     public ValueStat FireRate;
 
+    public IConsumableStat Health => _health;
+    public IConsumableStat Stamina => _stamina;
+
     private void Start()
     {
-        Health.Initialize();
-        Stamina.Initialize();
+        _health.Initialize();
+        _stamina.Initialize();
         BombCount.Initialize();
     }
 
@@ -25,17 +28,14 @@ public class PlayerStats : Singleton<PlayerStats>
     {
         float deltaTime = Time.deltaTime;
 
-        Health.Regenerate(deltaTime);
-        Stamina.Regenerate(deltaTime);
+        _health.Regenerate(deltaTime);
+        _stamina.Regenerate(deltaTime);
     }
 
-    public void TakeDamage(float damage)
+    public void ApplyDamage(float damage)
     {
-        Health.Decrease(damage);
-
-        if(Health.Value <= 0)
-        {
-            // Todo: 사망 로직 작성
-        }
+        _health.Decrease(damage);
     }
+
+    public bool IsDead => _health.Value <= 0;
 }

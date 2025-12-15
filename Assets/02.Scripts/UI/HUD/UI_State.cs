@@ -18,6 +18,7 @@ public class UI_State : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (GameManager.Instance == null) return;
         GameManager.Instance.RemoveListener(UpdateStateUIText);
     }
 

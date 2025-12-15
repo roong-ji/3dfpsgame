@@ -2834,6 +2834,7 @@ GameObject:
   - component: {fileID: 1829563388}
   - component: {fileID: 1829563389}
   - component: {fileID: 1829563390}
+  - component: {fileID: 1829563391}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -2973,11 +2974,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c9a3a678cc56cf43aeea01ea6cea3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health:
+  _health:
     _maxValue: 100
     _value: 0
     _regenerationRate: 1
-  Stamina:
+  _stamina:
     _maxValue: 100
     _value: 0
     _regenerationRate: 10
@@ -3023,6 +3024,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gun: {fileID: 1947230761}
+--- !u!114 &1829563391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829563379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3472f1fb132158409614788abfc5ddd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1830549035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3202,6 +3215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b444df7b3d7f9874b8e904cf4025bb93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _readyTime: 0.1
+  _startTime: 0.1
 --- !u!4 &1899726961
 Transform:
   m_ObjectHideFlags: 0
@@ -3474,7 +3489,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815f792a25f69f343947f6df0631ab2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stateUIText: {fileID: 1940785591}
 --- !u!1 &1947230756
 GameObject:
   m_ObjectHideFlags: 0

@@ -40,6 +40,12 @@ public class GameManager : Singleton<GameManager>
         Time.timeScale = 1;
     }
 
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        State = EGameState.GameOver;
+    }
+
     public void AddListener(Action<EGameState> listener)
     {
         _onGameStateChanged += listener;

@@ -101,6 +101,16 @@ public class Monster : MonoBehaviour, IDamagable
         return true;
     }
 
+    public void Attack()
+    {
+        _player.GetComponent<IDamagable>().TryTakeDamage(new Damage(
+                _damage,
+                transform.position,
+                transform.position,
+                gameObject
+            ));
+    }
+
     public void Death()
     {
         Destroy(gameObject);

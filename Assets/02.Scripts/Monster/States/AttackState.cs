@@ -19,7 +19,7 @@ public class AttackState : BaseState
         {
             // Todo: Attack 애니메이션 실행
             _nextAttackTime = _monster.NextAttackTime;
-            PlayerStats.Instance.TakeDamage(_monster.Damage);
+            _monster.Attack();
         }
 
         if (_monster.Distance > _monster.AttackDistance)

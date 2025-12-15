@@ -9,7 +9,7 @@ public class Monster : MonoBehaviour, IDamagable
     private GameObject _player;
     private CharacterController _controller;
 
-    private float _health = 100f;
+    public ConsumableStat Health;
     private float _damage = 10f;
 
     private float _attackDistance = 2f;
@@ -38,8 +38,12 @@ public class Monster : MonoBehaviour, IDamagable
 
     public Vector3 DirectionToPlayer => (_player.transform.position - transform.position).normalized;
 
+    public bool IsDead => Health.Value <= 0;
+
     private void Start()
     {
+        Health.Initialize();
+
         _player = PlayerStats.Instance.gameObject;
         _controller = GetComponent<CharacterController>();
 
@@ -80,12 +84,12 @@ public class Monster : MonoBehaviour, IDamagable
 
     public bool TryTakeDamage(Damage damage)
     {
-        if (_health <= 0) return false;
-        _health -= damage.Amount;
+        if (Health.Value <= 0) return false;
+        Health.Decrease(damage.Amount);
 
         _lastDamageInfo = damage;
 
-        if ( _health > 0 )
+        if ( Health.Value > 0 )
         {
             ChangeState(EMonsterState.Hit);
         }

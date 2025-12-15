@@ -6,7 +6,7 @@ public class Monster : MonoBehaviour, IDamagable
     private Dictionary<EMonsterState, BaseState> _states;
     private BaseState _state;
 
-    private GameObject _player;
+    [SerializeField] private GameObject _player;
     private CharacterController _controller;
 
     public ConsumableStat Health;
@@ -46,7 +46,6 @@ public class Monster : MonoBehaviour, IDamagable
     {
         Health.Initialize();
 
-        _player = PlayerStats.Instance.gameObject;
         _controller = GetComponent<CharacterController>();
 
         _states = new Dictionary<EMonsterState, BaseState>

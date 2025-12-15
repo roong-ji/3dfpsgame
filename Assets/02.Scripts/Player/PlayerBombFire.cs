@@ -8,12 +8,9 @@ public class PlayerBombFire : MonoBehaviour
 
     private Transform _mainCameraTransform;
 
-    private CountStat _bombCount;
-
     private void Awake()
     {
         _mainCameraTransform = Camera.main.transform;
-        _bombCount = GetComponent<PlayerStats>().BombCount;
     }
 
     private void Update()
@@ -24,7 +21,7 @@ public class PlayerBombFire : MonoBehaviour
 
     private void BombFire()
     {
-        if (!_bombCount.TryConsume(1)) return;
+        if (!PlayerStats.Instance.BombCount.TryConsume(1)) return;
 
         GameObject bombObject = PoolManager.Instance.Spawn(_bombPrefab, _fireTransform.position);
         

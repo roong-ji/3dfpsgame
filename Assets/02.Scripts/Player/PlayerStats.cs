@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : Singleton<PlayerStats>
 {
     [SerializeField] private ConsumableStat _health;
     [SerializeField] private ConsumableStat _stamina;

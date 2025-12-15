@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CursorManager : MonoBehaviour
+public class CursorManager : Singleton<CursorManager>
 {
     void Awake()
     {

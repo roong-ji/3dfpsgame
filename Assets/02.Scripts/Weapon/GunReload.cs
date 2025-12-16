@@ -7,7 +7,7 @@ public class GunReload : MonoBehaviour
     private GunMagazine _magazine;
     private float _reloadTime;
 
-    private CountStat _ownerMagazine;
+    private ICountStat _ownerMagazine;
 
     private bool _isReloading = false;
 

@@ -8,7 +8,7 @@ public class UI_Bullet : MonoBehaviour
     [Header("총알 UI")]
     [SerializeField] private Text _bulletCountTexTUI;
 
-    private CountStat _currentBullet;
+    private ICountStat _currentBullet;
 
     private void Awake()
     {

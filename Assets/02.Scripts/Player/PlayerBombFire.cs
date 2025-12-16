@@ -8,7 +8,7 @@ public class PlayerBombFire : MonoBehaviour
 
     private Transform _mainCameraTransform;
 
-    private CountStat _bombCount;
+    private ICountStat _bombCount;
 
     private void Awake()
     {

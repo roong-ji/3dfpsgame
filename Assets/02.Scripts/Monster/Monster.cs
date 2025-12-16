@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,8 @@ public class Monster : MonoBehaviour, IDamagable
     private Dictionary<EMonsterState, BaseState> _states;
     private BaseState _state;
 
-    private GameObject _player;
+    [SerializeField] private GameObject _player;
+    private IDamagable _attackTarget;
     private CharacterController _controller;
 
     public ConsumableStat Health;
@@ -40,11 +42,15 @@ public class Monster : MonoBehaviour, IDamagable
 
     public bool IsDead => Health.Value <= 0;
 
+    // Todo: MonsterStats 분리
+
+    public event Action OnTakeDamaged;
+
     private void Start()
     {
         Health.Initialize();
 
-        _player = PlayerStats.Instance.gameObject;
+        _attackTarget = _player.GetComponent<IDamagable>();
         _controller = GetComponent<CharacterController>();
 
         _states = new Dictionary<EMonsterState, BaseState>
@@ -88,6 +94,7 @@ public class Monster : MonoBehaviour, IDamagable
         Health.Decrease(damage.Amount);
 
         _lastDamageInfo = damage;
+        OnTakeDamaged?.Invoke();
 
         if ( Health.Value > 0 )
         {
@@ -103,7 +110,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     public void Attack()
     {
-        _player.GetComponent<IDamagable>().TryTakeDamage(new Damage(
+        _attackTarget.TryTakeDamage(new Damage(
                 _damage,
                 transform.position,
                 transform.position,

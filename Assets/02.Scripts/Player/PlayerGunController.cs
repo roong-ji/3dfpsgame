@@ -8,13 +8,18 @@ public class PlayerGunController : MonoBehaviour
 
     private static event Action<NorseGun> _onGunEquipped;
 
+    private CountStat _totalBulletCount;
+
     private void Start()
     {
+        _totalBulletCount = GetComponent<PlayerStats>().TotalBulletCount;
         Equip(_gun);
     }
 
     private void Update()
     {
+        if (!CursorManager.Instance.IsLockCursor) return;
+
         if (Input.GetMouseButton(0))
         {
             GunFire();
@@ -33,7 +38,7 @@ public class PlayerGunController : MonoBehaviour
 
     private void GunReload()
     {
-        if (_gun == null || PlayerStats.Instance.TotalBulletCount.IsEmpty) return;
+        if (_gun == null || _totalBulletCount.IsEmpty) return;
         _gun.TryReload();
     }
 

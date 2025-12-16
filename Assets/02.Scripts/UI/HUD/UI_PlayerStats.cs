@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class UI_PlayerStats : MonoBehaviour
 {
+    [SerializeField] private PlayerStats _playerStats;
+
     [Header("체력 UI")]
     [SerializeField] private Slider _hpSliderUI;
 
@@ -12,19 +14,19 @@ public class UI_PlayerStats : MonoBehaviour
     [Header("폭탄 UI")]
     [SerializeField] private Text _bombCountTexTUI;
 
-    private void Start()
+    private void Awake()
     {
-        PlayerStats.Instance.Health.AddListener(UpdateHealthUI);
-        PlayerStats.Instance.Stamina.AddListener(UpdateStaminaUI);
-        PlayerStats.Instance.BombCount.AddListener(UpdateBombCountUI);
+        _playerStats.Health.AddListener(UpdateHealthUI);
+        _playerStats.Stamina.AddListener(UpdateStaminaUI);
+        _playerStats.BombCount.AddListener(UpdateBombCountUI);
     }
 
     private void OnDestroy()
     {
-        if (PlayerStats.Instance == null) return;
-        PlayerStats.Instance.Health.RemoveListener(UpdateHealthUI);
-        PlayerStats.Instance.Stamina.RemoveListener(UpdateStaminaUI);
-        PlayerStats.Instance.BombCount.RemoveListener(UpdateBombCountUI);
+        if (_playerStats == null) return;
+        _playerStats.Health.RemoveListener(UpdateHealthUI);
+        _playerStats.Stamina.RemoveListener(UpdateStaminaUI);
+        _playerStats.BombCount.RemoveListener(UpdateBombCountUI);
     }
     
     private void UpdateHealthUI(float health, float maxHealth)

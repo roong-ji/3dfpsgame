@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class UI_Bullet : MonoBehaviour
 {
+    [SerializeField] private PlayerStats _playerStats;
+
     [Header("총알 UI")]
     [SerializeField] private Text _bulletCountTexTUI;
 
@@ -32,7 +34,7 @@ public class UI_Bullet : MonoBehaviour
 
     private void UpdateBulletCountUI(int _)
     {
-        int maxBulletCount = PlayerStats.Instance.TotalBulletCount.Count;
+        int maxBulletCount = _playerStats.TotalBulletCount.Count;
         int bulletCount = _currentBullet.Count;
 
         _bulletCountTexTUI.text = $"{bulletCount}/{maxBulletCount}";

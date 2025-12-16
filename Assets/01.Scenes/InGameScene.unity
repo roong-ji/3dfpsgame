@@ -4024,16 +4024,12 @@ MonoBehaviour:
     _count: 5
   _totalBulletCount:
     _count: 120
-  Damage:
-    _value: 10
-  MoveSpeed:
+  _moveSpeed:
     _value: 7
-  RunSpeed:
+  _runSpeed:
     _value: 14
-  JumpPower:
+  _jumpPower:
     _value: 5
-  FireRate:
-    _value: 10
 --- !u!114 &1829563389
 MonoBehaviour:
   m_ObjectHideFlags: 0

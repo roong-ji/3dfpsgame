@@ -5,23 +5,28 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private ConsumableStat _health;
     [SerializeField] private ConsumableStat _stamina;
 
-    public CountStat BombCount;
-    public CountStat TotalBulletCount;
+    [SerializeField] private CountStat _bombCount;
+    [SerializeField] private CountStat _totalBulletCount;
 
-    public ValueStat Damage;
-    public ValueStat MoveSpeed;
-    public ValueStat RunSpeed;
-    public ValueStat JumpPower;
-    public ValueStat FireRate;
+    [SerializeField] private ValueStat _moveSpeed;
+    [SerializeField] private ValueStat _runSpeed;
+    [SerializeField] private ValueStat _jumpPower;
 
     public IConsumableStat Health => _health;
     public IConsumableStat Stamina => _stamina;
+
+    public ICountStat BombCount => _bombCount;
+    public ICountStat TotalBulletCount => _totalBulletCount;
+
+    public IValueStat MoveSpeed => _moveSpeed;
+    public IValueStat RunSpeed => _runSpeed;
+    public IValueStat JumpPower => _jumpPower;
 
     private void Start()
     {
         _health.Initialize();
         _stamina.Initialize();
-        BombCount.Initialize();
+        _bombCount.Initialize();
     }
 
     private void Update()

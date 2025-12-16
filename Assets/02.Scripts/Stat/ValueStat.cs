@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class ValueStat
+public class ValueStat : IValueStat
 {
     [SerializeField]
     private float _value;

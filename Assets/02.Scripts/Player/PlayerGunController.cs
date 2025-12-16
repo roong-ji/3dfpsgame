@@ -8,7 +8,7 @@ public class PlayerGunController : MonoBehaviour
 
     private static event Action<NorseGun> _onGunEquipped;
 
-    private CountStat _totalBulletCount;
+    private ICountStat _totalBulletCount;
 
     private void Start()
     {

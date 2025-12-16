@@ -42,9 +42,15 @@ public class Monster : MonoBehaviour, IDamagable
 
     public Vector3 TargetPosition => _player.transform.position;
 
-    public bool IsJumpArea => _agent.isOnOffMeshLink;
-
     public bool IsDead => Health.Value <= 0;
+
+    public struct JumpData
+    {
+        public Vector3 startPos;
+        public Vector3 endPos;
+    }
+    private JumpData _jumpData;
+    public JumpData CurrentJumpData => _jumpData;
 
     // Todo: MonsterStats 분리
 
@@ -60,11 +66,14 @@ public class Monster : MonoBehaviour, IDamagable
         _agent.speed = _moveSpeed;
         _agent.stoppingDistance = _attackDistance;
 
+        _agent.autoTraverseOffMeshLink = false;
+
         _states = new Dictionary<EMonsterState, BaseState>
         {
             { EMonsterState.Idle, new IdleState(this) },
             { EMonsterState.Patrol, new PatrolState(this) },
             { EMonsterState.Trace, new TraceState(this) },
+            { EMonsterState.Jump, new JumpState(this) },
             { EMonsterState.Comeback, new ComebackState(this) },
             { EMonsterState.Attack, new AttackState(this) },
             { EMonsterState.Hit, new HitState(this) },
@@ -81,11 +90,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     public void ChangeState(EMonsterState nextState)
     {
-        if(_state != null)
-        {
-            _state.OnStateExit();
-        }
-
+        _state?.OnStateExit();
         _state = _states[nextState];
         _state.OnStateEnter();
     }
@@ -100,11 +105,46 @@ public class Monster : MonoBehaviour, IDamagable
         _agent.SetDestination(position);
     }
 
-    public void Jump()
+    public bool CheckOffMeshLink()
+    {
+        if (_agent.isOnOffMeshLink)
+        {
+            OffMeshLinkData data = _agent.currentOffMeshLinkData;
+
+            Debug.Log(data.linkType);
+            if (data.linkType == OffMeshLinkType.LinkTypeManual)
+            {
+                // 수동 링크 -> 점프 시작
+                _jumpData = new JumpData
+                {
+                    startPos = transform.position,
+                    endPos = data.endPos
+                };
+                return true;
+            }
+            else
+            {
+                // 자동 링크 -> 그냥 건너가기
+                _agent.ActivateCurrentOffMeshLink(true);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public void StopAgent()
     {
         _agent.isStopped = true;
-        _agent.ResetPath();
+        _agent.updatePosition = false;
+        _agent.updateRotation = false;
+    }
+
+    public void RestartAgent()
+    {
         _agent.CompleteOffMeshLink();
+        _agent.updatePosition = true;
+        _agent.updateRotation = true;
+        _agent.isStopped = false;
     }
 
     public bool TryTakeDamage(Damage damage)

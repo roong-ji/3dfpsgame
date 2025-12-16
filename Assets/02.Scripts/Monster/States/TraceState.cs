@@ -14,10 +14,15 @@ public class TraceState : BaseState
 
     public override void OnStateUpdate()
     {
+        if (_monster.CheckOffMeshLink())
+        {
+            _monster.ChangeState(EMonsterState.Jump);
+            return;
+        }
+
         _monster.MoveToPosition(_monster.TargetPosition);
 
         float distance = _monster.Distance;
-
 
         if (distance > _monster.DetectDistance)
         {

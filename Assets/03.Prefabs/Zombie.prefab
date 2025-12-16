@@ -79,6 +79,7 @@ MonoBehaviour:
     _maxValue: 100
     _value: 0
     _regenerationRate: 10
+  IsJump: 0
 --- !u!195 &9077541350370962763
 NavMeshAgent:
   m_ObjectHideFlags: 0

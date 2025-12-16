@@ -107,43 +107,25 @@ public class Monster : MonoBehaviour, IDamagable
 
     public bool CheckOffMeshLink()
     {
-        if (_agent.isOnOffMeshLink)
-        {
-            OffMeshLinkData data = _agent.currentOffMeshLinkData;
+        if (!_agent.isOnOffMeshLink) return false;
 
-            Debug.Log(data.linkType);
-            if (data.linkType == OffMeshLinkType.LinkTypeManual)
-            {
-                // 수동 링크 -> 점프 시작
-                _jumpData = new JumpData
-                {
-                    startPos = transform.position,
-                    endPos = data.endPos
-                };
-                return true;
-            }
-            else
-            {
-                // 자동 링크 -> 그냥 건너가기
-                _agent.ActivateCurrentOffMeshLink(true);
-                return false;
-            }
-        }
-        return false;
+        OffMeshLinkData data = _agent.currentOffMeshLinkData;
+        _jumpData = new JumpData
+        {
+            startPos = transform.position,
+            endPos = data.endPos
+        };
+        return true;
     }
 
     public void StopAgent()
     {
         _agent.isStopped = true;
-        _agent.updatePosition = false;
-        _agent.updateRotation = false;
+        _agent.CompleteOffMeshLink();
     }
 
     public void RestartAgent()
     {
-        _agent.CompleteOffMeshLink();
-        _agent.updatePosition = true;
-        _agent.updateRotation = true;
         _agent.isStopped = false;
     }
 
@@ -155,17 +137,16 @@ public class Monster : MonoBehaviour, IDamagable
         _lastDamageInfo = damage;
         OnTakeDamaged?.Invoke();
 
-        _agent.isStopped = true;
-        _agent.ResetPath();
-
-        if ( Health.Value > 0 )
-        {
-            ChangeState(EMonsterState.Hit);
-        }
-        else
+        if (Health.Value <= 0)
         {
             _agent.enabled = false;
             ChangeState(EMonsterState.Die);
+        }
+        else if (_state is not JumpState)
+        {
+            _agent.isStopped = true;
+            _agent.ResetPath();
+            ChangeState(EMonsterState.Hit);
         }
 
         return true;

@@ -3821,8 +3821,8 @@ MonoBehaviour:
   m_Width: 9.624194
   m_CostModifier: 1
   m_IsOverridingCost: 0
-  m_Bidirectional: 1
-  m_AutoUpdatePosition: 0
+  m_Bidirectional: 0
+  m_AutoUpdatePosition: 1
   m_Area: 2
 --- !u!4 &1628794792 stripped
 Transform:

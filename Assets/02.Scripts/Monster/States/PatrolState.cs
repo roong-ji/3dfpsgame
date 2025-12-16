@@ -26,9 +26,7 @@ public class PatrolState : BaseState
             _patrolPoint.y = position.y;
         }
 
-        Vector3 direction = (_patrolPoint - position).normalized;
-
-        _monster.Move(direction);
+        _monster.MoveToPosition(_patrolPoint);
 
         if (_monster.Distance <= _monster.DetectDistance)
         {

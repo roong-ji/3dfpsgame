@@ -13,6 +13,7 @@ public class ComebackState : BaseState
     public override void OnStateEnter()
     {
         Debug.Log("상태 진입: Comeback");
+        _monster.MoveToPosition(_originPosition);
     }
 
     public override void OnStateExit() { }
@@ -20,7 +21,6 @@ public class ComebackState : BaseState
     public override void OnStateUpdate()
     {
         Vector3 position = _monster.gameObject.transform.position;
-        _monster.Move((_originPosition - position).normalized);
 
         if ((position - _originPosition).sqrMagnitude <= Epsilon)
         {

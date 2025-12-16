@@ -14,9 +14,10 @@ public class TraceState : BaseState
 
     public override void OnStateUpdate()
     {
-        _monster.Move(_monster.DirectionToPlayer);
+        _monster.MoveToPosition(_monster.TargetPosition);
 
         float distance = _monster.Distance;
+
 
         if (distance > _monster.DetectDistance)
         {

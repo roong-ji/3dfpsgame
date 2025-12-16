@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Monster : MonoBehaviour, IDamagable
 {
@@ -10,19 +11,20 @@ public class Monster : MonoBehaviour, IDamagable
     [SerializeField] private GameObject _player;
     private IDamagable _attackTarget;
     private CharacterController _controller;
+    private NavMeshAgent _agent;
 
     public ConsumableStat Health;
     private float _damage = 10f;
 
     private float _attackDistance = 2f;
-    private float _detectDistance = 10f;
-    private float _patrolDistance = 5f;
+    private float _detectDistance = 15f;
+    private float _patrolDistance = 15f;
 
     private float _moveSpeed = 3f;
     private float _attackSpeed = 2f;
 
     private float _hitStunTime = 0.2f;
-    private float _deathDelayTime = 2f;
+    private float _deathDelayTime = 02f;
 
     public float Damage => _damage;
     public float AttackDistance => _attackDistance;
@@ -38,7 +40,9 @@ public class Monster : MonoBehaviour, IDamagable
 
     public float Distance => Vector3.Distance(transform.position, _player.transform.position);
 
-    public Vector3 DirectionToPlayer => (_player.transform.position - transform.position).normalized;
+    public Vector3 TargetPosition => _player.transform.position;
+
+    public bool IsJumpArea => _agent.isOnOffMeshLink;
 
     public bool IsDead => Health.Value <= 0;
 
@@ -52,6 +56,9 @@ public class Monster : MonoBehaviour, IDamagable
 
         _attackTarget = _player.GetComponent<IDamagable>();
         _controller = GetComponent<CharacterController>();
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _moveSpeed;
+        _agent.stoppingDistance = _attackDistance;
 
         _states = new Dictionary<EMonsterState, BaseState>
         {
@@ -88,6 +95,18 @@ public class Monster : MonoBehaviour, IDamagable
         _controller.Move(direction * _moveSpeed * Time.deltaTime);
     }
 
+    public void MoveToPosition(Vector3 position)
+    {
+        _agent.SetDestination(position);
+    }
+
+    public void Jump()
+    {
+        _agent.isStopped = true;
+        _agent.ResetPath();
+        _agent.CompleteOffMeshLink();
+    }
+
     public bool TryTakeDamage(Damage damage)
     {
         if (Health.Value <= 0) return false;
@@ -96,12 +115,16 @@ public class Monster : MonoBehaviour, IDamagable
         _lastDamageInfo = damage;
         OnTakeDamaged?.Invoke();
 
+        _agent.isStopped = true;
+        _agent.ResetPath();
+
         if ( Health.Value > 0 )
         {
             ChangeState(EMonsterState.Hit);
         }
         else
         {
+            _agent.enabled = false;
             ChangeState(EMonsterState.Die);
         }
 

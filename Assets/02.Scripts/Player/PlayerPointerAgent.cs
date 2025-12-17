@@ -26,7 +26,6 @@ public class PlayerPointerAgent : MonoBehaviour
 
         if (Physics.Raycast(ray, out _rayHit))
         {
-            Debug.Log(_rayHit);
             _agent.SetDestination(_rayHit.point);
         }
     }

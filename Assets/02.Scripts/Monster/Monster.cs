@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour, IDamagable
     private IDamagable _attackTarget;
     private CharacterController _controller;
     private NavMeshAgent _agent;
+    private Animator _animator;
 
     public ConsumableStat Health;
     private float _damage = 10f;
@@ -61,6 +62,7 @@ public class Monster : MonoBehaviour, IDamagable
         Health.Initialize();
 
         _attackTarget = _player.GetComponent<IDamagable>();
+        _animator = GetComponentInChildren<Animator>();
         _controller = GetComponent<CharacterController>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _moveSpeed;
@@ -127,6 +129,11 @@ public class Monster : MonoBehaviour, IDamagable
     public void RestartAgent()
     {
         _agent.isStopped = false;
+    }
+
+    public void PlayAnimation(string trigger)
+    {
+        _animator.SetTrigger(trigger);
     }
 
     public bool TryTakeDamage(Damage damage)

@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class TraceState : BaseState
 {
+    private readonly string _idleToTrace = "IdleToTrace";
+
     public TraceState(Monster monster) : base(monster) { }
 
     public override void OnStateEnter()
     {
-        // Todo: Run 애니메이션 실행
-        Debug.Log("상태 진입 : Trace");
+        _monster.PlayAnimation(_idleToTrace);
     }
 
     public override void OnStateExit() { }

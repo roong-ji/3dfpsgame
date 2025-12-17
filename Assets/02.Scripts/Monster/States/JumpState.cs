@@ -34,12 +34,12 @@ public class JumpState : BaseState
         if (_currentTime < _duration)
         {
             _currentTime += Time.deltaTime;
-            float t = _currentTime / _duration;
+            float timeRate = _currentTime / _duration;
 
-            Vector3 currentPos = Vector3.Lerp(_startPosition, _endPosition, t);
-            currentPos.y += _jumpHeight * Mathf.Sin(t * Mathf.PI);
+            Vector3 position = Vector3.Lerp(_startPosition, _endPosition, timeRate);
+            position.y += _jumpHeight * Mathf.Sin(timeRate * Mathf.PI);
 
-            _monster.transform.position = currentPos;
+            _monster.transform.position = position;
 
             Vector3 direction = (_endPosition - _startPosition).normalized;
             direction.y = 0;

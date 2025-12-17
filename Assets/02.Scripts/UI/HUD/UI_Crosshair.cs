@@ -9,12 +9,12 @@ public class UI_Crosshair : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (GameManager.Instance == null) return;
         GameManager.Instance.OnAutoModeChanged -= OnOffCrosshairUI;
     }
 
     private void OnOffCrosshairUI(bool autoMode)
     {
-        Debug.Log(autoMode);
         gameObject.SetActive(!autoMode);
     }
 }

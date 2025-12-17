@@ -18,7 +18,7 @@ public class PlayerBombFire : MonoBehaviour
 
     private void Update()
     {
-        if (!Input.GetKeyDown(KeyCode.Q)) return;
+        if (!Input.GetKeyDown(KeyCode.Q) || GameManager.Instance.AutoMode) return;
         BombFire();
     }
 

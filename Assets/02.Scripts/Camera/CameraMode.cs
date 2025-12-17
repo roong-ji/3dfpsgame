@@ -1,20 +1,22 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class CameraFollow : MonoBehaviour
+public class CameraMode : MonoBehaviour
 {
-    // Todo: FPS TPS 탑뷰 타겟 나누어 명확히 하기
-    [SerializeField] private Transform[] _targets;
-    private Transform _currentTarget;
+    private Transform _target;
     private ECameraMode _mode = ECameraMode.FPS;
+
+    [SerializeField] private Transform _fpsTransform;
+    [SerializeField] private Transform _tpsTransform;
+    [SerializeField] private Transform _topViewTransform;
 
     private float _transitionDuration = 1f;
     private Ease _easeType = Ease.OutQuad;
     private bool _isChanging = false;
 
-    private void Start()
+    private void Awake()
     {
-        _currentTarget = _targets[(int)_mode];
+        _target = _fpsTransform;
     }
 
     private void Update()
@@ -25,16 +27,16 @@ public class CameraFollow : MonoBehaviour
     private void LateUpdate()
     {
         if( _isChanging) return;
-        transform.position = _currentTarget.position;
+        transform.position = _target.position;
     }
 
     private void InputChangeTarget()
     {
         if (!Input.GetKeyDown(KeyCode.T)) return;
-        ChangeTarget();
+        ChangeMode();
     }
 
-    private void ChangeTarget()
+    private void ChangeMode()
     {
         GetNextTarget();
         _isChanging = true;
@@ -44,7 +46,7 @@ public class CameraFollow : MonoBehaviour
 
         DOVirtual.Float(0f, 1f, _transitionDuration, (float easedTime) =>
         {
-            transform.position = Vector3.Lerp(startPosition, _currentTarget.position, easedTime);
+            transform.position = Vector3.Lerp(startPosition, _target.position, easedTime);
         })
         .SetEase(_easeType)
         .OnComplete(() => _isChanging = false);
@@ -59,9 +61,23 @@ public class CameraFollow : MonoBehaviour
             _ => ECameraMode.FPS
         };
 
-        _currentTarget = _targets[(int)_mode];
+        _target = _mode switch
+        {
+            ECameraMode.FPS => _fpsTransform,
+            ECameraMode.TPS => _tpsTransform,
+            _ => _topViewTransform
+        };
 
-        if (_mode == ECameraMode.TopView) return;
+        if (_mode == ECameraMode.TopView)
+        {
+            CursorManager.Instance.UnlockCursor();
+        }
+        else
+        {
+            CursorManager.Instance.LockCursor();
+        }
+
+        if (_mode == ECameraMode.TPS) return;
         GameManager.Instance.ToggleAutoMode();
     }
 }

@@ -46,8 +46,8 @@ public class Monster : MonoBehaviour, IDamagable
 
     public struct JumpData
     {
-        public Vector3 startPos;
-        public Vector3 endPos;
+        public Vector3 startPosition;
+        public Vector3 endPosition;
     }
     private JumpData _jumpData;
     public JumpData CurrentJumpData => _jumpData;
@@ -112,8 +112,8 @@ public class Monster : MonoBehaviour, IDamagable
         OffMeshLinkData data = _agent.currentOffMeshLinkData;
         _jumpData = new JumpData
         {
-            startPos = transform.position,
-            endPos = data.endPos
+            startPosition = transform.position,
+            endPosition = data.endPos
         };
         return true;
     }

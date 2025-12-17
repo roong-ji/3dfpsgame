@@ -7,10 +7,6 @@ public class GameManager : Singleton<GameManager>
     private EGameState _state = EGameState.Ready;
     private event Action<EGameState> _onGameStateChanged;
 
-    [Header("시작 대기 시간 설정")]
-    [SerializeField] private float _readyTime = 2f;
-    [SerializeField] private float _startTime = 0.5f;
-
     public EGameState State
     {
         get => _state;
@@ -21,6 +17,15 @@ public class GameManager : Singleton<GameManager>
             _onGameStateChanged?.Invoke(_state);
         }
     }
+
+    private bool _autoMode = false;
+    public bool AutoMode => _autoMode;
+
+    public event Action<bool> OnAutoModeChanged;
+
+    [Header("시작 대기 시간 설정")]
+    [SerializeField] private float _readyTime = 2f;
+    [SerializeField] private float _startTime = 0.5f;
 
     private void Start()
     {
@@ -38,6 +43,12 @@ public class GameManager : Singleton<GameManager>
 
         State = EGameState.Playing;
         Time.timeScale = 1;
+    }
+
+    public void ToggleAutoMode()
+    {
+        _autoMode = !_autoMode;
+        OnAutoModeChanged?.Invoke(_autoMode);
     }
 
     public void GameOver()

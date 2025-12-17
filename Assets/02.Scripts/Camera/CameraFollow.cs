@@ -3,16 +3,18 @@ using DG.Tweening;
 
 public class CameraFollow : MonoBehaviour
 {
+    // Todo: FPS TPS 탑뷰 타겟 나누어 명확히 하기
     [SerializeField] private Transform[] _targets;
     private Transform _currentTarget;
-    private int _targetIndex = 0;
+    private ECameraMode _mode = ECameraMode.FPS;
+
     private float _transitionDuration = 1f;
     private Ease _easeType = Ease.OutQuad;
     private bool _isChanging = false;
 
     private void Start()
     {
-        _currentTarget = _targets[_targetIndex];
+        _currentTarget = _targets[(int)_mode];
     }
 
     private void Update()
@@ -34,8 +36,7 @@ public class CameraFollow : MonoBehaviour
 
     private void ChangeTarget()
     {
-        _targetIndex = (_targetIndex + 1) % _targets.Length;
-        _currentTarget = _targets[_targetIndex];
+        GetNextTarget();
         _isChanging = true;
         
         Vector3 startPosition = transform.position;
@@ -47,5 +48,20 @@ public class CameraFollow : MonoBehaviour
         })
         .SetEase(_easeType)
         .OnComplete(() => _isChanging = false);
+    }
+
+    private void GetNextTarget()
+    {
+        _mode = _mode switch
+        {
+            ECameraMode.FPS => ECameraMode.TPS,
+            ECameraMode.TPS => ECameraMode.TopView,
+            _ => ECameraMode.FPS
+        };
+
+        _currentTarget = _targets[(int)_mode];
+
+        if (_mode == ECameraMode.TopView) return;
+        GameManager.Instance.ToggleAutoMode();
     }
 }

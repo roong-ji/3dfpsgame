@@ -12,11 +12,20 @@ public class CursorManager : Singleton<CursorManager>
 
     private void Update()
     {
+        if (GameManager.Instance.AutoMode) return;
         if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.RightAlt))
+        {
+            ToggleCursor();
+        }
+    }
+
+    private void ToggleCursor()
+    {
+        if (_isLockCursor)
         {
             UnlockCursor();
         }
-        if (Input.GetKeyUp(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.RightAlt))
+        else
         {
             LockCursor();
         }

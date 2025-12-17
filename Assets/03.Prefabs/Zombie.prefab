@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3659441196209815009}
   - component: {fileID: 6654016426003248565}
   - component: {fileID: 3085834646952005124}
+  - component: {fileID: 9077541350370962763}
   m_Layer: 7
   m_Name: Zombie
   m_TagString: Untagged
@@ -78,6 +79,29 @@ MonoBehaviour:
     _maxValue: 100
     _value: 0
     _regenerationRate: 10
+  IsJump: 0
+--- !u!195 &9077541350370962763
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753971711671451314}
+  m_Enabled: 1
+  m_AgentTypeID: -1372625422
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &2818842497823204857
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,7 +713,3 @@ MonoBehaviour:
   _hitDelay: 0.5
   _hitDuration: 0.5
   _fadeDuration: 0.2
-  _shakeDuration: 0.2
-  _shakePower: 15
-  _shakeCount: 20
-  _shakeRandomness: 90

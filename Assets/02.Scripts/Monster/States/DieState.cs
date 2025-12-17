@@ -37,7 +37,6 @@ public class DieState : BaseState
 
             _monsterTransform.rotation = Quaternion.Lerp(_monsterTransform.rotation, _targetQuaternion, _timer / _monster.DeathTime);
             _monsterTransform.position = Vector3.Lerp(_monsterTransform.position, _targetPosition, _timer / _monster.DeathTime);
-
         }
         else
         {

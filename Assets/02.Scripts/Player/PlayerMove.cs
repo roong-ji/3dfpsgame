@@ -31,6 +31,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.Instance.AutoMode) return;
+
         HandleJump();
         HandleMoveSpeed();
         HandleMovement();

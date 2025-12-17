@@ -22,8 +22,6 @@ public class PlayerPointerAgent : MonoBehaviour
         
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         
-        Debug.Log(ray);
-
         if (Physics.Raycast(ray, out _rayHit))
         {
             _agent.SetDestination(_rayHit.point);

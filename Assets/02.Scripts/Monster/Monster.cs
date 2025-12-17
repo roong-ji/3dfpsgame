@@ -25,7 +25,6 @@ public class Monster : MonoBehaviour, IDamagable
     private float _attackSpeed = 2f;
 
     private float _hitStunTime = 0.2f;
-    private float _deathDelayTime = 02f;
 
     public float Damage => _damage;
     public float AttackDistance => _attackDistance;
@@ -34,7 +33,6 @@ public class Monster : MonoBehaviour, IDamagable
     public float NextAttackTime => Time.time + _attackSpeed;
 
     public float HitTime => _hitStunTime;
-    public float DeathTime => _deathDelayTime;
 
     private Damage _lastDamageInfo;
     public Damage LastDamageInfo => _lastDamageInfo;
@@ -131,7 +129,7 @@ public class Monster : MonoBehaviour, IDamagable
         _agent.isStopped = false;
     }
 
-    public void PlayAnimation(string trigger)
+    public void PlayAnimation(int trigger)
     {
         _animator.SetTrigger(trigger);
     }

@@ -9,10 +9,7 @@ public class AttackState : BaseState
 
     public AttackState(Monster monster) : base(monster) { }
 
-    public override void OnStateEnter()
-    {
-        Debug.Log("상태 진입: Attack");
-    }
+    public override void OnStateEnter() { }
 
     public override void OnStateExit() { }
 

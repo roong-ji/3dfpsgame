@@ -34,9 +34,5 @@ public class HitState : BaseState
             _monster.Move(_knockbackDirection * _knockbackSpeed);
             _knockbackSpeed = Mathf.Lerp(_knockbackSpeed, 0f, _timer / _monster.HitTime);
         }
-        else
-        {
-            _monster.ChangeState(EMonsterState.Idle);
-        }
     }
 }

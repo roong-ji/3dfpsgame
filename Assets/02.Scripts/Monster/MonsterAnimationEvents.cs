@@ -18,4 +18,10 @@ public class MonsterAnimationEvents : MonoBehaviour
     {
         _monster.Death();
     }
+
+    private void ApplyEndOfAnimation()
+    {
+        _monster.RestartAgent();
+        _monster.ChangeState(EMonsterState.Idle);
+    }
 }

@@ -6,11 +6,7 @@ public class IdleState : BaseState
 
     public IdleState(Monster monster) : base(monster) { }
 
-    public override void OnStateEnter()
-    {
-        // Todo: Idle 애니메이션 실행
-        Debug.Log("상태 진입 : Idle");
-    }
+    public override void OnStateEnter() { }
 
     public override void OnStateExit() { }
 

@@ -38,7 +38,7 @@ public class PlayerGunController : MonoBehaviour
         if (_gun == null) return;
         if (_gun.TryFire())
         {
-            _animator.PlayShootAnimation();
+            _animator.PlayFireAnimation();
         }
     }
 

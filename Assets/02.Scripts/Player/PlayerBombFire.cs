@@ -10,19 +10,22 @@ public class PlayerBombFire : MonoBehaviour
 
     private ICountStat _bombCount;
 
+    private PlayerAnimator _animator;
+
     private void Awake()
     {
         _mainCameraTransform = Camera.main.transform;
         _bombCount = GetComponent<PlayerStats>().BombCount;
+        _animator = GetComponent<PlayerAnimator>();
     }
 
     private void Update()
     {
         if (!Input.GetKeyDown(KeyCode.Q) || GameManager.Instance.AutoMode) return;
-        BombFire();
+        _animator.PlayThrowAnimation();
     }
 
-    private void BombFire()
+    public void BombFire()
     {
         if (!_bombCount.TryConsume(1)) return;
 

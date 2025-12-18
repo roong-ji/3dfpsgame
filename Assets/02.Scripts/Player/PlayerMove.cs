@@ -19,6 +19,7 @@ public class PlayerMove : MonoBehaviour
     private float _yVelocity = 0;
 
     private bool _canDoubleJump = false;
+    private bool _isJumping = false;
 
     private CharacterController _controller;
     private PlayerStats _stats;
@@ -33,7 +34,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Instance.AutoMode) return;
+        if (_stats.IsDead || GameManager.Instance.AutoMode) return;
 
         HandleJump();
         HandleMoveSpeed();
@@ -56,15 +57,24 @@ public class PlayerMove : MonoBehaviour
 
     private void HandleJump()
     {
+        if (_isJumping && _controller.isGrounded)
+        {
+            _animator.StopJumpAnimation();
+            _isJumping = false;
+        }
+
         _yVelocity += _configs.Gravity * Time.deltaTime;
 
-        // if (_controller.collisionFlags == CollisionFlags.Below)
         if (!Input.GetButtonDown("Jump")) return;
 
+        _animator.PlayJumpAnimation();
+
+        // if (_controller.collisionFlags == CollisionFlags.Below)
         if (_controller.isGrounded)
         {
             _yVelocity = _stats.JumpPower.Value;
             _canDoubleJump = true;
+            _isJumping = true;
         }
         else if (_canDoubleJump && _stats.Stamina.TryConsume(_configs.JumpStamina))
         {

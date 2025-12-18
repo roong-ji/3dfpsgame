@@ -51,6 +51,8 @@ public class PlayerPointerAgent : MonoBehaviour
     {
         if (!_agent.isOnOffMeshLink) return;
 
+        _animator.PlayJumpAnimation();
+
         _agent.isStopped = true;
         _isJumping = true;
 
@@ -75,6 +77,7 @@ public class PlayerPointerAgent : MonoBehaviour
             _agent.CompleteOffMeshLink();
             _agent.isStopped = false;
             _isJumping = false;
+            _animator.StopJumpAnimation();
         });
     }
 }

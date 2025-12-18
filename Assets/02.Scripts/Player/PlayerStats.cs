@@ -31,6 +31,8 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
+        if (IsDead) return;
+
         float deltaTime = Time.deltaTime;
 
         _health.Regenerate(deltaTime);

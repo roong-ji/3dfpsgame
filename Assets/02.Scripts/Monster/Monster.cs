@@ -136,7 +136,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     public bool TryTakeDamage(Damage damage)
     {
-        if (Health.Value <= 0) return false;
+        if (_state is DieState) return false;
         Health.Decrease(damage.Amount);
 
         _lastDamageInfo = damage;

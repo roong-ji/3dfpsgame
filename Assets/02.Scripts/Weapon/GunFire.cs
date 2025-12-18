@@ -72,6 +72,6 @@ public class GunFire : MonoBehaviour
 
         GameObject effect = PoolManager.Instance.Spawn(_effectPrefabs[randomEffect], _effectTransform.position);
 
-        effect.transform.rotation = _effectTransform.rotation * Quaternion.Euler(0, 0, 90);
+        effect.transform.rotation = Quaternion.LookRotation(transform.forward);
     }
 }

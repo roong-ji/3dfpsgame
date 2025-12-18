@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Bomb : MonoBehaviour, IPoolable
 {
@@ -44,6 +45,7 @@ public class Bomb : MonoBehaviour, IPoolable
     {
         _damage.AttackerPoint = transform.position;
         _rigidbody.AddForce(throwForce, ForceMode.Impulse);
+        _rigidbody.AddTorque(Random.insideUnitSphere.normalized, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -1,7 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 
-public class CameraMode : Singleton<CameraMode>
+public class CameraMode : MonoBehaviour
 {
     // Todo: 카메라 매니저 혹은 카메라 설정 값을 저장하는 클래스 분리
     private Transform _target;

@@ -26,10 +26,7 @@ public class CameraRotate : MonoBehaviour
         if(!CursorManager.Instance.IsLockCursor) return;
 
         CameraRotateByMouseInput();
-        transform.eulerAngles = _cameraRotation + _recoil.RecoilOffset;
-
-        if (CameraMode.Instance.Mode != ECameraMode.FPS) return;
-        transform.eulerAngles += _offsetY;
+        transform.eulerAngles = _cameraRotation + _offsetY + _recoil.RecoilOffset;
     }
 
     private void CameraRotateByMouseInput()

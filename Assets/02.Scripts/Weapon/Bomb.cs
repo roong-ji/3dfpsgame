@@ -16,6 +16,8 @@ public class Bomb : MonoBehaviour, IPoolable
     [Header("폭발 범위")]
     [SerializeField] private float _explosionDistance;
 
+    private bool _shouldRelease = false;
+
     public void Initialize(GameObject prefab)
     {
         _prefab = prefab;
@@ -23,6 +25,14 @@ public class Bomb : MonoBehaviour, IPoolable
         _rigidbody = GetComponent<Rigidbody>();
         _damage.Amount = _damageAmount;
         _damage.KnockbackPower = _knockbackPower;
+        _shouldRelease = true;
+    }
+
+    private void OnEnable()
+    {
+        if (!_shouldRelease) return;
+        _rigidbody.linearVelocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
     }
 
     public void SetAttacker(GameObject attacker)

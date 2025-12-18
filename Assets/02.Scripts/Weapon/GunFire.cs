@@ -11,6 +11,7 @@ public class GunFire : MonoBehaviour
 
     private Transform _fireTransform;
     private CameraRecoil _cameraRecoil;
+    private Bullet _bullet;
 
     private Damage _damage;
     private float _fireRate;
@@ -22,6 +23,7 @@ public class GunFire : MonoBehaviour
         _fireTransform = Camera.main.transform;
         _cameraRecoil = Camera.main.GetComponent<CameraRecoil>();
         _hitEffect = EffectManager.Instance.BulletHitEffect;
+        _bullet = EffectManager.Instance.BulletEffect;
     }
 
     public void Initialize(GunStats stats, GameObject owner)
@@ -52,6 +54,8 @@ public class GunFire : MonoBehaviour
             _hitEffect.transform.forward = hitInfo.normal;
 
             _hitEffect.Play();
+
+            _bullet.PlayBulletEffect(_effectTransform.position, hitInfo.point);
 
             if (hitInfo.collider.TryGetComponent<IDamagable>(out IDamagable hitObject))
             {

@@ -4532,7 +4532,15 @@ MonoBehaviour:
   - Prefab: {fileID: 8404473868249565428, guid: 60b80637d2f425144a5365e0deca5d00, type: 3}
     Count: 10
   - Prefab: {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}
-    Count: 10
+    Count: 2
+  - Prefab: {fileID: 199458, guid: 487eef9aff9d0f543836d5af5ab26430, type: 3}
+    Count: 2
+  - Prefab: {fileID: 199458, guid: 7b6a7e40bd9ccc0489274923930761c7, type: 3}
+    Count: 2
+  - Prefab: {fileID: 199458, guid: 29d86feb88bf925428f9d7de6d4b401f, type: 3}
+    Count: 2
+  - Prefab: {fileID: 199458, guid: 4aa4c63f0f9d6a84dbaeed6b9caeca80, type: 3}
+    Count: 2
 --- !u!1 &1829563379
 GameObject:
   m_ObjectHideFlags: 0
@@ -4687,8 +4695,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gun: {fileID: 1947230761}
-  _effectPrefab: {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}
-  _effectTransform: {fileID: 2058366752}
 --- !u!114 &1829563391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5476,6 +5482,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4fb7875043a3841a9528ceff6a942e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectPrefabs:
+  - {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}
+  - {fileID: 199458, guid: 487eef9aff9d0f543836d5af5ab26430, type: 3}
+  - {fileID: 199458, guid: 7b6a7e40bd9ccc0489274923930761c7, type: 3}
+  - {fileID: 199458, guid: 29d86feb88bf925428f9d7de6d4b401f, type: 3}
+  - {fileID: 199458, guid: 4aa4c63f0f9d6a84dbaeed6b9caeca80, type: 3}
+  _effectTransform: {fileID: 2058366752}
 --- !u!114 &1947230764
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class GunFire : MonoBehaviour
 {
+    [Header("발사 이펙트 프리팹")]
+    [SerializeField] private GameObject _effectPrefab;
+    [SerializeField] private Transform _effectTransform;
+
     private ParticleSystem _hitEffect;
     private float _nextFireTime = 0f;
 
@@ -32,6 +36,7 @@ public class GunFire : MonoBehaviour
     public void Fire()
     {
         _cameraRecoil.CameraRecoilByFire();
+        PoolManager.Instance.Spawn(_effectPrefab, _effectTransform.position);
 
         // 1. Ray를 생성하고 발사할 위치, 방향, 거리를 설정한다.
         Ray ray = new Ray(origin: _fireTransform.position, direction: _fireTransform.forward);

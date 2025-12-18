@@ -15,8 +15,6 @@ public class PlayerMove : MonoBehaviour
 
     private moveConfig _configs = new moveConfig();
 
-    private static readonly int s_speed = Animator.StringToHash("Speed");
-
     private float _currentMoveSpeed;
     private float _yVelocity = 0;
 
@@ -24,13 +22,13 @@ public class PlayerMove : MonoBehaviour
 
     private CharacterController _controller;
     private PlayerStats _stats;
-    private Animator _animator;
+    private PlayerAnimator _animator;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
         _stats = GetComponent<PlayerStats>();
-        _animator = GetComponentInChildren<Animator>();
+        _animator = GetComponent<PlayerAnimator>();
     }
 
     private void Update()
@@ -48,7 +46,7 @@ public class PlayerMove : MonoBehaviour
         float y = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(x, 0, y);
-        _animator.SetFloat(s_speed, direction.magnitude);
+        _animator.PlayMoveAnimation(direction.magnitude);
 
         direction = transform.TransformDirection(direction);
         direction.y = _yVelocity;

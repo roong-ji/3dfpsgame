@@ -10,8 +10,11 @@ public class PlayerGunController : MonoBehaviour
 
     private ICountStat _totalBulletCount;
 
+    private PlayerAnimator _animator;
+
     private void Start()
     {
+        _animator = GetComponent<PlayerAnimator>();
         _totalBulletCount = GetComponent<PlayerStats>().TotalBulletCount;
         Equip(_gun);
     }
@@ -33,7 +36,10 @@ public class PlayerGunController : MonoBehaviour
     private void GunFire()
     {
         if (_gun == null) return;
-        _gun.TryFire();
+        if (_gun.TryFire())
+        {
+            _animator.PlayShootAnimation();
+        }
     }
 
     private void GunReload()

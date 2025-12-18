@@ -5,6 +5,7 @@ public class CameraRotate : MonoBehaviour
 {
     private const float RotationSpeed = 200f;
     private const float LimitRotationY = 90f;
+    private Vector3 _offsetY = new Vector3(0, -30f, 0);
 
     private float _accumulationX = 0;
     private float _accumulationY = 0;
@@ -26,6 +27,9 @@ public class CameraRotate : MonoBehaviour
 
         CameraRotateByMouseInput();
         transform.eulerAngles = _cameraRotation + _recoil.RecoilOffset;
+
+        if (CameraMode.Instance.Mode != ECameraMode.FPS) return;
+        transform.eulerAngles += _offsetY;
     }
 
     private void CameraRotateByMouseInput()

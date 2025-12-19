@@ -18,14 +18,22 @@ public class EffectManager : Singleton<EffectManager>
 
     public Bullet BulletEffect => _bulletEffect;
 
-    public void PlayBloodEffect(Vector3 position, Vector3 normal)
+    public void PlayBloodEffect(Transform blooder, Vector3 normal)
     {
-        _bloodEffect.transform.position = position;
+        _bloodEffect.transform.SetParent(blooder.transform, false);
         _bloodEffect.transform.forward = normal;
 
         foreach (var effect in _bloodEffects)
         {
             effect.Play();
+        }
+    }
+
+    public void StopBloodEffect()
+    {
+        foreach (var effect in _bloodEffects)
+        {
+            effect.Stop();
         }
     }
 }

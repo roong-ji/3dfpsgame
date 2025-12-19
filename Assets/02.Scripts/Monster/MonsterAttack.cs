@@ -17,8 +17,8 @@ public class MonsterAttack : MonoBehaviour
     public void Attack()
     {
         int count = Physics.OverlapSphereNonAlloc(_attackPoint.position, _attackRange.Value, _hitBuffer, _targetLayer);
-
         if (count <= 0) return;
+
         IDamagable targetObject = _hitBuffer[0].GetComponent<IDamagable>();
         targetObject.TryTakeDamage(new Damage(_damage.Value, _attackPoint.position, transform.position, gameObject));
     }

@@ -24,6 +24,8 @@ public class PlayerPointerAgent : MonoBehaviour
         _agent.speed = _stats.MoveSpeed.Value;
     }
 
+    // Todo: AutoMode가 켜질 때 agent를 활성화, 꺼질 때 비활성화
+
     private void Update()
     {
         if (_isJumping || !GameManager.Instance.AutoMode) return;

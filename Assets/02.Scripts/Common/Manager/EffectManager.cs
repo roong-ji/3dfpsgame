@@ -21,7 +21,11 @@ public class EffectManager : Singleton<EffectManager>
     public void PlayBloodEffect(Transform blooder, Vector3 normal)
     {
         _bloodEffect.transform.SetParent(blooder.transform, false);
-        _bloodEffect.transform.forward = normal;
+
+        if(normal != default)
+        {
+            _bloodEffect.transform.forward = normal;
+        }
 
         foreach (var effect in _bloodEffects)
         {
@@ -31,6 +35,7 @@ public class EffectManager : Singleton<EffectManager>
 
     public void StopBloodEffect()
     {
+        _bloodEffect.transform.SetParent(transform);
         foreach (var effect in _bloodEffects)
         {
             effect.Stop();

@@ -56,6 +56,8 @@ public class Bomb : MonoBehaviour, IPoolable
     {
         _damage.HitPoint = transform.position;
 
+        // Todo: NonAlloc 적용
+
         Collider[] targets = Physics.OverlapSphere(
             transform.position,
             _explosionDistance

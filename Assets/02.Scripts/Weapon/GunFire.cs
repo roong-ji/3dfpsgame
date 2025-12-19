@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class GunFire : MonoBehaviour
 {
+    [Header("발사 이펙트 프리팹")]
+    [SerializeField] private GameObject[] _effectPrefabs;
+    [SerializeField] private Transform _effectTransform;
+
     private ParticleSystem _hitEffect;
     private float _nextFireTime = 0f;
 
     private Transform _fireTransform;
     private CameraRecoil _cameraRecoil;
+    private Bullet _bullet;
 
     private Damage _damage;
     private float _fireRate;
@@ -18,6 +23,7 @@ public class GunFire : MonoBehaviour
         _fireTransform = Camera.main.transform;
         _cameraRecoil = Camera.main.GetComponent<CameraRecoil>();
         _hitEffect = EffectManager.Instance.BulletHitEffect;
+        _bullet = EffectManager.Instance.BulletEffect;
     }
 
     public void Initialize(GunStats stats, GameObject owner)
@@ -31,7 +37,7 @@ public class GunFire : MonoBehaviour
 
     public void Fire()
     {
-        _cameraRecoil.CameraRecoilByFire();
+        FireEffect();
 
         // 1. Ray를 생성하고 발사할 위치, 방향, 거리를 설정한다.
         Ray ray = new Ray(origin: _fireTransform.position, direction: _fireTransform.forward);
@@ -49,6 +55,8 @@ public class GunFire : MonoBehaviour
 
             _hitEffect.Play();
 
+            _bullet.PlayBulletEffect(_effectTransform.position, hitInfo.point);
+
             if (hitInfo.collider.TryGetComponent<IDamagable>(out IDamagable hitObject))
             {
                 _damage.HitPoint = hitInfo.point;
@@ -58,5 +66,16 @@ public class GunFire : MonoBehaviour
         }
 
         _nextFireTime = Time.time + (1f / _fireRate);
+    }
+
+    private void FireEffect()
+    {
+        _cameraRecoil.CameraRecoilByFire();
+
+        int randomEffect = Random.Range(0, _effectPrefabs.Length);
+
+        GameObject effect = PoolManager.Instance.Spawn(_effectPrefabs[randomEffect], _effectTransform.position);
+
+        effect.transform.rotation = Quaternion.LookRotation(transform.forward);
     }
 }

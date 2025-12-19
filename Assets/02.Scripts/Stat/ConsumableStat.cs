@@ -25,6 +25,8 @@ public class ConsumableStat : IConsumableStat
         }
     }
 
+    public float MaxValue => _maxValue;
+
     public void Initialize()
     {
         Value = _maxValue;

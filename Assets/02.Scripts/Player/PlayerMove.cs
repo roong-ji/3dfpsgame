@@ -19,19 +19,22 @@ public class PlayerMove : MonoBehaviour
     private float _yVelocity = 0;
 
     private bool _canDoubleJump = false;
+    private bool _isJumping = false;
 
     private CharacterController _controller;
     private PlayerStats _stats;
+    private PlayerAnimator _animator;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
         _stats = GetComponent<PlayerStats>();
+        _animator = GetComponent<PlayerAnimator>();
     }
 
     private void Update()
     {
-        if (GameManager.Instance.AutoMode) return;
+        if (_stats.IsDead || GameManager.Instance.AutoMode) return;
 
         HandleJump();
         HandleMoveSpeed();
@@ -44,6 +47,7 @@ public class PlayerMove : MonoBehaviour
         float y = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(x, 0, y);
+        _animator.PlayMoveAnimation(direction.magnitude);
 
         direction = transform.TransformDirection(direction);
         direction.y = _yVelocity;
@@ -53,15 +57,24 @@ public class PlayerMove : MonoBehaviour
 
     private void HandleJump()
     {
+        if (_isJumping && _controller.isGrounded)
+        {
+            _animator.StopJumpAnimation();
+            _isJumping = false;
+        }
+
         _yVelocity += _configs.Gravity * Time.deltaTime;
 
-        // if (_controller.collisionFlags == CollisionFlags.Below)
         if (!Input.GetButtonDown("Jump")) return;
 
+        _animator.PlayJumpAnimation();
+
+        // if (_controller.collisionFlags == CollisionFlags.Below)
         if (_controller.isGrounded)
         {
             _yVelocity = _stats.JumpPower.Value;
             _canDoubleJump = true;
+            _isJumping = true;
         }
         else if (_canDoubleJump && _stats.Stamina.TryConsume(_configs.JumpStamina))
         {

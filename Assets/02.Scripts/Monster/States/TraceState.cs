@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class TraceState : BaseState
 {
+    private static readonly int s_traceToAttackIdle = Animator.StringToHash("TraceToAttackIdle");
+
     public TraceState(Monster monster) : base(monster) { }
 
-    public override void OnStateEnter()
-    {
-        // Todo: Run 애니메이션 실행
-        Debug.Log("상태 진입 : Trace");
-    }
+    public override void OnStateEnter() { }
 
     public override void OnStateExit() { }
 
@@ -31,6 +29,7 @@ public class TraceState : BaseState
 
         if (distance <= _monster.AttackDistance)
         {
+            _monster.PlayAnimation(s_traceToAttackIdle);
             _monster.ChangeState(EMonsterState.Attack);
         }
     }

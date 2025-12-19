@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour, IDamagable
     private IDamagable _attackTarget;
     private CharacterController _controller;
     private NavMeshAgent _agent;
+    private Animator _animator;
 
     public ConsumableStat Health;
     private float _damage = 10f;
@@ -24,7 +25,6 @@ public class Monster : MonoBehaviour, IDamagable
     private float _attackSpeed = 2f;
 
     private float _hitStunTime = 0.2f;
-    private float _deathDelayTime = 02f;
 
     public float Damage => _damage;
     public float AttackDistance => _attackDistance;
@@ -33,7 +33,6 @@ public class Monster : MonoBehaviour, IDamagable
     public float NextAttackTime => Time.time + _attackSpeed;
 
     public float HitTime => _hitStunTime;
-    public float DeathTime => _deathDelayTime;
 
     private Damage _lastDamageInfo;
     public Damage LastDamageInfo => _lastDamageInfo;
@@ -61,6 +60,7 @@ public class Monster : MonoBehaviour, IDamagable
         Health.Initialize();
 
         _attackTarget = _player.GetComponent<IDamagable>();
+        _animator = GetComponentInChildren<Animator>();
         _controller = GetComponent<CharacterController>();
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _moveSpeed;
@@ -129,9 +129,14 @@ public class Monster : MonoBehaviour, IDamagable
         _agent.isStopped = false;
     }
 
+    public void PlayAnimation(int trigger)
+    {
+        _animator.SetTrigger(trigger);
+    }
+
     public bool TryTakeDamage(Damage damage)
     {
-        if (Health.Value <= 0) return false;
+        if (_state is DieState) return false;
         Health.Decrease(damage.Amount);
 
         _lastDamageInfo = damage;

@@ -3,8 +3,10 @@ using DG.Tweening;
 
 public class CameraMode : MonoBehaviour
 {
+    // Todo: 카메라 매니저 혹은 카메라 설정 값을 저장하는 클래스 분리
     private Transform _target;
     private ECameraMode _mode = ECameraMode.FPS;
+    public ECameraMode Mode => _mode;
 
     [SerializeField] private Transform _fpsTransform;
     [SerializeField] private Transform _tpsTransform;
@@ -14,7 +16,7 @@ public class CameraMode : MonoBehaviour
     private Ease _easeType = Ease.OutQuad;
     private bool _isChanging = false;
 
-    private void Awake()
+    private void Start()
     {
         _target = _fpsTransform;
     }

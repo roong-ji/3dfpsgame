@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class AttackState : BaseState
 {
+    private static readonly int s_attack = Animator.StringToHash("Attack");
+    private static readonly int s_attackToTrace = Animator.StringToHash("AttackToTrace");
+
     private float _nextAttackTime = 0f;
 
     public AttackState(Monster monster) : base(monster) { }
 
-    public override void OnStateEnter()
-    {
-        Debug.Log("상태 진입: Attack");
-    }
+    public override void OnStateEnter() { }
 
     public override void OnStateExit() { }
 
@@ -17,13 +17,13 @@ public class AttackState : BaseState
     {
         if (Time.time >= _nextAttackTime)
         {
-            // Todo: Attack 애니메이션 실행
+            _monster.PlayAnimation(s_attack);
             _nextAttackTime = _monster.NextAttackTime;
-            _monster.Attack();
         }
 
         if (_monster.Distance > _monster.AttackDistance)
         {
+            _monster.PlayAnimation(s_attackToTrace);
             _monster.ChangeState(EMonsterState.Trace);
         }
     }

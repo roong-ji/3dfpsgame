@@ -3,6 +3,7 @@ using System;
 public interface IConsumableStat
 {
     float Value { get; }
+    float MaxValue { get; }
 
     bool TryConsume(float amount);
 

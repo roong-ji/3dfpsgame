@@ -12,7 +12,6 @@ public class ComebackState : BaseState
 
     public override void OnStateEnter()
     {
-        Debug.Log("상태 진입: Comeback");
         _monster.MoveToPosition(_originPosition);
     }
 

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HitState : BaseState
 {
+    private static readonly int s_hit = Animator.StringToHash("Hit");
+
     private float _timer;
     
     private float _knockbackSpeed;
@@ -11,8 +13,7 @@ public class HitState : BaseState
 
     public override void OnStateEnter()
     {
-        // Todo: Hit 애니메이션 실행
-        Debug.Log("상태 진입 : Hit");
+        _monster.PlayAnimation(s_hit);
 
         _timer = 0;
         
@@ -32,10 +33,6 @@ public class HitState : BaseState
 
             _monster.Move(_knockbackDirection * _knockbackSpeed);
             _knockbackSpeed = Mathf.Lerp(_knockbackSpeed, 0f, _timer / _monster.HitTime);
-        }
-        else
-        {
-            _monster.ChangeState(EMonsterState.Idle);
         }
     }
 }

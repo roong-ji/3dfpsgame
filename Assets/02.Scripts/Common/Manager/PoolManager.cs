@@ -39,7 +39,13 @@ public class PoolManager : Singleton<PoolManager>
                 },
                 actionOnGet: (obj) => obj.SetActive(true),
                 actionOnRelease: (obj) => obj.SetActive(false),
-                actionOnDestroy: (obj) => Destroy(obj),
+                actionOnDestroy: (obj) =>
+                {
+                    if (Application.isPlaying)
+                        Destroy(obj);
+                    else
+                        DestroyImmediate(obj);
+                },
                 collectionCheck: true,
                 defaultCapacity: poolInfo.Count,
                 maxSize: poolInfo.Count

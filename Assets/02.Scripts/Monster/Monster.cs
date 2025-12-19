@@ -14,25 +14,16 @@ public class Monster : MonoBehaviour, IDamagable
     private NavMeshAgent _agent;
     private Animator _animator;
 
-    public ConsumableStat Health;
-    private float _damage = 10f;
+    private MonsterStats _stats;
 
-    private float _attackDistance = 2f;
-    private float _detectDistance = 15f;
-    private float _patrolDistance = 15f;
+    public IConsumableStat Health => _stats.Health;
 
-    private float _moveSpeed = 3f;
-    private float _attackSpeed = 2f;
+    public float AttackDistance => _stats.AttackDistance.Value;
+    public float DetectDistance => _stats.DetectDistance.Value;
+    public float PatrolDistance => _stats.PatrolDistance.Value;
+    public float NextAttackTime => Time.time + _stats.AttackSpeed.Value;
 
-    private float _hitStunTime = 0.2f;
-
-    public float Damage => _damage;
-    public float AttackDistance => _attackDistance;
-    public float DetectDistance => _detectDistance;
-    public float PatrolDistance => _patrolDistance;
-    public float NextAttackTime => Time.time + _attackSpeed;
-
-    public float HitTime => _hitStunTime;
+    public float HitTime => _stats.HitStunTime.Value;
 
     private Damage _lastDamageInfo;
     public Damage LastDamageInfo => _lastDamageInfo;
@@ -41,7 +32,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     public Vector3 TargetPosition => _player.transform.position;
 
-    public bool IsDead => Health.Value <= 0;
+    public bool IsDead => _stats.IsDead;
 
     public struct JumpData
     {
@@ -51,21 +42,18 @@ public class Monster : MonoBehaviour, IDamagable
     private JumpData _jumpData;
     public JumpData CurrentJumpData => _jumpData;
 
-    // Todo: MonsterStats 분리
-
     public event Action OnTakeDamaged;
 
-    private void Start()
+    private void Awake()
     {
-        Health.Initialize();
-
         _attackTarget = _player.GetComponent<IDamagable>();
         _animator = GetComponentInChildren<Animator>();
         _controller = GetComponent<CharacterController>();
-        _agent = GetComponent<NavMeshAgent>();
-        _agent.speed = _moveSpeed;
-        _agent.stoppingDistance = _attackDistance;
+        _stats = GetComponent<MonsterStats>();
 
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _stats.MoveSpeed.Value;
+        _agent.stoppingDistance = _stats.AttackDistance.Value;
         _agent.autoTraverseOffMeshLink = false;
 
         _states = new Dictionary<EMonsterState, BaseState>
@@ -97,7 +85,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     public void Move(Vector3 direction)
     {
-        _controller.Move(direction * _moveSpeed * Time.deltaTime);
+        _controller.Move(direction * _stats.MoveSpeed.Value * Time.deltaTime);
     }
 
     public void MoveToPosition(Vector3 position)
@@ -137,12 +125,12 @@ public class Monster : MonoBehaviour, IDamagable
     public bool TryTakeDamage(Damage damage)
     {
         if (_state is DieState) return false;
-        Health.Decrease(damage.Amount);
+        _stats.ApplyDamage(damage.Amount);
 
         _lastDamageInfo = damage;
         OnTakeDamaged?.Invoke();
 
-        if (Health.Value <= 0)
+        if (IsDead)
         {
             _agent.enabled = false;
             ChangeState(EMonsterState.Die);
@@ -160,7 +148,7 @@ public class Monster : MonoBehaviour, IDamagable
     public void Attack()
     {
         _attackTarget.TryTakeDamage(new Damage(
-                _damage,
+                _stats.Damage.Value,
                 transform.position,
                 transform.position,
                 gameObject

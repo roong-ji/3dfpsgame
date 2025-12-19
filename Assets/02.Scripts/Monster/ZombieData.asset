@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a5e0f4699fb704fbfe41a2fc0a4872, type: 3}
+  m_Name: ZombieData
+  m_EditorClassIdentifier: 
+  _maxHealth: 100
+  _damage: 10
+  _moveSpeed: 3
+  _attackSpeed: 2
+  _attackDistance: 2
+  _detectDistance: 15
+  _patrolDistance: 15
+  _hitStunTime: 0.2

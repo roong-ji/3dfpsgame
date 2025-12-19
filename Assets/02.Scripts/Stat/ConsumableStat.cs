@@ -55,6 +55,11 @@ public class ConsumableStat : IConsumableStat
         return true;
     }
 
+    public void SetMaxValue(float value)
+    {
+        _maxValue = value;
+    }
+
     public void IncreaseMax(float amount)
     {
         if (amount < 0) return;

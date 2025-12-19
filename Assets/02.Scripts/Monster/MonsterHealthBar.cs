@@ -21,7 +21,7 @@ public class MonsterHealthBar : MonoBehaviour
 
     private Sequence _hitSequence;
 
-    private void Awake()
+    private void Start()
     {
         _monster = GetComponentInParent<Monster>();
         _mainCameraTransform = Camera.main.transform;

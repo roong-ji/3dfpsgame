@@ -44,6 +44,10 @@ public class PlayerAnimator : MonoBehaviour
 
     public void PlayDeathAnimation()
     {
+        for (int i = 1; i < _animator.layerCount; i++)
+        {
+            _animator.SetLayerWeight(i, 0f);
+        }
         _animator.applyRootMotion = true;
         _animator.SetTrigger(s_death);
     }

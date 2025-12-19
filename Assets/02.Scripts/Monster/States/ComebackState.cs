@@ -12,6 +12,7 @@ public class ComebackState : BaseState
 
     public override void OnStateEnter()
     {
+        _monster.SetStoppintDistance(0);
         _monster.MoveToPosition(_originPosition);
     }
 

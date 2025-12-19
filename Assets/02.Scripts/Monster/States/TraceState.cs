@@ -6,7 +6,10 @@ public class TraceState : BaseState
 
     public TraceState(Monster monster) : base(monster) { }
 
-    public override void OnStateEnter() { }
+    public override void OnStateEnter()
+    {
+        _monster.SetStoppintDistance(_monster.AttackDistance);
+    }
 
     public override void OnStateExit() { }
 

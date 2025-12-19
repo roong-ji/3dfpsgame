@@ -8,6 +8,7 @@ public class DieState : BaseState
 
     public override void OnStateEnter()
     {
+        EffectManager.Instance.StopBloodEffect();
         _monster.PlayAnimation(s_die);
     }
 

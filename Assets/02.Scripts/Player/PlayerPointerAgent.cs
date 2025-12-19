@@ -1,5 +1,4 @@
 using DG.Tweening;
-using Unity.Android.Gradle;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +23,8 @@ public class PlayerPointerAgent : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _stats.MoveSpeed.Value;
     }
+
+    // Todo: AutoMode가 켜질 때 agent를 활성화, 꺼질 때 비활성화
 
     private void Update()
     {

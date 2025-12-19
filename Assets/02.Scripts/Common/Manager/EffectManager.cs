@@ -5,6 +5,9 @@ public class EffectManager : Singleton<EffectManager>
     [SerializeField] private ParticleSystem _bombExplosionEffect;
     [SerializeField] private ParticleSystem _bulletHitEffect;
     [SerializeField] private ParticleSystem _drumExplosionEffect;
+
+    [SerializeField] private GameObject _bloodEffect;
+    [SerializeField] private ParticleSystem[] _bloodEffects;
     [SerializeField] private Bullet _bulletEffect;
 
     public ParticleSystem BombExplosionEffect => _bombExplosionEffect;
@@ -14,4 +17,28 @@ public class EffectManager : Singleton<EffectManager>
     public ParticleSystem DrumExplosionEffect => _drumExplosionEffect;
 
     public Bullet BulletEffect => _bulletEffect;
+
+    public void PlayBloodEffect(Transform blooder, Vector3 normal)
+    {
+        _bloodEffect.transform.SetParent(blooder.transform, false);
+
+        if(normal != default)
+        {
+            _bloodEffect.transform.forward = normal;
+        }
+
+        foreach (var effect in _bloodEffects)
+        {
+            effect.Play();
+        }
+    }
+
+    public void StopBloodEffect()
+    {
+        _bloodEffect.transform.SetParent(transform);
+        foreach (var effect in _bloodEffects)
+        {
+            effect.Stop();
+        }
+    }
 }

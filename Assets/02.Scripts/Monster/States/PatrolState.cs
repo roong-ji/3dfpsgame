@@ -8,9 +8,8 @@ public class PatrolState : BaseState
     public PatrolState(Monster monster) : base(monster) { }
 
     public override void OnStateEnter()
-    {        
-        // Todo: Run 애니메이션 실행
-        Debug.Log("상태 진입 : Patrol");
+    {
+        _monster.SetStoppintDistance(0);
     }
 
     public override void OnStateExit() { }
@@ -21,7 +20,6 @@ public class PatrolState : BaseState
 
         if (_patrolPoint == Vector3.zero || (_patrolPoint - position).sqrMagnitude <= Epsilon)
         {
-            Debug.Log("다음 순찰 지점");
             _patrolPoint = position + Random.insideUnitSphere * _monster.PatrolDistance;
             _patrolPoint.y = position.y;
         }

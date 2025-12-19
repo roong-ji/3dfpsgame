@@ -98,8 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damageAmount: 50
-  _knockbackPower: 7
-  _explosionDistance: 1
+  _knockbackPower: 30
+  _explosionDistance: 3
 --- !u!1001 &3596864541733788432
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,15 +12,15 @@ public class IdleState : BaseState
 
     public override void OnStateUpdate()
     {
+        _monster.PlayAnimation(s_idleToTrace);
+
         if (_monster.Distance <= _monster.DetectDistance)
         {
-            _monster.PlayAnimation(s_idleToTrace);
             _monster.ChangeState(EMonsterState.Trace);
         }
 
         else
         {
-            _monster.PlayAnimation(s_idleToTrace);
             _monster.ChangeState(EMonsterState.Patrol);
         }
     }

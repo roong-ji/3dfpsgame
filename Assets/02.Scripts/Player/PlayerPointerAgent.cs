@@ -1,7 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
-using static Monster;
 
 public class PlayerPointerAgent : MonoBehaviour
 {

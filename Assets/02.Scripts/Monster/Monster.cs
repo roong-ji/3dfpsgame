@@ -49,7 +49,6 @@ public class Monster : MonoBehaviour, IDamagable
 
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _stats.MoveSpeed.Value;
-        _agent.stoppingDistance = _stats.AttackDistance.Value;
 
         _states = new Dictionary<EMonsterState, BaseState>
         {
@@ -81,6 +80,11 @@ public class Monster : MonoBehaviour, IDamagable
     public void Move(Vector3 direction)
     {
         _controller.Move(direction * _stats.MoveSpeed.Value * Time.deltaTime);
+    }
+
+    public void SetStoppintDistance(float distance)
+    {
+        _agent.stoppingDistance = distance;
     }
 
     public void MoveToPosition(Vector3 position)

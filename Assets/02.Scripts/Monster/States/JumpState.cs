@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class JumpState : BaseState
 {
+    private static readonly int s_jumpToTrace = Animator.StringToHash("JumpToTrace");
+
     private float _currentTime;
     private float _duration = 0.8f;
     private float _jumpHeight = 2.0f;
@@ -22,6 +24,7 @@ public class JumpState : BaseState
 
     public override void OnStateExit() 
     {
+        _monster.PlayAnimation(s_jumpToTrace);
         _monster.RestartAgent();
     }
 

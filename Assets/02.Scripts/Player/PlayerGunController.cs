@@ -5,8 +5,10 @@ public class PlayerGunController : MonoBehaviour
 {
     [Header("현재 장착 중인 총기")]
     [SerializeField] private NorseGun _gun;
-
     private static event Action<NorseGun> _onGunEquipped;
+
+    private EZoomMode _zoomMode = EZoomMode.Normal;
+    public static event Action<EZoomMode> OnZoomModeChanged;
 
     private ICountStat _totalBulletCount;
 
@@ -23,6 +25,10 @@ public class PlayerGunController : MonoBehaviour
     {
         if (!CursorManager.Instance.IsLockCursor || GameManager.Instance.AutoMode) return;
 
+        if (Input.GetMouseButtonDown(1))
+        {
+            ToggleZoomMode();
+        }
         if (Input.GetMouseButton(0))
         {
             GunFire();
@@ -53,6 +59,16 @@ public class PlayerGunController : MonoBehaviour
         _gun = gun;
         _gun.Initialize(gameObject);
         _onGunEquipped?.Invoke(gun);
+    }
+
+    private void ToggleZoomMode()
+    {
+        _zoomMode = _zoomMode switch
+        {
+            EZoomMode.Normal => EZoomMode.ZoomIn,
+            _ => EZoomMode.Normal
+        };
+        OnZoomModeChanged?.Invoke(_zoomMode);
     }
 
     public static void AddListener(Action<NorseGun> listener)

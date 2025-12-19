@@ -9,12 +9,12 @@ public class Monster : MonoBehaviour, IDamagable
     private BaseState _state;
 
     [SerializeField] private GameObject _player;
-    private IDamagable _attackTarget;
     private CharacterController _controller;
     private NavMeshAgent _agent;
     private Animator _animator;
 
     private MonsterStats _stats;
+    private MonsterAttack _attack;
 
     public IConsumableStat Health => _stats.Health;
 
@@ -32,24 +32,20 @@ public class Monster : MonoBehaviour, IDamagable
 
     public Vector3 TargetPosition => _player.transform.position;
 
-    public bool IsDead => _stats.IsDead;
+    private Line _jumpData;
+    public Line CurrentJumpData => _jumpData;
 
-    public struct JumpData
-    {
-        public Vector3 startPosition;
-        public Vector3 endPosition;
-    }
-    private JumpData _jumpData;
-    public JumpData CurrentJumpData => _jumpData;
+    public bool IsDead => _stats.IsDead;
 
     public event Action OnTakeDamaged;
 
     private void Awake()
     {
-        _attackTarget = _player.GetComponent<IDamagable>();
         _animator = GetComponentInChildren<Animator>();
         _controller = GetComponent<CharacterController>();
         _stats = GetComponent<MonsterStats>();
+        _attack = GetComponent<MonsterAttack>();
+        _attack.Initialize(_stats);
 
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _stats.MoveSpeed.Value;
@@ -98,10 +94,10 @@ public class Monster : MonoBehaviour, IDamagable
         if (!_agent.isOnOffMeshLink) return false;
 
         OffMeshLinkData data = _agent.currentOffMeshLinkData;
-        _jumpData = new JumpData
+        _jumpData = new Line
         {
-            startPosition = transform.position,
-            endPosition = data.endPos
+            Start = transform.position,
+            End = data.endPos
         };
         return true;
     }
@@ -147,12 +143,7 @@ public class Monster : MonoBehaviour, IDamagable
 
     public void Attack()
     {
-        _attackTarget.TryTakeDamage(new Damage(
-                _stats.Damage.Value,
-                transform.position,
-                transform.position,
-                gameObject
-            ));
+        _attack.Attack();
     }
 
     public void Death()

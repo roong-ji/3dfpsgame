@@ -10,6 +10,7 @@ public class MonsterStats : MonoBehaviour
     private ValueStat _moveSpeed = new();
     private ValueStat _attackSpeed = new();
 
+    private ValueStat _attackRange = new();
     private ValueStat _attackDistance = new();
     private ValueStat _detectDistance = new();
     private ValueStat _patrolDistance = new();
@@ -21,6 +22,7 @@ public class MonsterStats : MonoBehaviour
     public IValueStat MoveSpeed => _moveSpeed;
     public IValueStat AttackSpeed => _attackSpeed;
 
+    public IValueStat AttackRange => _attackRange;
     public IValueStat AttackDistance => _attackDistance;
     public IValueStat DetectDistance => _detectDistance;
     public IValueStat PatrolDistance => _patrolDistance;
@@ -43,6 +45,7 @@ public class MonsterStats : MonoBehaviour
         _moveSpeed.SetValue(_data.MoveSpeed);
         _attackSpeed.SetValue(_data.AttackSpeed);
 
+        _attackRange.SetValue(_data.AttackRange);
         _attackDistance.SetValue(_data.AttackDistance);
         _detectDistance.SetValue(_data.DetectDistance);
         _patrolDistance.SetValue(_data.PatrolDistance);

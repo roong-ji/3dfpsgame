@@ -16,7 +16,8 @@ MonoBehaviour:
   _damage: 10
   _moveSpeed: 3
   _attackSpeed: 2
-  _attackDistance: 2
+  _attackRange: 0.5
+  _attackDistance: 1.5
   _detectDistance: 15
   _patrolDistance: 15
   _hitStunTime: 0.2

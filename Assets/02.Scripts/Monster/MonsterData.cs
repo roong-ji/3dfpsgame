@@ -10,6 +10,7 @@ public class MonsterData : ScriptableObject
     [SerializeField] private float _attackSpeed;
 
     [Header("행동 스탯")]
+    [SerializeField] private float _attackRange;
     [SerializeField] private float _attackDistance;
     [SerializeField] private float _detectDistance;
     [SerializeField] private float _patrolDistance;
@@ -20,6 +21,7 @@ public class MonsterData : ScriptableObject
     public float MoveSpeed => _moveSpeed;
     public float AttackSpeed => _attackSpeed;
 
+    public float AttackRange => _attackRange;
     public float AttackDistance => _attackDistance;
     public float DetectDistance => _detectDistance;
     public float PatrolDistance => _patrolDistance;

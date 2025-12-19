@@ -12,10 +12,10 @@ public class Bullet : MonoBehaviour
         _line = GetComponent<LineRenderer>();
     }
 
-    public void PlayBulletEffect(Vector3 startPosition, Vector3 endPosition)
+    public void PlayBulletEffect(Line line)
     {
-        _line.SetPosition(0, startPosition);
-        _line.SetPosition(1, endPosition);
+        _line.SetPosition(0, line.Start);
+        _line.SetPosition(1, line.End);
 
         Invoke(nameof(DeleteLine), _duration);
     }

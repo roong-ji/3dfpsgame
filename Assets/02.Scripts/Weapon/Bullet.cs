@@ -14,9 +14,11 @@ public class Bullet : MonoBehaviour
 
     public void PlayBulletEffect(Line line)
     {
+        // Todo: 경로 상의 랜덤한 라인을 그리도록 변경
         _line.SetPosition(0, line.Start);
         _line.SetPosition(1, line.End);
 
+        // Todo: 리플렉션 제거
         Invoke(nameof(DeleteLine), _duration);
     }
 

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Unity.Android.Gradle;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -57,15 +58,16 @@ public class PlayerPointerAgent : MonoBehaviour
 
         OffMeshLinkData data = _agent.currentOffMeshLinkData;
 
-        Vector3 startPosition = transform.position;
-        Vector3 endPosition = data.endPos;
-        endPosition.y += _endPositionOffsetY;
-
-        transform.LookAt(new Vector3(endPosition.x, transform.position.y, endPosition.z));
+        Line jump = new Line
+        {
+            Start = transform.position,
+            End = data.endPos
+        };
+        jump.End.y += _endPositionOffsetY;
 
         DOVirtual.Float(0f, 1f, _jumpDuration, (float timeRate) =>
         {
-            Vector3 position = Vector3.Lerp(startPosition, endPosition, timeRate);
+            Vector3 position = Vector3.Lerp(jump.Start, jump.End, timeRate);
             position.y += _jumpHeight * Mathf.Sin(timeRate * Mathf.PI);
 
             transform.position = position;

@@ -55,7 +55,7 @@ public class GunFire : MonoBehaviour
 
             _hitEffect.Play();
 
-            _bullet.PlayBulletEffect(_effectTransform.position, hitInfo.point);
+            _bullet.PlayBulletEffect(new Line(_effectTransform.position, hitInfo.point));
 
             if (hitInfo.collider.TryGetComponent<IDamagable>(out IDamagable hitObject))
             {

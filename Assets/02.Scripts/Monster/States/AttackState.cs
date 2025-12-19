@@ -15,6 +15,8 @@ public class AttackState : BaseState
 
     public override void OnStateUpdate()
     {
+        _monster.transform.LookAt(_monster.TargetPosition);
+
         if (Time.time >= _nextAttackTime)
         {
             _monster.PlayAnimation(s_attack);

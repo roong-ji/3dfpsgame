@@ -21,6 +21,8 @@ public class HitState : BaseState
 
         _knockbackSpeed = damage.KnockbackPower;
         _knockbackDirection = (_monster.gameObject.transform.position - damage.AttackerPoint).normalized;
+
+        EffectManager.Instance.PlayBloodEffect(damage.HitPoint, damage.Normal);
     }
 
     public override void OnStateExit() { }

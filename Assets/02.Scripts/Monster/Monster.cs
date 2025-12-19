@@ -50,7 +50,6 @@ public class Monster : MonoBehaviour, IDamagable
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _stats.MoveSpeed.Value;
         _agent.stoppingDistance = _stats.AttackDistance.Value;
-        _agent.autoTraverseOffMeshLink = false;
 
         _states = new Dictionary<EMonsterState, BaseState>
         {

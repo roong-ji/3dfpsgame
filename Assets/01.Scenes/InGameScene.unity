@@ -2010,7 +2010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1753971711671451314, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3085834646952005124, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
       propertyPath: _player
@@ -3471,6 +3471,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1105828742}
     m_Modifications:
+    - target: {fileID: 1007127540951276610, guid: 3ace37360f306cb4aac03640550fa9ef, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 1007127540951276611, guid: 3ace37360f306cb4aac03640550fa9ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4935,6 +4939,8 @@ MonoBehaviour:
     Count: 2
   - Prefab: {fileID: 199458, guid: 4aa4c63f0f9d6a84dbaeed6b9caeca80, type: 3}
     Count: 2
+  - Prefab: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
+    Count: 300
 --- !u!1 &1829563379
 GameObject:
   m_ObjectHideFlags: 0
@@ -6323,7 +6329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1753971711671451314, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3085834646952005124, guid: 872be1e4a9827bb4986f6a592d6f5c0e, type: 3}
       propertyPath: _player

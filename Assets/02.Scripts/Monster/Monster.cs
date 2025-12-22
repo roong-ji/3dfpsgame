@@ -25,6 +25,8 @@ public class Monster : MonoBehaviour, IDamagable
 
     public float HitTime => _stats.HitStunTime.Value;
 
+    public ItemData DropItem => _stats.DropItem;
+
     private Damage _lastDamageInfo;
     public Damage LastDamageInfo => _lastDamageInfo;
 

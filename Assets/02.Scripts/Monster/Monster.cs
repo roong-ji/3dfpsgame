@@ -77,6 +77,7 @@ public class Monster : MonoBehaviour, IDamagable
         _state?.OnStateExit();
         _state = _states[nextState];
         _state.OnStateEnter();
+        Debug.Log(_state);
     }
 
     public void Move(Vector3 direction)

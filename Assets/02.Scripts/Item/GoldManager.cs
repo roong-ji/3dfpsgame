@@ -6,7 +6,7 @@ public class GoldManager : Singleton<GoldManager>
     [SerializeField] private Resource _gold;
     public IResource Gold => _gold;
 
-    private int _gainRange = 100;
+    private const int GainRange = 101;
 
     protected override void Init()
     {
@@ -16,7 +16,7 @@ public class GoldManager : Singleton<GoldManager>
 
     public void GainGold()
     {
-        _gold.Increase(UnityEngine.Random.Range(0, _gainRange));
+        _gold.Increase(UnityEngine.Random.Range(1, GainRange));
     }
 
     public void Bind(Action<int> action)

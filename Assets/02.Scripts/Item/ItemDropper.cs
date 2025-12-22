@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ItemDropper
+public static class ItemDropper
 {
     public static void DropRandomGolds(ItemData itemData)
     {

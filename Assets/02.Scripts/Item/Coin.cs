@@ -9,12 +9,14 @@ public class Coin : MonoBehaviour, IPoolable
 
     private GameObject _prefab;
     private Rigidbody _rigidbody;
+    private MagnetMovement _movement;
 
     private bool _shouldRelease = false;
 
     public void Initialize(GameObject prefab)
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _movement = GetComponent<MagnetMovement>();
         _prefab = prefab;
         _shouldRelease = true;
     }
@@ -33,13 +35,14 @@ public class Coin : MonoBehaviour, IPoolable
         _rigidbody.AddTorque(Random.insideUnitSphere, ForceMode.Impulse);
     }
 
-    private void OnDisable()
+    public void Magnet(Transform transform)
     {
-        Release();
+        _movement.MoveTo(transform, Release);
     }
 
     public void Release()
     {
+        GoldManager.Instance.GainGold();
         PoolManager.Instance.Release(_prefab, gameObject);
     }
 }

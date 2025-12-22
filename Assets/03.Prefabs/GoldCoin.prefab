@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2740913018641196425}
   - component: {fileID: 16617852783775260}
   - component: {fileID: 2254775703472003718}
+  - component: {fileID: -674226049206997035}
   m_Layer: 10
   m_Name: GoldCoin
   m_TagString: Untagged
@@ -98,6 +99,21 @@ MonoBehaviour:
   _force: 15
   _range: 2
   _upForce: 5
+--- !u!114 &-674226049206997035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498403948531744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d2879acfb84c44cb23d9c630b7f746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 0.5
+  _arcHeight: 2
+  _scatterRange: 1
 --- !u!1 &1667978803413412
 GameObject:
   m_ObjectHideFlags: 0

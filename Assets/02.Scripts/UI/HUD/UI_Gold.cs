@@ -23,16 +23,21 @@ public class UI_Gold : MonoBehaviour
 
     private void UpdateGoldUIText(int targetGold)
     {
-        if (_goldTweener != null && _goldTweener.IsActive())
+        if (_goldTweener == null)
         {
-            _goldTweener.Kill();
+            _goldTweener = DOTween.To(() => _currentDisplayGold, SetGoldText, targetGold, _duration)
+                .SetEase(Ease.OutExpo)
+                .SetAutoKill(false);
         }
-
-        _goldTweener = DOTween.To(() => _currentDisplayGold, x =>
+        else
         {
-            _currentDisplayGold = x;
-            _goldUIText.text = _currentDisplayGold.ToString("N0");
-        }, targetGold, _duration)
-        .SetEase(Ease.OutExpo);
+            _goldTweener.ChangeValues(_currentDisplayGold, targetGold, _duration).Restart();
+        }
+    }
+
+    private void SetGoldText(int gold)
+    {
+        _currentDisplayGold = gold;
+        _goldUIText.SetText("{0}", gold);
     }
 }

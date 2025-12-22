@@ -33,12 +33,12 @@ public class Coin : MonoBehaviour, IPoolable
     {
         _rigidbody.AddExplosionForce(
             _force,
-            transform.position + Random.insideUnitSphere,
+            transform.position + Random.insideUnitSphere * _range,
             _range,
             _upForce,
             ForceMode.Impulse
         );
-        
+
         _rigidbody.AddTorque(Random.insideUnitSphere, ForceMode.Impulse);
     }
 

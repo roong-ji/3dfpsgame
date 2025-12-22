@@ -8,7 +8,7 @@ public class UI_Bullet : MonoBehaviour
     [Header("총알 UI")]
     [SerializeField] private Text _bulletCountTexTUI;
 
-    private ICountStat _currentBullet;
+    private IResource _currentBullet;
 
     private void Awake()
     {
@@ -28,13 +28,13 @@ public class UI_Bullet : MonoBehaviour
         {
             _currentBullet.RemoveListener(UpdateBulletCountUI);
         }
-        _currentBullet = gun.Magazine.BulletCount;
+        _currentBullet = gun.Magazine.Bullet;
         _currentBullet.AddListener(UpdateBulletCountUI);
     }
 
     private void UpdateBulletCountUI(int _)
     {
-        int maxBulletCount = _playerStats.TotalBulletCount.Count;
+        int maxBulletCount = _playerStats.Bullet.Count;
         int bulletCount = _currentBullet.Count;
 
         _bulletCountTexTUI.text = $"{bulletCount}/{maxBulletCount}";

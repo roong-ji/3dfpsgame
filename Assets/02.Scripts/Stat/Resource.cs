@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class CountStat : ICountStat
+public class Resource : IResource
 {
     [SerializeField] private int _count;
 

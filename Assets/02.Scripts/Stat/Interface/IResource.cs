@@ -1,6 +1,6 @@
 using System;
 
-public interface ICountStat
+public interface IResource
 {
     int Count { get; }
 

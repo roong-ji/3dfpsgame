@@ -33,7 +33,7 @@ public class NorseGun : MonoBehaviour
     
     public bool TryFire()
     {
-        if(!_fire.IsReady || !_magazine.BulletCount.TryConsume(1)) return false;
+        if(!_fire.IsReady || !_magazine.Bullet.TryConsume(1)) return false;
         _fire.Fire();
         return true;
     }

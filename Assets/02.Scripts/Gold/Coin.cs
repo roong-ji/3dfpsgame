@@ -3,9 +3,9 @@ using UnityEngine;
 public class Coin : MonoBehaviour, IPoolable
 {
     [Header("드랍 연출 설정")]
-    [SerializeField] private float _force = 20f;
-    [SerializeField] private float _range = 5f;
-    [SerializeField] private float _upForce = 2f;
+    [SerializeField] private float _force;
+    [SerializeField] private float _range;
+    [SerializeField] private float _upForce;
 
     private GameObject _prefab;
     private Rigidbody _rigidbody;
@@ -33,10 +33,8 @@ public class Coin : MonoBehaviour, IPoolable
         _rigidbody.AddTorque(Random.insideUnitSphere, ForceMode.Impulse);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnDisable()
     {
-        if (!collision.gameObject.CompareTag("Player")) return;
-        Debug.Log("충돌");
         Release();
     }
 

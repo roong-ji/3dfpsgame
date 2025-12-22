@@ -5,8 +5,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private ConsumableStat _health;
     [SerializeField] private ConsumableStat _stamina;
 
-    [SerializeField] private CountStat _bombCount;
-    [SerializeField] private CountStat _totalBulletCount;
+    [SerializeField] private Resource _bomb;
+    [SerializeField] private Resource _bullet;
 
     [SerializeField] private ValueStat _moveSpeed;
     [SerializeField] private ValueStat _runSpeed;
@@ -15,8 +15,8 @@ public class PlayerStats : MonoBehaviour
     public IConsumableStat Health => _health;
     public IConsumableStat Stamina => _stamina;
 
-    public ICountStat BombCount => _bombCount;
-    public ICountStat TotalBulletCount => _totalBulletCount;
+    public IResource Bomb => _bomb;
+    public IResource Bullet => _bullet;
 
     public IValueStat MoveSpeed => _moveSpeed;
     public IValueStat RunSpeed => _runSpeed;
@@ -26,7 +26,7 @@ public class PlayerStats : MonoBehaviour
     {
         _health.Initialize();
         _stamina.Initialize();
-        _bombCount.Initialize();
+        _bomb.Initialize();
     }
 
     private void Update()

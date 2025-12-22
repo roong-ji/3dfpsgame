@@ -21,6 +21,7 @@ public class MonsterAnimationEvents : MonoBehaviour
 
     private void ApplyEndOfAnimation()
     {
+        if (_monster.IsDead) return;
         _monster.RestartAgent();
         _monster.ChangeState(EMonsterState.Idle);
     }

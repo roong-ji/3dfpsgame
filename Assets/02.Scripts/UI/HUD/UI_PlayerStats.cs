@@ -18,7 +18,7 @@ public class UI_PlayerStats : MonoBehaviour
     {
         _playerStats.Health.AddListener(UpdateHealthUI);
         _playerStats.Stamina.AddListener(UpdateStaminaUI);
-        _playerStats.BombCount.AddListener(UpdateBombCountUI);
+        _playerStats.Bomb.AddListener(UpdateBombCountUI);
     }
 
     private void OnDestroy()
@@ -26,7 +26,7 @@ public class UI_PlayerStats : MonoBehaviour
         if (_playerStats == null) return;
         _playerStats.Health.RemoveListener(UpdateHealthUI);
         _playerStats.Stamina.RemoveListener(UpdateStaminaUI);
-        _playerStats.BombCount.RemoveListener(UpdateBombCountUI);
+        _playerStats.Bomb.RemoveListener(UpdateBombCountUI);
     }
     
     private void UpdateHealthUI(float health, float maxHealth)

@@ -2,9 +2,9 @@
 public class GunMagazine
 {
     public const int Capacity = 30;
-    public CountStat BulletCount;
+    public Resource Bullet;
 
-    public bool IsFull => BulletCount.Count == Capacity;
+    public bool IsFull => Bullet.Count == Capacity;
 
-    public int NeedToFill => Capacity - BulletCount.Count;
+    public int NeedToFill => Capacity - Bullet.Count;
 }

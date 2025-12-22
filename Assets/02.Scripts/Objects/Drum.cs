@@ -42,6 +42,7 @@ public class Drum : MonoBehaviour, IDamagable
 
     public void Explosion()
     {
+        // Todo: NonAlloc으로 변경
         Collider[] targets = Physics.OverlapSphere(
             transform.position,
             _explosionDistance,

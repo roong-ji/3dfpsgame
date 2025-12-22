@@ -9,7 +9,8 @@ public class DieState : BaseState
     public override void OnStateEnter()
     {
         EffectManager.Instance.StopBloodEffect();
-        _monster.PlayAnimation(s_die);
+        ItemDropper.DropRandomGolds(_monster.DropItem);
+        _monster.PlayAnimation(s_die, true);
     }
 
     public override void OnStateExit() { }

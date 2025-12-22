@@ -8,14 +8,14 @@ public class PlayerBombFire : MonoBehaviour
 
     private Transform _mainCameraTransform;
 
-    private ICountStat _bombCount;
+    private IResource _bombCount;
 
     private PlayerAnimator _animator;
 
     private void Awake()
     {
         _mainCameraTransform = Camera.main.transform;
-        _bombCount = GetComponent<PlayerStats>().BombCount;
+        _bombCount = GetComponent<PlayerStats>().Bomb;
         _animator = GetComponent<PlayerAnimator>();
     }
 

@@ -10,14 +10,14 @@ public class PlayerGunController : MonoBehaviour
     private EZoomMode _zoomMode = EZoomMode.Normal;
     public static event Action<EZoomMode> OnZoomModeChanged;
 
-    private ICountStat _totalBulletCount;
+    private IResource _totalBulletCount;
 
     private PlayerAnimator _animator;
 
     private void Start()
     {
         _animator = GetComponent<PlayerAnimator>();
-        _totalBulletCount = GetComponent<PlayerStats>().TotalBulletCount;
+        _totalBulletCount = GetComponent<PlayerStats>().Bullet;
         Equip(_gun);
     }
 

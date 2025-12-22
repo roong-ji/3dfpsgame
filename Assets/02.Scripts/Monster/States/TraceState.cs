@@ -3,6 +3,7 @@ using UnityEngine;
 public class TraceState : BaseState
 {
     private static readonly int s_traceToAttackIdle = Animator.StringToHash("TraceToAttackIdle");
+    private static readonly int s_traceToJump = Animator.StringToHash("TraceToJump");
 
     public TraceState(Monster monster) : base(monster) { }
 
@@ -17,6 +18,7 @@ public class TraceState : BaseState
     {
         if (_monster.CheckOffMeshLink())
         {
+            _monster.PlayAnimation(s_traceToJump);
             _monster.ChangeState(EMonsterState.Jump);
             return;
         }

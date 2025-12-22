@@ -17,6 +17,7 @@ public class GunEffect : MonoBehaviour, IPoolable
 
     private void OnEnable()
     {
+        // Todo: 리플렉션 제거
         if (!_shouldRelease) return;
         Invoke(nameof(Release), _duration);
     }

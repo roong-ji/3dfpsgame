@@ -16,6 +16,8 @@ public class MonsterStats : MonoBehaviour
     private ValueStat _patrolDistance = new();
     private ValueStat _hitStunTime = new();
 
+    private ItemData _dropItem;
+
     public IConsumableStat Health => _health; 
 
     public IValueStat Damage => _damage;
@@ -27,6 +29,8 @@ public class MonsterStats : MonoBehaviour
     public IValueStat DetectDistance => _detectDistance;
     public IValueStat PatrolDistance => _patrolDistance;
     public IValueStat HitStunTime => _hitStunTime;
+
+    public ItemData DropItem => _dropItem;
 
     private void Awake()
     {
@@ -50,6 +54,13 @@ public class MonsterStats : MonoBehaviour
         _detectDistance.SetValue(_data.DetectDistance);
         _patrolDistance.SetValue(_data.PatrolDistance);
         _hitStunTime.SetValue(_data.HitStunTime);
+
+        _dropItem = new ItemData(
+                _data.CoinPrefab,
+                gameObject,
+                _data.MinCoin,
+                _data.MaxCoin
+            );
     }
 
     public void ApplyDamage(float amount)

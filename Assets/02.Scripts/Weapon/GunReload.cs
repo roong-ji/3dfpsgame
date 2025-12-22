@@ -7,7 +7,7 @@ public class GunReload : MonoBehaviour
     private GunMagazine _magazine;
     private float _reloadTime;
 
-    private ICountStat _ownerMagazine;
+    private IResource _ownerMagazine;
 
     private bool _isReloading = false;
 
@@ -17,7 +17,7 @@ public class GunReload : MonoBehaviour
     {
         _magazine = magazine;
         _reloadTime = stats.ReloadTime.Value;
-        _ownerMagazine = owner.GetComponent<PlayerStats>().TotalBulletCount;
+        _ownerMagazine = owner.GetComponent<PlayerStats>().Bullet;
     }
 
     public void TryReload()
@@ -34,7 +34,7 @@ public class GunReload : MonoBehaviour
         if (bulletToFill <= 0) return;
 
         _ownerMagazine.TryConsume(bulletToFill);
-        _magazine.BulletCount.Increase(bulletToFill);
+        _magazine.Bullet.Increase(bulletToFill);
     }
 
     private IEnumerator ReloadRoutine()

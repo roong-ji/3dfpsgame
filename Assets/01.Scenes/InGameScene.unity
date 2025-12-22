@@ -1641,7 +1641,7 @@ GameObject:
   - component: {fileID: 535269254}
   - component: {fileID: 535269255}
   - component: {fileID: 535269256}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: ItemDetector
   m_TagString: Player
   m_Icon: {fileID: 0}

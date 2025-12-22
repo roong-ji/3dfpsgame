@@ -57,7 +57,7 @@ public class GunFire : MonoBehaviour
 
             _bullet.PlayBulletEffect(new Line(_effectTransform.position, hitInfo.point));
 
-            if (hitInfo.collider.TryGetComponent<IDamagable>(out IDamagable hitObject))
+            if (hitInfo.collider.TryGetComponent(out IDamagable hitObject))
             {
                 _damage.HitPoint = hitInfo.point;
                 _damage.Normal = hitInfo.normal;

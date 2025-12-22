@@ -77,7 +77,6 @@ public class Monster : MonoBehaviour, IDamagable
         _state?.OnStateExit();
         _state = _states[nextState];
         _state.OnStateEnter();
-        Debug.Log(_state);
     }
 
     public void Move(Vector3 direction)
@@ -122,6 +121,11 @@ public class Monster : MonoBehaviour, IDamagable
     public void PlayAnimation(int trigger)
     {
         _animator.SetTrigger(trigger);
+    }
+
+    public void PlayAnimation(int trigger, bool on)
+    {
+        _animator.SetBool(trigger, on);
     }
 
     public bool TryTakeDamage(Damage damage)

@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _force: 5
-  _range: 2
-  _upForce: 1
+  _range: 5
+  _upForce: 5
 --- !u!114 &-674226049206997035
 MonoBehaviour:
   m_ObjectHideFlags: 0

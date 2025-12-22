@@ -10,7 +10,7 @@ public class DieState : BaseState
     {
         EffectManager.Instance.StopBloodEffect();
         ItemDropper.DropRandomGolds(_monster.DropItem);
-        _monster.PlayAnimation(s_die);
+        _monster.PlayAnimation(s_die, true);
     }
 
     public override void OnStateExit() { }

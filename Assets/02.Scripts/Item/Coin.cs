@@ -31,7 +31,14 @@ public class Coin : MonoBehaviour, IPoolable
 
     public void Scatter()
     {
-        _rigidbody.AddExplosionForce(_force, transform.position, 0, _upForce, ForceMode.Impulse);
+        _rigidbody.AddExplosionForce(
+            _force,
+            transform.position + Random.insideUnitSphere,
+            _range,
+            _upForce,
+            ForceMode.Impulse
+        );
+        
         _rigidbody.AddTorque(Random.insideUnitSphere, ForceMode.Impulse);
     }
 

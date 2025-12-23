@@ -6,7 +6,6 @@ public enum EMonsterState
     Jump,
     Comeback,
     Charge,
-    JumpAttack,
     Attack,
     Hit,
     Die,

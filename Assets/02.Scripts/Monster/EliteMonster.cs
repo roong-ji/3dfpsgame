@@ -11,8 +11,7 @@ public class EliteMonster : Monster
             { EMonsterState.Trace, new TraceState(this) },
             { EMonsterState.Jump, new JumpState(this) },
             { EMonsterState.Charge, new ChargeState(this) },
-            //{ EMonsterState.JumpAttack, new ComebackState(this) },
-            { EMonsterState.Attack, new AttackState(this) },
+            { EMonsterState.Attack, new EliteAttackState(this) },
             { EMonsterState.Hit, new HitState(this) },
             { EMonsterState.Die, new DieState(this) }
         };

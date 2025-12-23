@@ -59,7 +59,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("LoadingScene");
     }
 
     public void Quit()

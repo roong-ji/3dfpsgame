@@ -81,7 +81,7 @@ public class LoginScene : MonoBehaviour
 
         _messageTextUI.text = "* 로그인 성공";
 
-        SceneManager.LoadScene("InGameScene");
+        SceneManager.LoadScene("LoadingScene");
     }
 
     private void Register()

@@ -45,7 +45,7 @@ public class Coin : MonoBehaviour, IPoolable
     public void Magnet(Transform transform)
     {
         _movement.MoveTo(transform, Release);
-    } 
+    }
 
     public void Release()
     {

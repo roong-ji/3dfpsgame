@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -55,6 +55,16 @@ public class GameManager : Singleton<GameManager>
     {
         Time.timeScale = 1;
         CursorManager.Instance.LockCursor();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     private IEnumerator StartToPlay_Coroutine()

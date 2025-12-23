@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour, IDamagable
 {
-    private Dictionary<EMonsterState, BaseState> _states;
+    protected Dictionary<EMonsterState, BaseState> _states;
     private BaseState _state;
 
     [SerializeField] private GameObject _player;
@@ -52,6 +52,11 @@ public class Monster : MonoBehaviour, IDamagable
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _stats.MoveSpeed.Value;
 
+        Initialize();
+    }
+
+    protected virtual void Initialize()
+    {
         _states = new Dictionary<EMonsterState, BaseState>
         {
             { EMonsterState.Idle, new IdleState(this) },

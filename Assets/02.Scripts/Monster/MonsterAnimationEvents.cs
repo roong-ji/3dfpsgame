@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MonsterAnimationEvents : MonoBehaviour
 {
-    private Monster _monster;
+    protected Monster _monster;
 
     private void Awake()
     {

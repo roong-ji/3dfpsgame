@@ -13,6 +13,8 @@ public class HitState : BaseState
 
     public override void OnStateEnter()
     {
+        Debug.Log("상태 진입 : Hit");
+
         _monster.PlayAnimation(s_hit);
 
         _timer = 0;

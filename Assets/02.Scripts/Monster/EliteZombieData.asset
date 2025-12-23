@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a5e0f4699fb704fbfe41a2fc0a4872, type: 3}
+  m_Name: EliteZombieData
+  m_EditorClassIdentifier: 
+  _maxHealth: 500
+  _damage: 25
+  _moveSpeed: 2
+  _attackSpeed: 2
+  _attackRange: 1
+  _attackDistance: 3
+  _detectDistance: 100
+  _patrolDistance: 15
+  _hitStunTime: 0
+  _coinPrefab: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}
+  _minCoin: 30
+  _maxCoin: 51

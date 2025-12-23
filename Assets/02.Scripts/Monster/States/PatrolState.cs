@@ -9,6 +9,7 @@ public class PatrolState : BaseState
 
     public override void OnStateEnter()
     {
+        Debug.Log("상태 진입 : Patrol");
         _monster.SetStoppintDistance(0);
     }
 

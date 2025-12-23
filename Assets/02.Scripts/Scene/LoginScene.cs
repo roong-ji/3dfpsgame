@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class LoginScene : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class LoginScene : MonoBehaviour
 
     private SceneMode _mode = SceneMode.Login;
 
-    // 비밀번호 확인 오브젝트
     [SerializeField] private GameObject _passwordCofirmObject;
+
     [SerializeField] private Button _gotoRegisterButton;
     [SerializeField] private Button _loginButton;
     [SerializeField] private Button _gotoLoginButton;
@@ -26,10 +27,14 @@ public class LoginScene : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _messageTextUI;
 
+    private const int MinLength = 7;
+    private const int MaxLength = 20;
+
     private void Start()
     {
         AddButtonEvents();
         Refresh();
+        LoadLastLoggedinID();
     }
 
     private void AddButtonEvents()
@@ -50,12 +55,26 @@ public class LoginScene : MonoBehaviour
         _messageTextUI.text = string.Empty;
     }
 
+    private void LoadLastLoggedinID()
+    {
+        if (!PlayerPrefs.HasKey("LastLoggedinID")) return;
+
+        _idInputField.text = PlayerPrefs.GetString("LastLoggedinID");
+        _passwordInputField.text = PlayerPrefs.GetString(_idInputField.text);
+    }
+
     private void Login()
     {
         string id = _idInputField.text;
         if (string.IsNullOrEmpty(id))
         {
             _messageTextUI.text = "아이디를 입력해주세요";
+            return;
+        }
+
+        if (!IsEmailType(id))
+        {
+            _messageTextUI.text = "아이디는 이메일 형식이어야 합니다.";
             return;
         }
 
@@ -79,6 +98,8 @@ public class LoginScene : MonoBehaviour
             return;
         }
 
+        PlayerPrefs.SetString("LastLoggedinID", id);
+
         _messageTextUI.text = "* 로그인 성공";
 
         SceneManager.LoadScene("LoadingScene");
@@ -93,6 +114,12 @@ public class LoginScene : MonoBehaviour
             return;
         }
 
+        if (!IsEmailType(id))
+        {
+            _messageTextUI.text = "아이디는 이메일 형식이어야 합니다.";
+            return;
+        }
+
         string password = _passwordInputField.text;
         if (string.IsNullOrEmpty(password))
         {
@@ -100,6 +127,11 @@ public class LoginScene : MonoBehaviour
             return;
         }
 
+        if (!IsValidPassword(password))
+        {
+            CheckType(password);
+            return;
+        }
 
         string password2 = _passwordConfirmInputField.text;
         if (string.IsNullOrEmpty(password2) || password != password2)
@@ -115,9 +147,10 @@ public class LoginScene : MonoBehaviour
         }
 
         PlayerPrefs.SetString(id, password);
-        _messageTextUI.text = "* 아이디가 생성되었습니다.";
 
         GotoLogin();
+
+        _messageTextUI.text = "* 아이디가 생성되었습니다.";
     }
 
     private void GotoLogin()
@@ -130,5 +163,62 @@ public class LoginScene : MonoBehaviour
     {
         _mode = SceneMode.Register;
         Refresh();
+    }
+
+    private void CheckType(string password)
+    {
+        if (!IsAllowedChars(password))
+        {
+            _messageTextUI.text = "패스워드는 영어/숫자/특수문자만 가능합니다.";
+            return;
+        }
+
+        if (!IsAllowedLength(password))
+        {
+            _messageTextUI.text = $"패스워드는 {MinLength}자리 이상 {MaxLength}자리 이하여야 합니다.";
+            return;
+        }
+
+        if (!HasSpecialChar(password))
+        {
+            _messageTextUI.text = "패스워드는 특수문자를 하나 이상 포함해야 합니다.";
+            return;
+        }
+
+        if (!HasUpperAndLower(password))
+        {
+            _messageTextUI.text = "패스워드는 대소문자를 각 하나 이상 포함해야 합니다.";
+            return;
+        }
+    }
+
+    private bool IsEmailType(string input)
+    {
+        return Regex.IsMatch(input, @"^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}");
+    }
+
+    private bool IsAllowedChars(string input)
+    {
+        return Regex.IsMatch(input, @"^[a-zA-Z0-9!@#$%^&*()_+=.-]+$");
+    }
+
+    private bool IsAllowedLength(string input)
+    {
+        return Regex.IsMatch(input, $@"^.{{{MinLength},{MaxLength}}}$");
+    }
+
+    private bool HasSpecialChar(string input)
+    {
+        return Regex.IsMatch(input, @"[!@#$%^&*()_+=.-]");
+    }
+
+    private bool HasUpperAndLower(string input)
+    {
+        return Regex.IsMatch(input, @"(?=.*[a-z])(?=.*[A-Z])");
+    }
+
+    private bool IsValidPassword(string input)
+    {
+        return Regex.IsMatch(input, $@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+=.-])[a-zA-Z0-9!@#$%^&*()_+=.-]{{{MinLength},{MaxLength}}}");
     }
 }

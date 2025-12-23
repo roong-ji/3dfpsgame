@@ -9,7 +9,6 @@ public class TraceState : BaseState
 
     public override void OnStateEnter()
     {
-        Debug.Log("상태 진입 : Trace");
         _monster.SetStoppintDistance(_monster.AttackDistance);
     }
 

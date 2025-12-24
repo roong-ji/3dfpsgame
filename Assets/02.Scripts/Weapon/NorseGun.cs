@@ -8,6 +8,7 @@ public class NorseGun : MonoBehaviour
     [SerializeField] private GunMagazine _magazine;
 
     public GunMagazine Magazine => _magazine;
+    
     public event Action<float> OnReloadProgress
     {
         add { _reload.AddListener(value); }
@@ -33,7 +34,7 @@ public class NorseGun : MonoBehaviour
     
     public bool TryFire()
     {
-        if(!_fire.IsReady || !_magazine.Bullet.TryConsume(1)) return false;
+        if(_reload.IsReloading || !_fire.IsReady || !_magazine.Bullet.TryConsume(1)) return false;
         _fire.Fire();
         return true;
     }

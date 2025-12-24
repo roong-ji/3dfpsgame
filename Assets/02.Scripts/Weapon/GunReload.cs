@@ -10,6 +10,8 @@ public class GunReload : MonoBehaviour
     private IResource _ownerMagazine;
 
     private bool _isReloading = false;
+    
+    public bool IsReloading => _isReloading;
 
     private event Action<float> _onReloadProgress;
 

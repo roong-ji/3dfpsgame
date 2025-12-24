@@ -11,19 +11,20 @@ public class PlayerGunController : MonoBehaviour
     public static event Action<EZoomMode> OnZoomModeChanged;
 
     private IResource _totalBulletCount;
-
     private PlayerAnimator _animator;
+    private PlayerStats _stats;
 
     private void Start()
     {
         _animator = GetComponent<PlayerAnimator>();
-        _totalBulletCount = GetComponent<PlayerStats>().Bullet;
+        _stats = GetComponent<PlayerStats>();
+        _totalBulletCount = _stats.Bullet;
         Equip(_gun);
     }
 
     private void Update()
     {
-        if (!CursorManager.Instance.IsLockCursor || GameManager.Instance.AutoMode) return;
+        if (_stats.IsDead || !CursorManager.Instance.IsLockCursor || GameManager.Instance.AutoMode) return;
 
         if (Input.GetMouseButtonDown(1))
         {

@@ -26,6 +26,8 @@ public class LoginScene : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _messageTextUI;
 
+    private const string LastLoggedinID = "LastLoggedinID";
+
     private void Start()
     {
         AddButtonEvents();
@@ -79,8 +81,8 @@ public class LoginScene : MonoBehaviour
 
     private void LoadLastLoggedinID()
     {
-        if (!PlayerPrefs.HasKey("LastLoggedinID")) return;
-        _idInputField.text = PlayerPrefs.GetString("LastLoggedinID");
+        if (!PlayerPrefs.HasKey(LastLoggedinID)) return;
+        _idInputField.text = PlayerPrefs.GetString(LastLoggedinID);
     }
 
     private void Login()
@@ -121,7 +123,7 @@ public class LoginScene : MonoBehaviour
             return;
         }
 
-        PlayerPrefs.SetString("LastLoggedinID", id);
+        PlayerPrefs.SetString(LastLoggedinID, id);
 
         _messageTextUI.text = "* 로그인 성공";
 
@@ -156,8 +158,8 @@ public class LoginScene : MonoBehaviour
             return;
         }
 
-        string password2 = _passwordConfirmInputField.text;
-        if (string.IsNullOrEmpty(password2) || password != password2)
+        string passwordConfirm = _passwordConfirmInputField.text;
+        if (string.IsNullOrEmpty(passwordConfirm) || password != passwordConfirm)
         {
             _messageTextUI.text = "패스워드를 확인해주세요";
             return;

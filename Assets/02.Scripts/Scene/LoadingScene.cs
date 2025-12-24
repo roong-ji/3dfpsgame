@@ -22,10 +22,11 @@ public class LoadingScene : MonoBehaviour
 
         while (!ao.isDone)
         {
-            _progressSlider.value = ao.progress;
-            _progressTextUI.text = $"{ao.progress * 100}%";
+            float progress = Mathf.Clamp01(ao.progress / 0.9f);
+            _progressSlider.value = progress;
+            _progressTextUI.SetText("{0:0}%", progress * 100);
 
-            if (ao.progress >= 0.9f)
+            if (progress >= 1)
             {
                 ao.allowSceneActivation = true;
             }

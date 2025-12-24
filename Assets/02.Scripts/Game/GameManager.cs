@@ -59,6 +59,7 @@ public class GameManager : Singleton<GameManager>
 
     public void Restart()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("LoadingScene");
     }
 

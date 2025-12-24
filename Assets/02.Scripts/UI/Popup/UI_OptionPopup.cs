@@ -17,9 +17,9 @@ public class UI_OptionPopup : MonoBehaviour
 
     private void OnDestroy()
     {
-        _continueButton.onClick.RemoveListener(GameContinue);
-        _restartButton.onClick.RemoveListener(GameRestart);
-        _exitButton.onClick.RemoveListener(GameExit);
+        _continueButton?.onClick.RemoveListener(GameContinue);
+        _restartButton?.onClick.RemoveListener(GameRestart);
+        _exitButton?.onClick.RemoveListener(GameExit);
     }
 
     public void Show()

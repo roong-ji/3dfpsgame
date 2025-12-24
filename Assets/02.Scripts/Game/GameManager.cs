@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -27,9 +28,43 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private float _readyTime = 2f;
     [SerializeField] private float _startTime = 0.5f;
 
+    [Header("UI 옵션 팝업")]
+    [SerializeField] private UI_OptionPopup _optionUI;
+
     private void Start()
     {
         StartCoroutine(StartToPlay_Coroutine());
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
+    }
+
+    private void Pause()
+    {
+        Time.timeScale = 0;
+        CursorManager.Instance.UnlockCursor();
+        _optionUI.Show();
+    }
+
+    public void Continue()
+    {
+        Time.timeScale = 1;
+        CursorManager.Instance.LockCursor();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     private IEnumerator StartToPlay_Coroutine()

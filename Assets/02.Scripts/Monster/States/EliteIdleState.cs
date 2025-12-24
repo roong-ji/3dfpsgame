@@ -7,7 +7,7 @@ public class EliteIdleState : BaseState
 
     public EliteIdleState(Monster monster) : base(monster) { }
 
-    public override void OnStateEnter() { Debug.Log("상태 진입 : Idle"); }
+    public override void OnStateEnter() { }
 
     public override void OnStateExit() { }
 

@@ -33,6 +33,32 @@ public class LoginScene : MonoBehaviour
         LoadLastLoggedinID();
     }
 
+    private void TestAES()
+    {
+        string originalData = "내 아이디는 test@gmail.com 입니다.";
+        string myKey = "MySecretKey123";
+
+        Debug.Log($"<color=green>[원본]</color> {originalData}");
+
+        string encryptedData = AES.Encrypt(originalData, myKey);
+        Debug.Log($"<color=yellow>[암호화됨]</color> {encryptedData}");
+
+        string decryptedData = AES.Decrypt(encryptedData, myKey);
+        Debug.Log($"<color=cyan>[복호화됨]</color> {decryptedData}");
+
+        if (originalData == decryptedData)
+        {
+            Debug.Log("성공! 원본과 완벽하게 일치합니다.");
+        }
+        else
+        {
+            Debug.LogError("실패.. 데이터가 다릅니다.");
+        }
+
+        //string wrongDecryption = AES.Decrypt(encryptedData, "WrongPassword");
+        //Debug.Log($"<color=red>[틀린 비번 시도]</color> 결과: {wrongDecryption}");
+    }
+
     private void AddButtonEvents()
     {
         _gotoRegisterButton.onClick.AddListener(GotoRegister);

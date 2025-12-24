@@ -22,4 +22,15 @@ public static class Hash
             return stringBuilder.ToString();
         }
     }
+
+    public static byte[] GetHashKey(string input)
+    {
+        if (string.IsNullOrEmpty(input)) return new byte[32];
+
+        using (SHA256 sha256 = SHA256.Create())
+        {
+            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+            return sha256.ComputeHash(inputBytes);
+        }
+    }
 }

@@ -48,7 +48,10 @@ public class Monster : MonoBehaviour, IDamagable
         _stats = GetComponent<MonsterStats>();
         _attack = GetComponent<MonsterAttack>();
         _attack.Initialize(_stats);
+    }
 
+    private void Start()
+    {
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _stats.MoveSpeed.Value;
 
@@ -75,6 +78,11 @@ public class Monster : MonoBehaviour, IDamagable
     private void Update()
     {
         _state.OnStateUpdate();
+
+        if (_agent.hasPath)
+        {
+            Debug.DrawLine(transform.position, _agent.steeringTarget, Color.red);
+        }
     }
 
     public void ChangeState(EMonsterState nextState)

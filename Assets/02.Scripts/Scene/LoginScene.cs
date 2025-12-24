@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,38 +28,13 @@ public class LoginScene : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _messageTextUI;
 
     private const string LastLoggedinID = "LastLoggedinID";
+    private const string SecurityKey = "SecretKeyForSave";
 
     private void Start()
     {
         AddButtonEvents();
         Refresh();
         LoadLastLoggedinID();
-    }
-
-    private void TestAES()
-    {
-        string originalData = "내 아이디는 test@gmail.com 입니다.";
-        string myKey = "MySecretKey123";
-
-        Debug.Log($"<color=green>[원본]</color> {originalData}");
-
-        string encryptedData = AES.Encrypt(originalData, myKey);
-        Debug.Log($"<color=yellow>[암호화됨]</color> {encryptedData}");
-
-        string decryptedData = AES.Decrypt(encryptedData, myKey);
-        Debug.Log($"<color=cyan>[복호화됨]</color> {decryptedData}");
-
-        if (originalData == decryptedData)
-        {
-            Debug.Log("성공! 원본과 완벽하게 일치합니다.");
-        }
-        else
-        {
-            Debug.LogError("실패.. 데이터가 다릅니다.");
-        }
-
-        //string wrongDecryption = AES.Decrypt(encryptedData, "WrongPassword");
-        //Debug.Log($"<color=red>[틀린 비번 시도]</color> 결과: {wrongDecryption}");
     }
 
     private void AddButtonEvents()
@@ -116,10 +92,27 @@ public class LoginScene : MonoBehaviour
 
         string passwordDB = PlayerPrefs.GetString(idHash);
         string passwordHash = Hash.GetHash(password);
+        string passwordDecrypted = string.Empty;
 
-        if (passwordDB != passwordHash)
+        try
+        {
+            passwordDecrypted = AES.Decrypt(passwordDB, SecurityKey);
+#if UNITY_EDITOR
+            Debug.Log($"<color=cyan>[복호화됨]</color> {passwordDecrypted}");
+#endif
+        }
+        catch (Exception)
+        {
+            _messageTextUI.text = "데이터 오류: 로그인 정보를 확인할 수 없습니다.";
+            return;
+        }
+
+        if (passwordHash != passwordDecrypted)
         {
             _messageTextUI.text = "패스워드를 확인해주세요";
+#if UNITY_EDITOR
+            Debug.Log($"<color=red>[틀린 비번 시도]</color> 결과: {passwordDecrypted}");
+#endif
             return;
         }
 
@@ -173,7 +166,13 @@ public class LoginScene : MonoBehaviour
         }
 
         string passwordHash = Hash.GetHash(password);
-        PlayerPrefs.SetString(idHash, passwordHash);
+        string encryptedPassword = AES.Encrypt(passwordHash, SecurityKey);
+        PlayerPrefs.SetString(idHash, encryptedPassword);
+
+#if UNITY_EDITOR
+        Debug.Log($"<color=green>[원본]</color> {password}");
+        Debug.Log($"<color=yellow>[암호화됨]</color> {encryptedPassword}");
+#endif
 
         GotoLogin();
 

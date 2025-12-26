@@ -22,7 +22,10 @@ public class ComebackState : BaseState
     {
         Vector3 position = _monster.gameObject.transform.position;
 
-        if ((position - _originPosition).sqrMagnitude <= Epsilon)
+        Vector3 leftDistance = position - _originPosition;
+        leftDistance.y = 0;
+
+        if (leftDistance.sqrMagnitude <= Epsilon)
         {
             _monster.ChangeState(EMonsterState.Idle);
         }

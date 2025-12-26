@@ -3,7 +3,7 @@ using UnityEngine;
 public class PatrolState : BaseState
 {
     private Vector3 _patrolPoint;
-    private const float Epsilon = 0.1f;
+    private const float Epsilon = 1.5f;
 
     public PatrolState(Monster monster) : base(monster) { }
 

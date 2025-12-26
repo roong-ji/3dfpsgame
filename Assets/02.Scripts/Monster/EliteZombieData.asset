@@ -18,7 +18,7 @@ MonoBehaviour:
   _attackSpeed: 2
   _attackRange: 1
   _attackDistance: 3
-  _detectDistance: 100
+  _detectDistance: 30
   _patrolDistance: 15
   _hitStunTime: 0
   _coinPrefab: {fileID: 1498403948531744, guid: fa2c57d3f28a5e6419393e8bc3eeb32a, type: 3}

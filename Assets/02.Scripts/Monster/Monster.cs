@@ -79,10 +79,12 @@ public class Monster : MonoBehaviour, IDamagable
     {
         _state.OnStateUpdate();
 
+#if UNITY_EDITOR
         if (_agent.hasPath)
         {
             Debug.DrawLine(transform.position, _agent.steeringTarget, Color.red);
         }
+#endif
     }
 
     public void ChangeState(EMonsterState nextState)
